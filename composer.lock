@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "263f3592c74ef53510f3c24a9d3d8a79",
+    "content-hash": "731654cd3f8e97f3c9bd419012f42c4a",
     "packages": [
         {
             "name": "jefferson49/webtrees-common",
-            "version": "1.2.1",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jefferson49/webtrees-common.git",
-                "reference": "b3a00f9e84320f2a2968bb98d15212edab695bd2"
+                "reference": "58c95fcc5b3de2017094d2c7dcfc1e1a7fd02b14"
             },
             "require": {
                 "php": ">=7.4"
@@ -27,7 +27,7 @@
                 "webtree-module",
                 "webtrees"
             ],
-            "time": "2024-12-20T11:58:08+00:00"
+            "time": "2025-01-06T11:07:01+00:00"
         },
         {
             "name": "league/oauth2-client",
