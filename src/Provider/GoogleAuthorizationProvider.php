@@ -79,7 +79,7 @@ class GoogleAuthorizationProvider extends AbstractAuthorizationProvider implemen
         $user_data = $resourceOwner->toArray();
 
         try {
-            $user_id = (int) $resourceOwner->getId() ?? '';
+            $user_id = (int) $resourceOwner->getId() ?? 0;
         }
         catch (Exception $e) {
             throw new IdentityProviderException(I18N::translate('Invalid user data received from the authorization provider') . ': '. json_encode($user_data) . ' . ' . I18N::translate('Check the setting for urlResourceOwnerDetails in the webtrees configuration.'), 0, $user_data);
