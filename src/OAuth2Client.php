@@ -641,6 +641,9 @@ class OAuth2Client extends AbstractModule implements
 
         $redirectUrl = Html::url($url, $parameters) . self::REDIRECT_ROUTE;
 
+        //Replace %2F in URL, because some providers do not accept it, e.g. Dropbox
+        $redirectUrl = str_replace('%2F', '/', $redirectUrl);
+
         return $redirectUrl;
     }
 
