@@ -3,10 +3,15 @@
         {
             "url": "https://github.com/Jefferson49/webtrees-common.git",
             "type": "git"
-        }
+        },
+        {
+            "url": "https://github.com/Jefferson49/oauth2-dropbox.git",
+            "type": "git"
+        }        
     ],
     "require": {
         "jefferson49/webtrees-common": ">=1.2.2",
+        "stevenmaguire/oauth2-dropbox": "dev-Remove-scope-from-getAccessToken",
         "league/oauth2-client": "=2.8.0",
         "league/oauth2-github": "=3.1.1",
         "league/oauth2-google": "=4.0.1"
