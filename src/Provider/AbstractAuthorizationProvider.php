@@ -128,8 +128,14 @@ abstract class AbstractAuthorizationProvider
         try {
             return $this->provider->getAccessToken($grant, $options);
         }
-        catch (Exception $e) {
-            throw new IdentityProviderException(I18N::translate('Error while trying to get an access token from the authorization provider. Check the setting for urlAccessToken in the webtrees configuration. Check the server access logs (or .htaccess configuration files) whether any 301 or 302 redirects are applied, which might convert POST into GET requests.'), 0, 0);
+        catch (IdentityProviderException $e) {
+            $message  = $e->getMessage();
+            $response = $e->getResponseBody();
+            $status_code = $response->getStatusCode();
+            $reason_phrase = $response->getReasonPhrase();
+            $error_text = ' Error message: ' . $message . ', Status code: ' .  $status_code . ', Reason phrase: ' . $reason_phrase . ' .';
+
+            throw new IdentityProviderException($error_text . I18N::translate('Error while trying to get an access token from the authorization provider. Check the setting for urlAccessToken in the webtrees configuration. Check the server access logs (or .htaccess configuration files) whether any 301 or 302 redirects are applied, which might convert POST into GET requests.'), 0, 0);
         }
     }
 

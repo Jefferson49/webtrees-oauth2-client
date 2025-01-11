@@ -190,6 +190,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             } catch (IdentityProviderException $e) {
 
                 // Failed to get the access token or user details.
+                CustomModuleLog::addDebugLog($log_module, 'Failed to get the access token or user details' . ': ' . $e->getMessage());
+
                 return $this->viewResponse(OAuth2Client::viewsNamespace() . '::alert', [
                     'title'        => I18N::translate('OAuth 2.0 communication error'),
                     'tree'          => $tree instanceof Tree ? $tree->name() : null,
