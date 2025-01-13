@@ -14,6 +14,7 @@ This README file contains the following main sections:
 +   [Configuration of Authorization Providers](#configuration-of-authorization-providers)
     + [General Configuration](#general-configuration)
     + [Generic](#generic)
+    + [Dropbox](#dropbox)
     + [Github](#github)
     + [Google](#google)
     + [Joomla](#joomla)
@@ -56,6 +57,7 @@ The OAuth 2.0 Client for webtrees uses the OAuth 2.0 implementation of the [The 
 
 Currently, the following authorization providers are supported:
 + **Generic** (can be configured for several authorization providers)
++ **Dropbox**
 + **Github**
 + **Google**
 + **Joomla** (with a specific authorization provider extension installed in Joomla)
@@ -101,6 +103,25 @@ Generic_signInButtonLabel='xxx'
     + **Generic_urlAccessToken**='...' (value from the OAuth 2.0 Server)
     + **Generic_urlResourceOwnerDetails**='...' (value from the OAuth 2.0 Server)
     + **Generic_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.))
+
+### Dropbox
++ Open the [Dropbox](https://www.dropbox.com/login) page and log into your Dropbox account
++ Open the [Apps page](https://www.dropbox.com/developers/apps)
++ Click on the "Create app" button on the right side
++ Select "Scoped access"
++ Select "App folder"
++ Provide a a name in "Name your app"
++ Press "Create app" button on the lower right side
++ At "Development users", press button "Enable additional users"
++ At "OAuth 2: Redirect URIs", enter the redirect URL and press the "Add" button. See chapter [General Configuration](#general-configuration) about how to get the redirect URL from the webtrees custom module settings.
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Dropbox_clientId='xxx'
+Dropbox_clientSecret='xxx'
+```
++ Insert the configuration details from your Dropbox App into the newly included configuration lines of your config.ini.php file:
+    + **Dropbox_clientId**='...' (value shown in Dropbox, like described above)
+    + **Dropbox_clientSecret**='...' (value shown in Dropbox, like described above)
 
 ### Github
 + Open the [Github](https://github.com/) page and log into your Github account
@@ -245,6 +266,7 @@ The following table shows the mapping of the user data for the different authori
 |Authorization provider|user name|real name|email address|
 |:---------------------|:--------|:--------|:------------|
 |Generic|mandatory|optional|primary|
+|Dropbox|primary|optional|mandatory|
 |Github|primary|optional|mandatory|
 |Google|optional|optional|primary|
 |Joomla|primary|optional|mandatory|
