@@ -265,12 +265,12 @@ The following table shows the mapping of the user data for the different authori
 
 |Authorization provider|user name|real name|email address|
 |:---------------------|:--------|:--------|:------------|
-|Generic|mandatory|optional|primary|
-|Dropbox|primary|optional|mandatory|
-|Github|primary|optional|mandatory|
-|Google|optional|optional|primary|
-|Joomla|primary|optional|mandatory|
-|WordPress|primary|optional|mandatory|
+|Generic|mandatory|optional|**primary**|
+|Dropbox|**primary**|optional|mandatory|
+|Github|**primary**|optional|mandatory|
+|Google|optional|optional|**primary**|
+|Joomla|**primary**|optional|mandatory|
+|WordPress|**primary**|optional|mandatory|
 
 ## Definitions 
 [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749) defines several roles, which are used in OAuth. In the context of the OAuth 2.0 Client and webtrees single sign on, the OAuth [roles](https://datatracker.ietf.org/doc/html/rfc6749#section-1.1) and definitions are used as follows:
