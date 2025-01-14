@@ -14,6 +14,7 @@ This README file contains the following main sections:
 +   [Configuration of Authorization Providers](#configuration-of-authorization-providers)
     + [General Configuration](#general-configuration)
     + [Generic](#generic)
+    + [Authentik](#authentik)
     + [Dropbox](#dropbox)
     + [Github](#github)
     + [Google](#google)
@@ -57,6 +58,7 @@ The OAuth 2.0 Client for webtrees uses the OAuth 2.0 implementation of the [The 
 
 Currently, the following authorization providers are supported:
 + **Generic** (can be configured for several authorization providers)
++ **Authentik**
 + **Dropbox**
 + **Github**
 + **Google**
@@ -103,6 +105,39 @@ Generic_signInButtonLabel='xxx'
     + **Generic_urlAccessToken**='...' (value from the OAuth 2.0 Server)
     + **Generic_urlResourceOwnerDetails**='...' (value from the OAuth 2.0 Server)
     + **Generic_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.))
+
+### Authentik
++ Use the [Generic client](#generic) to connect with Authentik
++ Authentik configuration:
+    + Customized > Property Mappings > Create > Scope Mapping  
+        + Name: uid to id
+        + scope name: hashed-id
+        + description: blank
+        + expression:
+            ```
+            return {
+            "id": request.user.uid,
+            }
+            ```
+            Note: This doesn't have to be uid, but it gives the same as the default hashed-id. It is not recommended to use id, since that simple integer can collide with other systems.
+        + Name: username
+        + scope name: username
+        + description: Username
+        + expression:
+            ```
+            return {
+            "username": request.user.username,
+            }
+            ```
+    + When creating the OAuth2 Provider, select:
+        + Client Type: Confidential
+        + Scopes:
+            + OpenID 'email'
+            + OpenID 'openid'
+            + OpenID 'profile'
+            + uid to id
+            + username
+        + Subject Mode: hashed ID (but this is not used anyways, it SHOULD be this/sub and not id for OIDC)
 
 ### Dropbox
 + Open the [Dropbox](https://www.dropbox.com/login) page and log into your Dropbox account
