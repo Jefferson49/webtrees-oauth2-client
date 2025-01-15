@@ -210,7 +210,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $real_name = $this->resizeUserData('Real name', $user_data_from_provider->realName(), true);
         $email     = $this->resizeUserData('Email address', $user_data_from_provider->email(), true);
         $password  = $this->resizeUserData('Password', $accessToken->getToken(), false);
-        CustomModuleLog::addDebugLog($log_module, 'Adjusted user data from authorzation provider to webtrees' . ': ' . json_encode([
+        CustomModuleLog::addDebugLog($log_module, 'Adjusted user data from authorization provider to webtrees' . ': ' . json_encode([
                 'user_name' => $user_name, 
                 'real_name' => $real_name,
                 'email'     => $email,
