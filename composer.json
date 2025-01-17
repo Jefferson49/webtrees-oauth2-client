@@ -10,7 +10,7 @@
         }        
     ],
     "require": {
-        "jefferson49/webtrees-common": ">=1.2.2",
+        "jefferson49/webtrees-common": ">=1.2.4",
         "stevenmaguire/oauth2-dropbox": "dev-Remove-scope-from-getAccessToken",
         "league/oauth2-client": "=2.8.0",
         "league/oauth2-github": "=3.1.1",

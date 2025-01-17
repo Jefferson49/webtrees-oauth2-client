@@ -128,6 +128,8 @@ class OAuth2Client extends AbstractModule implements
 
     //User preferences
     public const USER_PREF_PROVIDER_NAME = 'provider_name';
+    public const USER_PREF_ID_AT_PROVIDER = 'id_at_provider';
+    public const USER_PREF_EMAIL_AT_PROVIDER = 'email_at_provider';
 
 
    /**

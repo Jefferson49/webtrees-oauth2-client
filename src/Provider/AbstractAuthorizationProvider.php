@@ -251,21 +251,8 @@ abstract class AbstractAuthorizationProvider
      */
     public static function updateUserData(User $user, User $user_data_from_provider): void {
 
-        foreach(static::getUserKeyInformation() as $key => $obligation_level) {
-
-            //Update user data if mandatory and has changed since last sign in with webtrees
-            if ($obligation_level === AbstractAuthorizationProvider::USER_DATA_MANDATORY_KEY) {
-
-                if ($key === 'user_name' && $user->userName() !== $user_data_from_provider->userName()) {
-                    $user->setUserName($user_data_from_provider->userName());
-                }
-                if ($key === 'email' && $user->email() !== $user_data_from_provider->email()) {
-                    $user->setEmail($user_data_from_provider->email());
-                }
-                if ($key === 'real_name' && $user->realName() !== $user_data_from_provider->realName()) {
-                    $user->setRealName($user_data_from_provider->realName());
-                }
-            }
+        if ($user->email() !== $user_data_from_provider->email()) {
+            $user->setEmail($user_data_from_provider->email());
         }
     }
 }
