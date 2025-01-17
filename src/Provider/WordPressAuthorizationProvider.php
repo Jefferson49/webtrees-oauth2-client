@@ -31,14 +31,13 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client\Provider;
 
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\User;
+use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessToken;
-use Exception;
+
 
 /**
  * An OAuth2 authorization client for WordPress
@@ -78,20 +77,15 @@ class WordPressAuthorizationProvider extends AbstractAuthorizationProvider imple
      * 
      * @return User
      */
-    public function getUserData(AccessToken $token) : User {
+    public function getUserData(AccessToken $token) : AuthorizationProviderUser {
 
-        $resourceOwner = $this->provider->getResourceOwner($token);
-        $user_data = $resourceOwner->toArray();
+        $user           = parent::getUserData($token);
+        $user_data      = $user->getUserData();
 
-        try {
-            $user_id = (int) $resourceOwner->getId() ?? 0;
-        }
-        catch (Exception $e) {
-            throw new IdentityProviderException(I18N::translate('Invalid user data received from the authorization provider') . ': '. json_encode($user_data) . ' . ' . I18N::translate('Check the setting for urlResourceOwnerDetails in the webtrees configuration.'), 0, $user_data);
-        }
+        //Apply specific user data provided by Github
 
-        $first_name = $user_data['first_name'] ?? '';
-        $last_name = $user_data['last_name'] ?? '';
+        $first_name   = $user_data['first_name']   ?? '';
+        $last_name    = $user_data['last_name']    ?? '';
         $display_name = $user_data['display_name'] ?? '';
 
         $real_name = $first_name;
@@ -107,18 +101,9 @@ class WordPressAuthorizationProvider extends AbstractAuthorizationProvider imple
             $real_name = $display_name;
         }
 
-        return new User(
-            $user_id,
+        $user->setRealName($real_name);
 
-            //User name: Default has to be empty, because empty username needs to be detected as error
-            $user_data['username']        ?? $user_data['email'] ?? '',
-            
-            //Real name:
-            $real_name,
-
-            //Email: Default has to be empty, because empty email needs to be detected as error
-            $user_data['email']           ?? '',                             
-        );
+        return $user;
     }
 
     /**

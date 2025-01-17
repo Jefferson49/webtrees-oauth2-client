@@ -31,15 +31,13 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client\Provider;
 
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\User;
+use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Stevenmaguire\OAuth2\Client\Provider\Dropbox;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
-use Exception;
 
 
 /**
@@ -82,30 +80,16 @@ class DropboxAuthorizationProvider extends AbstractAuthorizationProvider impleme
      * 
      * @return User
      */
-    public function getUserData(AccessToken $token) : User {
+    public function getUserData(AccessToken $token) : AuthorizationProviderUser {
 
-        $resourceOwner = $this->provider->getResourceOwner($token);
-        $user_data = $resourceOwner->toArray();
+        $user      = parent::getUserData($token);
 
-        try {
-            $user_id = $resourceOwner->getId() ?? '';
-        }
-        catch (Exception $e) {
-            throw new IdentityProviderException(I18N::translate('Invalid user data received from the authorization provider') . ': '. json_encode($user_data) . ' . ' . I18N::translate('Check the setting for urlResourceOwnerDetails in the webtrees configuration.'), 0, $user_data);
-        }
+        //Apply specific user data provided by Dropbox
+        //Take authorization provider user ID as user name
+        $user->setUserName($user->getAuthorizationProviderUserId());
+        $user->setRealName($user->getRessourceOwner()->getName() ?? '');
 
-        return new User(
-            0,
-
-            //User name: Default has to be empty, because empty username needs to be detected as error
-            $user_id                  ?? $user_data['email'] ?? '',
-            
-            //Real name:
-            $resourceOwner->getName() ?? '',
-
-            //Email: Default has to be empty, because empty email needs to be detected as error
-            $user_data['email']       ?? '',                             
-        );
+        return $user;
     }
 
     /**

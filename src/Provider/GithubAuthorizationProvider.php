@@ -31,14 +31,12 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client\Provider;
 
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\User;
+use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\Github;
 use League\OAuth2\Client\Token\AccessToken;
-use Exception;
 
 
 /**
@@ -72,30 +70,17 @@ class GithubAuthorizationProvider extends AbstractAuthorizationProvider implemen
      * 
      * @return User
      */
-    public function getUserData(AccessToken $token) : User {
+    public function getUserData(AccessToken $token) : AuthorizationProviderUser {
 
-        $resourceOwner = $this->provider->getResourceOwner($token);
-        $user_data = $resourceOwner->toArray();
+        $user           = parent::getUserData($token);
+        $user_data      = $user->getUserData();
+        $resource_owner = $user->getRessourceOwner();
 
-        try {
-            $user_id = (int) $resourceOwner->getId() ?? 0;
-        }
-        catch (Exception $e) {
-            throw new IdentityProviderException(I18N::translate('Invalid user data received from the authorization provider') . ': '. json_encode($user_data) . ' . ' . I18N::translate('Check the setting for urlResourceOwnerDetails in the webtrees configuration.'), 0, $user_data);
-        }
+        //Apply specific user data provided by Github
+        $user->setUserName($user_data['login'] ?? '');
+        $user->setRealName($resource_owner->getName() ?? '');
 
-        return new User(
-            $user_id,
-
-            //User name: Default has to be empty, because empty username needs to be detected as error
-            $user_data['login']           ?? '',
-
-            //Real name:                         
-            $resourceOwner->getName()     ?? '',
-
-            //Email: Default has to be empty, because empty email needs to be detected as error
-            $resourceOwner->getEmail()    ?? '',                    
-        );
+        return $user;
     }      
 
     /**

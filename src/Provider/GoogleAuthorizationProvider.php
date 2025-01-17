@@ -31,14 +31,12 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client\Provider;
 
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\User;
+use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\Google;
 use League\OAuth2\Client\Token\AccessToken;
-use Exception;
 
 
 /**
@@ -73,30 +71,17 @@ class GoogleAuthorizationProvider extends AbstractAuthorizationProvider implemen
      * 
      * @return User
      */
-    public function getUserData(AccessToken $token) : User {
+    public function getUserData(AccessToken $token) : AuthorizationProviderUser {
 
-        $resourceOwner = $this->provider->getResourceOwner($token);
-        $user_data = $resourceOwner->toArray();
+        $user           = parent::getUserData($token);
+        $resource_owner = $user->getRessourceOwner();
 
-        try {
-            $user_id = (int) $resourceOwner->getId() ?? 0;
-        }
-        catch (Exception $e) {
-            throw new IdentityProviderException(I18N::translate('Invalid user data received from the authorization provider') . ': '. json_encode($user_data) . ' . ' . I18N::translate('Check the setting for urlResourceOwnerDetails in the webtrees configuration.'), 0, $user_data);
-        }
+        //Apply specific user data provided by Google        
+        //Take email as user name, because user name is not provided by Google
+        $user->setUserName($resource_owner->getEmail() ?? '');
+        $user->setRealName($resource_owner->getName() ?? '');
 
-        return new User(            
-            $user_id,
-
-            //User name: Empty, because not provided by Google
-            '', 
-            
-            //Real name:
-            $resourceOwner->getName()     ?? '', 
-            
-            //Email: Default has to be empty, because empty email needs to be detected as error
-            $resourceOwner->getEmail()    ?? '',                         
-        );
+        return $user;
     }      
 
     /**

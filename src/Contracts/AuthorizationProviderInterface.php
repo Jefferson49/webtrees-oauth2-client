@@ -33,6 +33,7 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\OAuth2Client\Contracts;
 
 use Fisharebest\Webtrees\User;
+use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
@@ -114,9 +115,9 @@ interface AuthorizationProviderInterface
      * 
      * @param AccessToken $token
      * 
-     * @return string
+     * @return AuthorizationProviderUser
      */
-    public function getUserData(AccessToken $token) : User;    
+    public function getUserData(AccessToken $token) : AuthorizationProviderUser;    
 
     /**
      * Returns a list with options that can be passed to the provider

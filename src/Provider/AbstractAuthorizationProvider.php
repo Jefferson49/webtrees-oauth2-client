@@ -33,6 +33,7 @@ namespace Jefferson49\Webtrees\Module\OAuth2Client\Provider;
 
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\User;
+use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
@@ -153,28 +154,38 @@ abstract class AbstractAuthorizationProvider
     /**
      * Use access token to get user data from provider and return it as a webtrees User object
      * 
-     * @param AccessToken $token
+     * @param  AccessToken               $token
+     * @throws IdentityProviderException
      * 
-     * @return User
+     * @return AuthorizationProviderUser
      */
-    public function getUserData(AccessToken $token) : User {
+    public function getUserData(AccessToken $token) : AuthorizationProviderUser {
 
         $resourceOwner = $this->provider->getResourceOwner($token);
-        $user_data = $resourceOwner->toArray();
+        $user_data     = $resourceOwner->toArray();
 
         try {
-            $user_id = (int) $resourceOwner->getId() ?? 0;
+            $authorization_provider_user_id = (string) $resourceOwner->getId();
         }
         catch (Exception $e) {
             throw new IdentityProviderException(I18N::translate('Invalid user data received from the authorization provider') . ': '. json_encode($user_data) . ' . ' . I18N::translate('Check the setting for urlResourceOwnerDetails in the webtrees configuration.'), 0, $user_data);
         }
 
-        return new User(
-            $user_id,
-            $user_data['username']        ?? '', //Default has to be empty, because empty username needs to be detected as error
-            $user_data['name']            ?? $user_data['username'] ?? '',
-            $user_data['email']           ?? '', //Default has to be empty, because empty email needs to be detected as error
-        );
+        //Email: Default has to be empty, because empty email needs to be detected as error
+        $email = $user_data['email'] ?? '';
+
+        //User name: Default has to be empty, because empty username needs to be detected as error
+        $user_name = $user_data['username'] ?? '';
+
+        //Real name
+        if(isset($user_data['name']) && is_string($user_data['name'])) {
+            $real_name = $user_data['name'];
+        }
+        else {
+            $real_name = '$user_name';
+        }
+
+        return new AuthorizationProviderUser(0, $user_name, $real_name, $email, $authorization_provider_user_id, $user_data, $resourceOwner);
     }    
 
     /**
@@ -256,5 +267,5 @@ abstract class AbstractAuthorizationProvider
                 }
             }
         }
-    }     
+    }
 }
