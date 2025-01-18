@@ -135,16 +135,6 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             CustomModuleLog::addDebugLog($log_module, 'Found the requested authorization provider' . ': ' . $provider_name);
         }
 
-        //Validate the requested provider
-        $validation_result = $provider->validate();
-        if ($validation_result !== '') {
-            FlashMessages::addMessage($validation_result, 'danger');
-            return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));            
-        }
-        elseif (!$retreived_provider_name_from_session) {
-            CustomModuleLog::addDebugLog($log_module, 'Successfully validated the requested authorization provider' . ': ' . $provider_name);
-        }
-
         // If we don't have an authorization code then get one
         if ($code === '') {
 
@@ -226,7 +216,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
         }
 
-        //Check email
+        //Check if user can be found by email
         $email_found = $this->user_service->findByEmail($email) !== null;
 
         //If user does not exist already, redirect to registration page based on the authorization provider user data
@@ -262,8 +252,10 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         try {
             $user = $this->doLogin($email, $provider_name, $authorization_provider_id, $log_module->getLogPrefix());
 
-            //ToDo: Update the user with the data received from the provider
-            $provider->updateUserData($user, $user_data_from_provider);
+            //Update email address if shall be syncronized with provider
+            if (boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'))) {
+                $user->setEmail($email);
+            }
 
             if (Auth::isAdmin() && $this->upgrade_service->isUpgradeAvailable()) {
                 FlashMessages::addMessage(MoreI18N::xlate('A new version of webtrees is available.') . ' <a class="alert-link" href="' . e(route(UpgradeWizardPage::class)) . '">' . MoreI18N::xlate('Upgrade to webtrees %s.', '<span dir="ltr">' . $this->upgrade_service->latestVersion() . '</span>') . '</a>');
@@ -400,4 +392,16 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
         return null;
     }       
+
+    /**
+     * Update a webtrees user according to the user data received from the authorization provider
+     *
+     * @param User $user                     the user to be updated
+     * @param User $user_data_from_provider  user data received from an authorization provider
+     *
+     * @return void
+     */
+    public static function updateUserData(User $user, User $user_data_from_provider): void {
+
+    }    
 }

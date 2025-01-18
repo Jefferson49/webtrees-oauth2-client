@@ -30,7 +30,8 @@ use Jefferson49\Webtrees\Module\OAuth2Client\Provider\AbstractAuthorizationProvi
 
 $edit_user_name = true;
 $edit_real_name = true;
-$edit_email     = true; 
+$edit_email     = false;
+$edit_password  = false;
 
 //Check whether webtress password is used in parallel and can be edited
 $module_service = new ModuleService();
@@ -41,12 +42,6 @@ $provider_authorization = isset($provider_name) ? true : false;
 if ($provider_authorization) {
     $provider_name = $provider_authorization ? Session::get(OAuth2Client::activeModuleName() . 'provider_name') : '';
     $provider = (new AuthorizationProviderFactory())::make($provider_name, '');
-    $user_key_info = $provider->getUserKeyInformation();
-
-    //Determine, whether parts of the user data can be edited
-    $edit_user_name = $user_key_info['user_name'] === AbstractAuthorizationProvider::USER_DATA_OPTIONAL_KEY;    
-    $edit_real_name = $user_key_info['real_name'] === AbstractAuthorizationProvider::USER_DATA_OPTIONAL_KEY;    
-    $edit_email     = $user_key_info['email']     === AbstractAuthorizationProvider::USER_DATA_OPTIONAL_KEY;    
 }
 
 ?>
@@ -78,8 +73,9 @@ if ($provider_authorization) {
         <?php if (!$edit_email) : ?>        
             <input type="hidden" name="email" value="<?= $email ?>">
         <?php endif ?>
-
-        <input type="hidden" name="password" value="<?= $random_password ?>">
+        <?php if (!$edit_password) : ?>        
+            <input type="hidden" name="password" value="<?= $random_password ?>">
+        <?php endif ?>        
     <?php endif ?>
 
     <div class="row">

@@ -51,12 +51,11 @@ if ($is_oauth2_user) {
     }
 
     $provider = (new AuthorizationProviderFactory())::make($provider_name, '');
-    $user_key_info = $provider->getUserKeyInformation();
 
-    //Determine, whether parts of the user data can be edited
-    $edit_user_name = $user_key_info['user_name'] === AbstractAuthorizationProvider::USER_DATA_OPTIONAL_KEY;    
-    $edit_real_name = $user_key_info['real_name'] === AbstractAuthorizationProvider::USER_DATA_OPTIONAL_KEY;    
-    $edit_email     = $user_key_info['email']     === AbstractAuthorizationProvider::USER_DATA_OPTIONAL_KEY;    
+    //Determine, whether the email address can be edited
+    $different_email = $user->email() !== $user->getPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, '');
+    $sync_email = boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'));
+    $edit_email = ($different_email OR !$sync_email);
 }
 
 ?>
@@ -67,7 +66,10 @@ if ($is_oauth2_user) {
 
 <?php if ($is_oauth2_user && $signed_in_with_provider) : ?>
     <div class="h4">
-        <?= I18N::translate('Signed in with %s', $provider->getSignInButtonLabel()) . ' - ' . I18N::translate('Mandatory user account data from the authorization provider cannot be changed') ?>	
+        <?= I18N::translate('Signed in with %s', $provider->getSignInButtonLabel()) ?>
+        <?php if (!$edit_email) : ?>        
+            <?= ' - ' . I18N::translate('The email address provided from the authorization provider cannot be changed') ?>
+        <?php endif ?>
     </div>
 <?php elseif ($is_oauth2_user && !$signed_in_with_provider) : ?>
     <div class="h4">

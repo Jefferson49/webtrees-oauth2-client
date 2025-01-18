@@ -126,19 +126,4 @@ interface AuthorizationProviderInterface
      *                 Options include `clientId`, `clientSecret`, `redirectUri`, etc.
      */
     public static function getRequiredOptions() : array;
-
-    /**
-     * Returns an array with the webtrees user data keys, which defines if they are primary or mandatory
-     * See class: Fisharebest\Webtrees\User
-     *
-     * @return array   An array with the webtrees user data keys. The value for a key defines if it is primary, mandatory, or optional
-     */
-    public static function getUserKeyInformation() : array;    
-
-    /**
-     * Validate the provider
-     *
-     * @return string   Validation error; empty string if no error
-     */
-    public function validate() : string;
 }

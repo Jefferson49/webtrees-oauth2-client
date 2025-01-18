@@ -122,18 +122,4 @@ class WordPressAuthorizationProvider extends AbstractAuthorizationProvider imple
             'signInButtonLabel',
         ];   
     }    
-
-    /**
-     * Returns an array with the webtrees user data keys, which defines if they are primary or mandatory
-     * See class: Fisharebest\Webtrees\User
-     *
-     * @return array   An array with the webtrees user data keys. The value for a key defines if it is primary, mandatory, or optional
-     */
-    public static function getUserKeyInformation() : array {
-        return [
-            'user_name' => self::USER_DATA_PRIMARY_KEY,
-            'real_name' => self::USER_DATA_OPTIONAL_KEY,
-            'email'     => self::USER_DATA_MANDATORY_KEY,
-        ];
-    }      
 }

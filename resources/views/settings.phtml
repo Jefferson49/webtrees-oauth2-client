@@ -19,6 +19,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  * @var bool   $dont_show_webtrees_login_menu
  * @var bool   $debugging_activated
  * @var bool   $use_webtrees_password
+ * @var bool   $sync_provider_email
  */
 
 $uses_https   = strpos(Strtoupper($base_url), 'HTTPS://') === false ? false : true;
@@ -111,7 +112,7 @@ $redirect_url = OAuth2Client::getRedirectUrl();
 	</fieldset>
 
 	<div class="h4">
-		<?= I18N::translate('Settings for Password Management') ?>
+		<?= I18N::translate('Settings for Password and Email Management') ?>
 	</div>
 
 	<fieldset class="mb-3">
@@ -122,23 +123,37 @@ $redirect_url = OAuth2Client::getRedirectUrl();
 			<div class="col-sm-9">
 				<?= view('components/checkbox', ['label' => MoreI18N::xlate('Allow'), 'name' => OAuth2Client::PREF_USE_WEBTREES_PASSWORD, 'checked' => $use_webtrees_password]) ?>
 				<div class="form-text">
-					<?= I18N::translate('If selecting this option, a user who signs in with an authorization provider will be allowed to use a webtrees password in parallel. This might allow the user to sign into webtrees if the authorization provider is not available. However, there is a risk that the user might get confused about the parallel password management at the provider and in webtrees.'); ?>
+					<?= I18N::translate('If selecting this option, a user, who can sign in with an authorization provider, will additionally be allowed to sign in with a webtrees password.'); ?>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+
+	<fieldset class="mb-3">
+		<div class="row">
+			<legend class="col-form-label col-sm-3">
+				<?= I18N::translate('Keep email address synchronized with authorization provider') ?>
+			</legend>
+			<div class="col-sm-9">
+				<?= view('components/checkbox', ['label' => I18N::translate('Keep synchronized'), 'name' => OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, 'checked' => $sync_provider_email]) ?>
+				<div class="form-text">
+					<?= I18N::translate('If selecting this option, a user with the same email address between webtrees and the authorizaton provider will not be allowed to change the email address within webtrees. If the email address has changed at the authorization provider, the webtrees email address will be updated during sign in. If the administrator decides to change the email address in the webtrees user administration, the synchronization of the email address will be canceled.'); ?>
 				</div>
 			</div>
 		</div>
 	</fieldset>
 
 	<div class="h4">
-		<?= I18N::translate('Settings for Debugging') ?>
+		<?= I18N::translate('Debug Settings') ?>
 	</div>
 
 	<fieldset class="mb-3">
 		<div class="row">
 			<legend class="col-form-label col-sm-3">
-				<?= I18N::translate('Debugging') ?>
+				<?= I18N::translate('Debug logs') ?>
 			</legend>
 			<div class="col-sm-9">
-				<?= view('components/checkbox', ['label' => I18N::translate('Activate debug logs'), 'name' => OAuth2Client::PREF_DEBUGGING_ACTIVATED, 'checked' => $debugging_activated]) ?>
+				<?= view('components/checkbox', ['label' => MoreI18N::xlate('Activate'), 'name' => OAuth2Client::PREF_DEBUGGING_ACTIVATED, 'checked' => $debugging_activated]) ?>
 				<div class="form-text">
 					<?= I18N::translate('By selecting this option, additional debug information about the protocol flow between webtrees and the authorization provider will be logged in the webtrees website logs.'); ?>
 				</div>

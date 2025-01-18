@@ -125,6 +125,7 @@ class OAuth2Client extends AbstractModule implements
     public const PREF_DONT_SHOW_WEBTREES_LOGIN_MENU = 'dont_show_webtrees_login_menu';
     public const PREF_DEBUGGING_ACTIVATED = 'debugging_activated';
     public const PREF_USE_WEBTREES_PASSWORD = 'use_webtrees_password';
+    public const PREF_SYNC_PROVIDER_EMAIL = 'sync_provider_email';
 
     //User preferences
     public const USER_PREF_PROVIDER_NAME = 'provider_name';
@@ -496,6 +497,7 @@ class OAuth2Client extends AbstractModule implements
                 self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU => boolval($this->getPreference(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, '0')),
                 self::PREF_DEBUGGING_ACTIVATED           => boolval($this->getPreference(self::PREF_DEBUGGING_ACTIVATED, '0')),
                 self::PREF_USE_WEBTREES_PASSWORD         => boolval($this->getPreference(self::PREF_USE_WEBTREES_PASSWORD, '0')),
+                self::PREF_SYNC_PROVIDER_EMAIL           => boolval($this->getPreference(self::PREF_SYNC_PROVIDER_EMAIL, '1')),
             ]
         );
     }
@@ -515,6 +517,7 @@ class OAuth2Client extends AbstractModule implements
         $dont_show_webtrees_login_menu = Validator::parsedBody($request)->boolean(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, false);
         $debugging_activated           = Validator::parsedBody($request)->boolean(self::PREF_DEBUGGING_ACTIVATED, false);
         $use_webtrees_password         = Validator::parsedBody($request)->boolean(self::PREF_USE_WEBTREES_PASSWORD, false);
+        $sync_provider_email           = Validator::parsedBody($request)->boolean(self::PREF_SYNC_PROVIDER_EMAIL, false);
 
         //Save the received settings to the user preferences
         if ($save === '1') {
@@ -523,6 +526,7 @@ class OAuth2Client extends AbstractModule implements
 			$this->setPreference(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, $dont_show_webtrees_login_menu ? '1' : '0');
 			$this->setPreference(self::PREF_DEBUGGING_ACTIVATED, $debugging_activated ? '1' : '0');
 			$this->setPreference(self::PREF_USE_WEBTREES_PASSWORD, $use_webtrees_password ? '1' : '0');
+			$this->setPreference(self::PREF_SYNC_PROVIDER_EMAIL, $sync_provider_email ? '1' : '0');
         }
 
         //Finally, show a success message

@@ -53,11 +53,6 @@ abstract class AbstractAuthorizationProvider
     //A label for the sign in button
     protected string $sign_in_button_label;
 
-    public const USER_DATA_PRIMARY_KEY   = 'primary_key';
-    public const USER_DATA_MANDATORY_KEY = 'mandatory_key';
-    public const USER_DATA_OPTIONAL_KEY  = 'optional_key';
-    public const USER_DATA_UNUSED_KEY    = 'unused_key';
-   
 
     /**
      * Get the name of the authorization client
@@ -202,57 +197,5 @@ abstract class AbstractAuthorizationProvider
             'urlAccessToken',
             'urlResourceOwnerDetails',        
         ];
-    }
-
-    /**
-     * Returns an array with the webtrees user data keys, which defines if they are primary or mandatory
-     * See class: Fisharebest\Webtrees\User
-     *
-     * @return array   An array with the webtrees user data keys. The value for a key defines if it is primary, mandatory, or optional
-     */
-    public static function getUserKeyInformation() : array {
-        return [
-            'user_name' => self::USER_DATA_MANDATORY_KEY,
-            'real_name' => self::USER_DATA_OPTIONAL_KEY,
-            'email'     => self::USER_DATA_PRIMARY_KEY,
-        ];
-    } 
-
-    /**
-     * Validate the provider
-     *
-     * @return string   Validation error; empty string if no error
-     */
-    public function validate() : string
-    {
-        //Validate the user data definition of the provider
-        if (!in_array(AbstractAuthorizationProvider::USER_DATA_PRIMARY_KEY, static::getUserKeyInformation())) {
-            return I18N::translate('Cannot use the sign in data of the authorization provider. No primary key defined for the user data.');
-        }
-        elseif (Array_count_values(static::getUserKeyInformation())[AbstractAuthorizationProvider::USER_DATA_PRIMARY_KEY] > 1) {
-            return I18N::translate('Cannot use the sign in data of the authorization provider. More than one primary key defined for the user data.');
-        }
-        elseif (static::getUserKeyInformation()['user_name'] !== AbstractAuthorizationProvider::USER_DATA_PRIMARY_KEY
-            &&  static::getUserKeyInformation()['email']     !== AbstractAuthorizationProvider::USER_DATA_PRIMARY_KEY) {
-
-            return I18N::translate('Cannot use the sign in data of the authorization provider. Neither username nor email is a primary key.');
-        }
- 
-        return '';
-    }    
-
-    /**
-     * Update a webtrees user according to the user data received from the authorization provider
-     *
-     * @param User $user                     the user to be updated
-     * @param User $user_data_from_provider  user data received from an authorization provider
-     *
-     * @return void
-     */
-    public static function updateUserData(User $user, User $user_data_from_provider): void {
-
-        if ($user->email() !== $user_data_from_provider->email()) {
-            $user->setEmail($user_data_from_provider->email());
-        }
     }
 }
