@@ -209,7 +209,6 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $user_name = $this->resizeUserData('Username', $user_data_from_provider->userName(), true);
         $real_name = $this->resizeUserData('Real name', $user_data_from_provider->realName(), true);
         $email     = $this->resizeUserData('Email address', $user_data_from_provider->email(), true);
-        $password  = $this->resizeUserData('Password', $accessToken->getToken(), false);
         $authorization_provider_id = $user_data_from_provider->getAuthorizationProviderUserId();
 
         CustomModuleLog::addDebugLog($log_module, 'Adjusted user data from authorization provider to webtrees' . ': ' . json_encode([
@@ -241,18 +240,20 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             if (Site::getPreference('USE_REGISTRATION_MODULE') !== '1') {
                 throw new HttpNotFoundException();
             }
+
+            $random_password  = md5($accessToken->getToken() . time());
                 
             return $this->viewResponse(OAuth2Client::viewsNamespace() . '::register-page', [
-                'captcha'       => $this->captcha_service->createCaptcha(),
-                'comments'      => I18N::translate('Automatic user registration after sign in with authorization provider'),
-                'email'         => $email,
-                'realname'      => $real_name,
-                'show_caution'  => $show_caution,
-                'title'         => $title,
-                'tree'          => $tree instanceof Tree ? $tree->name() : null,
-                'username'      => $user_name,
-                'password'      => $password,
-                'provider_name' => $provider_name,
+                'captcha'         => $this->captcha_service->createCaptcha(),
+                'comments'        => I18N::translate('Automatic user registration after sign in with authorization provider'),
+                'email'           => $email,
+                'realname'        => $real_name,
+                'show_caution'    => $show_caution,
+                'title'           => $title,
+                'tree'            => $tree instanceof Tree ? $tree->name() : null,
+                'username'        => $user_name,
+                'random_password' => $random_password,
+                'provider_name'   => $provider_name,
             ]);
         }            
 

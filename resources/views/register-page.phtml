@@ -25,7 +25,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\Provider\AbstractAuthorizationProvi
  * @var Tree|null $tree
  * @var string    $username
  * @var bool      $provider_name
- * @var string    $password
+ * @var string    $random_password
  */
 
 $edit_user_name = true;
@@ -35,7 +35,6 @@ $edit_email     = true;
 //Check whether webtress password is used in parallel and can be edited
 $module_service = new ModuleService();
 $oauth2_client  = $module_service->findByName(OAuth2Client::activeModuleName());
-$edit_password  = boolval($oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD, '0'));
 
 $provider_authorization = isset($provider_name) ? true : false;
 
@@ -80,9 +79,7 @@ if ($provider_authorization) {
             <input type="hidden" name="email" value="<?= $email ?>">
         <?php endif ?>
 
-        <?php if (!$edit_password) : ?>
-            <input type="hidden" name="password" value="<?= $password ?>">
-        <?php endif ?>
+        <input type="hidden" name="password" value="<?= $random_password ?>">
     <?php endif ?>
 
     <div class="row">
@@ -121,11 +118,11 @@ if ($provider_authorization) {
         </div>
     </div>
 
-    <?php if (!$provider_authorization OR ($provider_authorization && $edit_password)) : ?>
+    <?php if (!$provider_authorization) : ?>
         <div class="row">
             <label class="col-sm-3 col-form-label wt-page-options-label" for="password">
             <?php if ($provider_authorization) : ?>
-                <?= MoreI18N::xlate('Password (within webtrees)') ?>
+                <?= I18N::translate('Password (within webtrees)') ?>
             <?php else : ?>
                 <?= MoreI18N::xlate('Password') ?>
             <?php endif ?>    
@@ -172,7 +169,7 @@ if ($provider_authorization) {
     <?= csrf_field() ?>
 </form>
 
-<?php if (!$provider_authorization OR ($provider_authorization && $edit_password)) : ?>
+<?php if (!$provider_authorization) : ?>
     <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree]) ?>
 
     <?php View::push('javascript') ?>
