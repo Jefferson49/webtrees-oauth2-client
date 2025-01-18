@@ -34,7 +34,6 @@ namespace Jefferson49\Webtrees\Module\OAuth2Client;
 use Exception;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
-use Fisharebest\Webtrees\DB;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Http\Exceptions\HttpNotFoundException;
 use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
@@ -51,7 +50,6 @@ use Fisharebest\Webtrees\Site;
 use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Services\ModuleService;
-use Illuminate\Database\Query\JoinClause;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLog;
@@ -99,30 +97,55 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $code          = Validator::queryParams($request)->string('code', '');
-        $state         = Validator::queryParams($request)->string('state', '');
-        $provider_name = Validator::queryParams($request)->string('provider_name', '');
-        $tree          = Validator::attributes($request)->treeOptional();
-        $url           = Validator::queryParams($request)->isLocalUrl()->string('url', route(HomePage::class));
+        $user            = Validator::attributes($request)->user();
+        $tree            = Validator::attributes($request)->treeOptional();
 
-        //Save or load the provider name to the session
-        if ($provider_name !== '') {
-            Session::put(OAuth2Client::activeModuleName() . 'provider_name', $provider_name);
-            Session::put(OAuth2Client::activeModuleName() . 'url', $url);
-            Session::put(OAuth2Client::activeModuleName() . 'tree', $tree);
-            $retreived_provider_name_from_session = false;
-        }
-        else {
-            $provider_name = Session::get(OAuth2Client::activeModuleName() . 'provider_name');
-            $tree          = Session::get(OAuth2Client::activeModuleName() . 'tree', null);
-            $url           = Session::get(OAuth2Client::activeModuleName() . 'url', route(HomePage::class));
-            $retreived_provider_name_from_session = true;
-        }
+        $code            = Validator::queryParams($request)->string('code', '');
+        $state           = Validator::queryParams($request)->string('state', '');
+        $provider_name   = Validator::queryParams($request)->string('provider_name', '');
+        $url             = Validator::queryParams($request)->isLocalUrl()->string('url', route(HomePage::class));
+        $connect_action  = Validator::queryParams($request)->string('connect_action', OAuth2Client::CONNECT_ACTION_NONE);
 
         $oauth2_client = $this->module_service->findByName(OAuth2Client::activeModuleName());
         $log_module = Functions::moduleLogInterface($oauth2_client);
 
-        $user = null;
+        //If we shall disconnect a user from the provider
+        if(     $connect_action === OAuth2Client::CONNECT_ACTION_DISCONNECT
+            &&  $provider_name === $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '')) {
+
+            //Reset provider in the user preferences
+            $user->setPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '');
+            $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, '');
+            $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, '');
+
+            CustomModuleLog::addDebugLog($log_module, 'Disconnected the user ' . $user->userName() . ' from provider: ' . $provider_name);
+
+            // Redirect to the target URL
+            return redirect($url);    
+        }
+        //If we shall connect an existing user to a provider, remember provider in session
+        elseif($connect_action === OAuth2Client::CONNECT_ACTION_CONNECT) {
+
+            //Put the provider and user to connect in the session
+            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, $provider_name);
+            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, $user->id());        
+
+            CustomModuleLog::addDebugLog($log_module, 'Received a request to connect the user ' . $user->userName() . ' to provider: ' . $provider_name);
+        }
+
+        //Save/load the provider name to/from the session
+        if ($provider_name !== '') {
+            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME, $provider_name);
+            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, $url);
+            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, $tree);
+            $retreived_provider_name_from_session = false;
+        }
+        else {
+            $provider_name = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME);
+            $url           = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, route(HomePage::class));
+            $tree          = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, null);
+            $retreived_provider_name_from_session = true;
+        }
 
         $provider = (new AuthorizationProviderFactory())::make($provider_name, OAuth2Client::getRedirectUrl());
 
@@ -208,12 +231,38 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 'email'                    => $email,
             ]));
         
-        CustomModuleLog::addDebugLog($log_module, 'Determined email for webtrees login' . ': ' . $email);
 
         //If no email was retrieved from authorization provider, redirect to login page
         if ($email === '') {
-            FlashMessages::addMessage(I18N::translate('Invalid user account data received from authorizaton provider. Email missing.'), 'danger');
+            $message = I18N::translate('Invalid user account data received from authorizaton provider. Email missing.');
+            FlashMessages::addMessage($message, 'danger');
+            CustomModuleLog::addDebugLog($log_module, $message);
             return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
+        }
+
+        //If we shall connect an existing user to a provider
+        $provider_to_connect = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, '');
+        $user_to_connect     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0);
+ 
+        if($provider_to_connect === $provider_name && $user_to_connect !== 0) {
+
+            if ($this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null) {
+                $message = I18N::translate('The identity received by the authorization provider cannot be connected to the requested user, because it is already used to sign in by another webtrees user.');
+                FlashMessages::addMessage($message, 'danger');
+                CustomModuleLog::addDebugLog($log_module, $message);
+                return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
+            }
+
+            $user = $this->user_service->find($user_to_connect);
+            $user->setPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, $provider_name);
+            $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, $authorization_provider_id);
+            $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, $email);
+
+            //Reset session value
+            Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT);
+            Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT);
+
+            CustomModuleLog::addDebugLog($log_module, 'Sucessfully connected existing user ' . $user->userName() . ' with provider: ' . $provider_name);
         }
 
         //Check if user can be found by email
@@ -250,11 +299,13 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //Login
         //Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction
         try {
-            $user = $this->doLogin($email, $provider_name, $authorization_provider_id, $log_module->getLogPrefix());
+            $user = $this->doLogin($email, $provider_name, $authorization_provider_id, $log_module->getLogPrefix());            
 
-            //Update email address if shall be syncronized with provider
-            if (boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'))) {
+            //Update email address if we have not just newly connected the user and email shall be syncronized with provider
+            if ($user_to_connect === 0 && boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'))) {
                 $user->setEmail($email);
+                FlashMessages::addMessage(I18N::translate('The email address for user %s was updated to: %s', $user->userName(), $user->email()));
+                CustomModuleLog::addDebugLog($log_module, 'Updated email for user: ' . $user->userName());
             }
 
             if (Auth::isAdmin() && $this->upgrade_service->isUpgradeAvailable()) {
@@ -263,9 +314,11 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             // Redirect to the target URL
             return redirect($url);
+
         } catch (Exception $ex) {
             // Failed to log in.
             FlashMessages::addMessage($ex->getMessage(), 'danger');
+            CustomModuleLog::addDebugLog($log_module, 'Failed to login: ' . $ex->getMessage());
 
             return redirect(route(LoginPage::class, [
                 'tree'     => $tree instanceof Tree ? $tree->name() : null,
@@ -391,17 +444,5 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         }
 
         return null;
-    }       
-
-    /**
-     * Update a webtrees user according to the user data received from the authorization provider
-     *
-     * @param User $user                     the user to be updated
-     * @param User $user_data_from_provider  user data received from an authorization provider
-     *
-     * @return void
-     */
-    public static function updateUserData(User $user, User $user_data_from_provider): void {
-
-    }    
+    } 
 }

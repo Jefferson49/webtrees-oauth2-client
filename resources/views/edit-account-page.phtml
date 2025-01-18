@@ -15,7 +15,7 @@ use Fisharebest\Webtrees\Tree;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
-use Jefferson49\Webtrees\Module\OAuth2Client\Provider\AbstractAuthorizationProvider;
+
 
 /**
  * @var array<string,string> $contact_methods
@@ -238,6 +238,13 @@ if ($is_oauth2_user) {
 
     <?= csrf_field() ?>
 </form>
+
+<?php if ($is_oauth2_user) : ?>
+    <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_DISCONNECT]) ?>
+<?php else : ?>
+    <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_CONNECT]) ?>
+<?php endif ?>
+
 
 <?php if ($show_delete_option) : ?>
     <div class="row mb-3">

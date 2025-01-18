@@ -126,11 +126,24 @@ class OAuth2Client extends AbstractModule implements
     public const PREF_DEBUGGING_ACTIVATED = 'debugging_activated';
     public const PREF_USE_WEBTREES_PASSWORD = 'use_webtrees_password';
     public const PREF_SYNC_PROVIDER_EMAIL = 'sync_provider_email';
+    public const PREF_CONNECT_WITH_PROVIDERS = 'connect_with_providers';
 
     //User preferences
     public const USER_PREF_PROVIDER_NAME = 'provider_name';
     public const USER_PREF_ID_AT_PROVIDER = 'id_at_provider';
     public const USER_PREF_EMAIL_AT_PROVIDER = 'email_at_provider';
+
+    //Session values
+    public const SESSION_PROVIDER_NAME = 'provider_name';
+    public const SESSION_TREE = 'tree';
+    public const SESSION_URL = 'url';
+    public const SESSION_PROVIDER_TO_CONNECT = 'provider_to_connect';
+    public const SESSION_USER_TO_CONNECT = 'user_to_connect';
+
+    //Connect actions
+    public const CONNECT_ACTION_NONE = 'connect_action_none';
+    public const CONNECT_ACTION_CONNECT = 'connect_action_connect';
+    public const CONNECT_ACTION_DISCONNECT = 'connect_action_disconnect';
 
 
    /**
@@ -498,6 +511,7 @@ class OAuth2Client extends AbstractModule implements
                 self::PREF_DEBUGGING_ACTIVATED           => boolval($this->getPreference(self::PREF_DEBUGGING_ACTIVATED, '0')),
                 self::PREF_USE_WEBTREES_PASSWORD         => boolval($this->getPreference(self::PREF_USE_WEBTREES_PASSWORD, '0')),
                 self::PREF_SYNC_PROVIDER_EMAIL           => boolval($this->getPreference(self::PREF_SYNC_PROVIDER_EMAIL, '1')),
+                self::PREF_CONNECT_WITH_PROVIDERS           => boolval($this->getPreference(self::PREF_CONNECT_WITH_PROVIDERS, '0')),
             ]
         );
     }
@@ -516,8 +530,9 @@ class OAuth2Client extends AbstractModule implements
         $show_webtrees_in_login_menu   = Validator::parsedBody($request)->boolean(self::PREF_SHOW_WEBTREES_IN_LOGIN_MENU, false);
         $dont_show_webtrees_login_menu = Validator::parsedBody($request)->boolean(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, false);
         $debugging_activated           = Validator::parsedBody($request)->boolean(self::PREF_DEBUGGING_ACTIVATED, false);
-        $use_webtrees_password         = Validator::parsedBody($request)->boolean(self::PREF_USE_WEBTREES_PASSWORD, false);
         $sync_provider_email           = Validator::parsedBody($request)->boolean(self::PREF_SYNC_PROVIDER_EMAIL, false);
+        $use_webtrees_password         = Validator::parsedBody($request)->boolean(self::PREF_USE_WEBTREES_PASSWORD, false);
+        $connect_with_providers        = Validator::parsedBody($request)->boolean(self::PREF_CONNECT_WITH_PROVIDERS, false);
 
         //Save the received settings to the user preferences
         if ($save === '1') {
@@ -527,6 +542,7 @@ class OAuth2Client extends AbstractModule implements
 			$this->setPreference(self::PREF_DEBUGGING_ACTIVATED, $debugging_activated ? '1' : '0');
 			$this->setPreference(self::PREF_USE_WEBTREES_PASSWORD, $use_webtrees_password ? '1' : '0');
 			$this->setPreference(self::PREF_SYNC_PROVIDER_EMAIL, $sync_provider_email ? '1' : '0');
+			$this->setPreference(self::PREF_CONNECT_WITH_PROVIDERS, $connect_with_providers ? '1' : '0');
         }
 
         //Finally, show a success message
