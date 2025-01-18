@@ -301,7 +301,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         try {
             $user = $this->doLogin($email, $provider_name, $authorization_provider_id, $log_module->getLogPrefix());            
 
-            //Update email address if we have not just newly connected the user and email shall be syncronized with provider
+            //Update email address if we have not just newly connected the user and email shall be synchronized with provider
             if ($user_to_connect === 0 && boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'))) {
                 $user->setEmail($email);
                 FlashMessages::addMessage(I18N::translate('The email address for user %s was updated to: %s', $user->userName(), $user->email()));

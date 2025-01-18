@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-18 15:09+0100\n"
-"PO-Revision-Date: 2025-01-18 15:10+0100\n"
+"POT-Creation-Date: 2025-01-18 18:15+0100\n"
+"PO-Revision-Date: 2025-01-18 18:15+0100\n"
 "Last-Translator: Rick Malkin <rick@alineofmalkins.com>\n"
 "Language-Team: \n"
 "Language: en_AU\n"
@@ -88,31 +88,31 @@ msgid ""
 "to %s characters."
 msgstr ""
 
-#: src/OAuth2Client.php:211
+#: src/OAuth2Client.php:210
 msgid "OAuth2 Client"
 msgstr ""
 
-#: src/OAuth2Client.php:224
+#: src/OAuth2Client.php:223
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr "A custom module to implement a OAuth2 client for WebTrees."
 
-#: src/OAuth2Client.php:406 resources/views/login-with-provider.phtml:39
+#: src/OAuth2Client.php:405 resources/views/login-with-provider.phtml:39
 msgid "Sign in with"
 msgstr ""
 
-#: src/OAuth2Client.php:550
+#: src/OAuth2Client.php:549
 #, php-format
 msgid "The preferences for the module \"%s\" were updated."
 msgstr ""
 
-#: src/OAuth2Client.php:577
+#: src/OAuth2Client.php:576
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
 "new module version %s."
 msgstr ""
 
-#: src/OAuth2Client.php:609
+#: src/OAuth2Client.php:608
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -121,7 +121,7 @@ msgid ""
 "functionality is also integrated in the %s module."
 msgstr ""
 
-#: src/OAuth2Client.php:614
+#: src/OAuth2Client.php:613
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -130,7 +130,7 @@ msgid ""
 "deactivate one of the modules."
 msgstr ""
 
-#: src/OAuth2Client.php:638
+#: src/OAuth2Client.php:637
 #, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the "
@@ -371,21 +371,19 @@ msgstr ""
 
 #: resources/views/settings.phtml:127
 msgid ""
-"If selecting this option, a user with the same email address between "
-"webtrees and the authorizaton provider will not be allowed to change the "
-"email address within webtrees. If the email address has changed at the "
-"authorization provider, the webtrees email address will be updated during "
-"sign in. If the administrator decides to change the email address in the "
-"webtrees user administration, the synchronization of the email address will "
-"be canceled."
+"This selection prevents a user with the same email address in webtrees and "
+"at the authorization provider from changing the email address in webtrees. "
+"If the email address at the authorization provider changes, the email "
+"address in webtrees will be updated when signing in. If the administrator "
+"changes the email address in the webtrees user management, the email address "
+"synchronization will no longer continue."
 msgstr ""
-"If selecting this option, a user with the same email address between "
-"webtrees and the authorisaton provider will not be allowed to change the "
-"email address within webtrees. If the email address has changed at the "
-"authorisation provider, the webtrees email address will be updated during "
-"sign in. If the administrator decides to change the email address in the "
-"webtrees user administration, the synchronisation of the email address will "
-"be canceled."
+"This selection prevents a user with the same email address in webtrees and "
+"at the authorisation provider from changing the email address in webtrees. "
+"If the email address at the authorisation provider changes, the email "
+"address in webtrees will be updated when signing in. If the administrator "
+"changes the email address in the webtrees user management, the email address "
+"synchronisation will no longer continue."
 
 #: resources/views/settings.phtml:136
 msgid "Use webtrees password in parallel"

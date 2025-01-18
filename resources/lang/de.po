@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-18 15:04+0100\n"
-"PO-Revision-Date: 2025-01-18 15:09+0100\n"
+"POT-Creation-Date: 2025-01-18 18:13+0100\n"
+"PO-Revision-Date: 2025-01-18 18:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -96,26 +96,26 @@ msgstr ""
 "Die Länge der/des \"%s\" überschreitet die maximale Länge von %s und wurde "
 "daher auf %s Zeichen gekürzt."
 
-#: src/OAuth2Client.php:211
+#: src/OAuth2Client.php:210
 msgid "OAuth2 Client"
 msgstr "OAuth2 Client"
 
-#: src/OAuth2Client.php:224
+#: src/OAuth2Client.php:223
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr ""
 "Ein benutzerspezifisches Modul, welches einen OAuth2 Client für webtrees zur "
 "Verfügung stellt."
 
-#: src/OAuth2Client.php:406 resources/views/login-with-provider.phtml:39
+#: src/OAuth2Client.php:405 resources/views/login-with-provider.phtml:39
 msgid "Sign in with"
 msgstr "Anmelden mit"
 
-#: src/OAuth2Client.php:550
+#: src/OAuth2Client.php:549
 #, php-format
 msgid "The preferences for the module \"%s\" were updated."
 msgstr "Die Einstellungen für das Modul \"%s\" wurden aktualisiert."
 
-#: src/OAuth2Client.php:577
+#: src/OAuth2Client.php:576
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
@@ -124,7 +124,7 @@ msgstr ""
 "Die Einstellungen für das benutzerdefinierte Modul \"%s\" wurden für die "
 "neue Modul-Version %s aktualisiert."
 
-#: src/OAuth2Client.php:609
+#: src/OAuth2Client.php:608
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -138,7 +138,7 @@ msgstr ""
 "deaktivieren, weil die identische Funktion ebenfalls im Modul %s integriert "
 "ist."
 
-#: src/OAuth2Client.php:614
+#: src/OAuth2Client.php:613
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -151,7 +151,7 @@ msgstr ""
 "beide Module die gleiche Custom View \"%s\" registriert haben. Es wird "
 "dringend empfohlen eines der beiden Module zu deaktivieren."
 
-#: src/OAuth2Client.php:638
+#: src/OAuth2Client.php:637
 #, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the "
@@ -413,21 +413,20 @@ msgstr "Synchron halten"
 
 #: resources/views/settings.phtml:127
 msgid ""
-"If selecting this option, a user with the same email address between "
-"webtrees and the authorizaton provider will not be allowed to change the "
-"email address within webtrees. If the email address has changed at the "
-"authorization provider, the webtrees email address will be updated during "
-"sign in. If the administrator decides to change the email address in the "
-"webtrees user administration, the synchronization of the email address will "
-"be canceled."
+"This selection prevents a user with the same email address in webtrees and "
+"at the authorization provider from changing the email address in webtrees. "
+"If the email address at the authorization provider changes, the email "
+"address in webtrees will be updated when signing in. If the administrator "
+"changes the email address in the webtrees user management, the email address "
+"synchronization will no longer continue."
 msgstr ""
-"Wenn Sie diese Option auswählen, darf ein Benutzer mit derselben E-Mail-"
-"Adresse in webtrees und beim Autorisierungsanbieter die E-Mail-Adresse in "
-"webtrees nicht ändern. Wenn sich die E-Mail-Adresse beim "
-"Autorisierungsanbieter geändert hat, wird die E-Mail-Adresse in webtrees "
-"beim Anmelden aktualisiert. Wenn der Administrator beschließt, die E-Mail-"
-"Adresse in der webtrees-Benutzerverwaltung zu ändern, wird die "
-"Synchronisierung der E-Mail-Adresse abgebrochen."
+"Diese Auswahl verhindert, dass ein Benutzer mit derselben E-Mail-Adresse in "
+"webtrees und beim Autorisierungsanbieter die E-Mail-Adresse in webtrees "
+"ändern kann. Sollte sich die E-Mail-Adresse beim Autorisierungsanbieter "
+"ändern, wird die E-Mail-Adresse in webtrees beim Anmelden aktualisiert. Wenn "
+"der Administrator die E-Mail-Adresse in der webtrees-Benutzerverwaltung "
+"ändert, wird die Synchronisierung der E-Mail-Adresse nicht mehr "
+"weitergeführt."
 
 #: resources/views/settings.phtml:136
 msgid "Use webtrees password in parallel"
@@ -438,14 +437,14 @@ msgid ""
 "If selecting this option, any user, who can sign in with an authorization "
 "provider, will additionally be allowed to sign in with a webtrees password."
 msgstr ""
-"Wenn Sie diese Option auswählen, darf sich jeder Benutzer, der sich mit "
-"einem Autorisierungsanbieter anmelden kann, zusätzlich mit einem webtrees-"
-"Passwort anmelden."
+"Diese Auswahl ermöglicht es Benutzern, die sich mit einem "
+"Autorisierungsanbieter anmelden, sich zusätzlich mit einem webtrees-Passwort "
+"anzumelden."
 
 #: resources/views/settings.phtml:150
 msgid "Allow existing webtrees users to connect with an authorization provider"
 msgstr ""
-"Erlauben Sie bestehenden webtrees-Benutzern, sich mit einem "
+"Bestehenden webtrees-Benutzern erlauben, sich mit einem "
 "Autorisierungsanbieter zu verbinden"
 
 #: resources/views/settings.phtml:155
