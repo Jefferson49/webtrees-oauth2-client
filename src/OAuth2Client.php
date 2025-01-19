@@ -139,6 +139,8 @@ class OAuth2Client extends AbstractModule implements
     public const SESSION_URL = 'url';
     public const SESSION_PROVIDER_TO_CONNECT = 'provider_to_connect';
     public const SESSION_USER_TO_CONNECT = 'user_to_connect';
+    public const SESSION_CONNECT_TIMESTAMP = 'connect_timestamp';
+    public const SESSION_CONNECT_TIMEOUT = 300;
 
     //Connect actions
     public const CONNECT_ACTION_NONE = 'connect_action_none';
