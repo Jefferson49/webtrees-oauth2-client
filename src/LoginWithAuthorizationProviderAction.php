@@ -111,26 +111,42 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
         //If we shall disconnect a user from the provider
         if(     $connect_action === OAuth2Client::CONNECT_ACTION_DISCONNECT
-            &&  $provider_name === $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '')) {
+            &&  $provider_name === $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '')
+            &&  $user === Auth::user()) {
 
             //Reset provider in the user preferences
             $user->setPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '');
             $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, '');
             $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, '');
 
-            CustomModuleLog::addDebugLog($log_module, 'Disconnected the user ' . $user->userName() . ' from provider: ' . $provider_name);
+            $message = I18N::translate('Disconnected the user %s from provider: %s', $user->userName(), $provider_name);
+            FlashMessages::addMessage($message, 'success');
+            CustomModuleLog::addDebugLog($log_module, $message);
 
             // Redirect to the target URL
             return redirect($url);    
         }
         //If we shall connect an existing user to a provider, remember provider in session
-        elseif($connect_action === OAuth2Client::CONNECT_ACTION_CONNECT) {
+        elseif(     $connect_action === OAuth2Client::CONNECT_ACTION_CONNECT
+                &&  $user === Auth::user()) {
 
             //Put the provider and user to connect in the session
             Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, $provider_name);
             Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, $user->id());        
 
             CustomModuleLog::addDebugLog($log_module, 'Received a request to connect the user ' . $user->userName() . ' to provider: ' . $provider_name);
+        }
+        //If session contains a user to connect, which is different from the logged in user, reset session values
+        elseif(Auth::id() !== Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0)) {
+            Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT);
+            Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT);
+
+            $message = I18N::translate('Failed security check: A user, who is currently not signed in, requested to connect an authorization provider with the current user.');
+            FlashMessages::addMessage($message, 'danger');
+            CustomModuleLog::addDebugLog($log_module, $message);
+
+            // Redirect to the target URL
+            return redirect($url);    
         }
 
         //Save/load the provider name to/from the session
@@ -258,11 +274,13 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, $authorization_provider_id);
             $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, $email);
 
-            //Reset session value
+            $message = I18N::translate('Sucessfully connected existing user %s with provider: %s', $user->userName(), $provider_name);
+            FlashMessages::addMessage($message, 'success');
+            CustomModuleLog::addDebugLog($log_module, $message);
+
+            //Reset session values
             Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT);
             Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT);
-
-            CustomModuleLog::addDebugLog($log_module, 'Sucessfully connected existing user ' . $user->userName() . ' with provider: ' . $provider_name);
         }
 
         //Check if user can be found by email
