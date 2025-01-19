@@ -17,11 +17,13 @@ use Jefferson49\Webtrees\Module\OAuth2Client\LoginWithAuthorizationProviderActio
  * @var string    $url
  * @var User      $user
  * @var string    $connect_action
+ * @var bool      $register
  */
 
 $user = $user ?? null;
 $connect_action = $connect_action ?? OAuth2Client::CONNECT_ACTION_NONE;
 $url = $url ?? route(HomePage::class);
+$register = $register ?? false;
 $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLables();
 $provider_of_user = $user !== null ? $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') : '';
 
@@ -31,11 +33,13 @@ $provider_of_user = $user !== null ? $user->getPreference(OAuth2Client::USER_PRE
     <div class="wt-page-options wt-page-options-login">
         <div class="row mb-3">
     <label class="col-sm-3 col-form-label wt-page-options-label">
-                <?php if ($connect_action === OAuth2Client::CONNECT_ACTION_CONNECT) : ?>
+                <?php if ($register) : ?>
+                    <?= I18N::translate('Register with') ?>
+                <?php elseif ($connect_action === OAuth2Client::CONNECT_ACTION_CONNECT) : ?>
                     <?= I18N::translate('Connect with') ?>                    
                 <?php elseif ($connect_action === OAuth2Client::CONNECT_ACTION_DISCONNECT) : ?>
                     <?= I18N::translate('Disconnect from') ?>
-                <?php elseif ($connect_action === OAuth2Client::CONNECT_ACTION_NONE) : ?>
+                <?php else : ?>
                     <?= I18N::translate('Sign in with') ?>
                 <?php endif ?>
             </label>
