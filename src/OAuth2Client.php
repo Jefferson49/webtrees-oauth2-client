@@ -394,7 +394,7 @@ class OAuth2Client extends AbstractModule implements
         $menu_title_shown = in_array($theme, ['webtrees', 'minimal', 'xenea', 'fab', 'rural', '_myartjaub_ruraltheme_', '_jc-theme-justlight_']);
 
         $submenus = [];
-        $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLables();
+        $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(Functions::getAllUsers());
 
         //Add webtrees as submenu item, if preference is activated
         if (boolval($this->getPreference(self::PREF_SHOW_WEBTREES_IN_LOGIN_MENU, '1'))) {

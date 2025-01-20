@@ -35,6 +35,8 @@ use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Webtrees;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
+use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
+use Illuminate\Support\Collection;
 
 use ReflectionMethod;
 
@@ -162,10 +164,10 @@ class AuthorizationProviderFactory
 	/**
      * Get the sign in button labels for all active authorization providers
      * 
-     * @return array
+     * @return array [provider_name => label]
      */ 
 
-     public static function getSignInButtonLables(): array {    
+    public static function getSignInButtonLabels(): array {    
 
         $provider_names = self::getAuthorizatonProviderNames();
 
@@ -193,7 +195,32 @@ class AuthorizationProviderFactory
     }
 
 	/**
-     * Get the sign in button labels for all active authorization providers
+     * Get sign in button labels for a set of users
+     * 
+     * @param  Collection [User]
+     * 
+     * @return array [provider_name => label]
+     */ 
+
+    public static function getSignInButtonLabelsByUsers(Collection $users): array {
+
+        $labels = self::getSignInButtonLabels();
+        $labels_for_users = [];
+    
+        foreach($users as $user) {
+            foreach($labels as $provider_name => $label) {
+
+                if($provider_name === $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '')) {
+                    $labels_for_users[$provider_name] = $label;
+                }
+            }
+        }
+
+        return $labels_for_users;
+    }
+
+	/**
+     * Whether a provider name is an available and valid provider
      * 
      * @param string $provider_name
      * 

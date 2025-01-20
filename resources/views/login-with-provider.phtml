@@ -8,8 +8,10 @@ use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\User;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\LoginWithAuthorizationProviderAction;
+use Illuminate\Support\Collection;
 
 
 /**
@@ -24,39 +26,46 @@ $user = $user ?? null;
 $connect_action = $connect_action ?? OAuth2Client::CONNECT_ACTION_NONE;
 $url = $url ?? route(HomePage::class);
 $register = $register ?? false;
-$sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLables();
 $provider_of_user = $user !== null ? $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') : '';
+
+if ($register) {
+    $label = I18N::translate('Register with');
+    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels(); 
+}
+elseif ($connect_action === OAuth2Client::CONNECT_ACTION_CONNECT) {
+    $label = I18N::translate('Connect with');
+    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels();
+}
+elseif ($connect_action === OAuth2Client::CONNECT_ACTION_DISCONNECT) {
+    $label = I18N::translate('Disconnect from');
+    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(new Collection([$user]));
+}
+else {
+    $label = I18N::translate('Sign in with');
+    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(Functions::getAllUsers());
+}
+
 
 ?>
 
 <?php if (sizeof($sign_in_button_labels) > 0) : ?>
     <div class="wt-page-options wt-page-options-login">
         <div class="row mb-3">
-    <label class="col-sm-3 col-form-label wt-page-options-label">
-                <?php if ($register) : ?>
-                    <?= I18N::translate('Register with') ?>
-                <?php elseif ($connect_action === OAuth2Client::CONNECT_ACTION_CONNECT) : ?>
-                    <?= I18N::translate('Connect with') ?>                    
-                <?php elseif ($connect_action === OAuth2Client::CONNECT_ACTION_DISCONNECT) : ?>
-                    <?= I18N::translate('Disconnect from') ?>
-                <?php else : ?>
-                    <?= I18N::translate('Sign in with') ?>
-                <?php endif ?>
+            <label class="col-sm-3 col-form-label wt-page-options-label">
+                <?= $label ?>
             </label>
             <div class="col-sm-9 wt-page-options-value">
                 <form method="post">
                     <?php foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) : ?>
-                        <?php if($connect_action !== OAuth2Client::CONNECT_ACTION_DISCONNECT OR $provider_name === $provider_of_user) : ?>
-                            <a href="<?= e(route(LoginWithAuthorizationProviderAction::class, [
-                                'tree'            => $tree instanceof Tree ? $tree->name() : null,
-                                'url'             => $url,
-                                'provider_name'   => $provider_name,
-                                'user'            => $user !== null ? $user->id() : 0,
-                                'connect_action'  => $connect_action,
-                            ])) ?>" type="submit" class="btn btn-secondary">
-                            <?= $sign_in_button_label ?>
-                            </a>
-                        <?php endif ?>
+                        <a href="<?= e(route(LoginWithAuthorizationProviderAction::class, [
+                            'tree'            => $tree instanceof Tree ? $tree->name() : null,
+                            'url'             => $url,
+                            'provider_name'   => $provider_name,
+                            'user'            => $user !== null ? $user->id() : 0,
+                            'connect_action'  => $connect_action,
+                        ])) ?>" type="submit" class="btn btn-secondary">
+                        <?= $sign_in_button_label ?>
+                        </a>
                     <?php endforeach ?>
                     <?= csrf_field() ?>
                 </form>
