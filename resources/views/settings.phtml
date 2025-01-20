@@ -124,7 +124,7 @@ $redirect_url = OAuth2Client::getRedirectUrl();
 			<div class="col-sm-9">
 				<?= view('components/checkbox', ['label' => I18N::translate('Keep synchronized'), 'name' => OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, 'checked' => $sync_provider_email]) ?>
 				<div class="form-text">
-					<?= I18N::translate('This selection prevents a user with the same email address in webtrees and at the authorization provider from changing the email address in webtrees. If the email address at the authorization provider changes, the email address in webtrees will be updated when signing in. If the administrator changes the email address in the webtrees user management, the email address synchronization will no longer continue.'); ?>
+					<?= I18N::translate('This selection prevents a user with the same email address in webtrees and at the authorization provider from changing the email address in webtrees. If the email address at the authorization provider changes, the email address in webtrees will be updated during sign in. If the administrator changes the email address in the webtrees user management, the email address synchronization will no longer continue.'); ?>
 				</div>
 			</div>
 		</div>
@@ -138,7 +138,7 @@ $redirect_url = OAuth2Client::getRedirectUrl();
 			<div class="col-sm-9">
 				<?= view('components/checkbox', ['label' => MoreI18N::xlate('Allow'), 'name' => OAuth2Client::PREF_USE_WEBTREES_PASSWORD, 'checked' => $use_webtrees_password]) ?>
 				<div class="form-text">
-					<?= I18N::translate('If selecting this option, any user, who can sign in with an authorization provider, will additionally be allowed to sign in with a webtrees password.'); ?>
+					<?= I18N::translate('This option allows users, who register with an authorization provider, to additionally sign in with a webtrees password.'); ?>
 				</div>
 			</div>
 		</div>

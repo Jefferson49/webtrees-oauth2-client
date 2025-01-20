@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-19 14:06+0100\n"
-"PO-Revision-Date: 2025-01-19 14:06+0100\n"
+"POT-Creation-Date: 2025-01-20 07:56+0100\n"
+"PO-Revision-Date: 2025-01-20 07:56+0100\n"
 "Last-Translator: Rick Malkin <rick@alineofmalkins.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/Factories/AuthorizationProviderFactory.php:154
+#: src/Factories/AuthorizationProviderFactory.php:156
 #, php-format
 msgid ""
 "The configuration for the authorization provider \"%s\" does not include "
@@ -26,12 +26,16 @@ msgstr ""
 "data for the option \"%s\". Please check the configuration in the following "
 "file: data/config.ini.php"
 
-#: src/LoginWithAuthorizationProviderAction.php:122
+#: src/LoginWithAuthorizationProviderAction.php:130
+msgid "The requested authorization provider could not be found"
+msgstr "The requested authorisation provider could not be found"
+
+#: src/LoginWithAuthorizationProviderAction.php:147
 #, php-format
 msgid "Disconnected the user %s from provider: %s"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:143
+#: src/LoginWithAuthorizationProviderAction.php:169
 msgid ""
 "Failed security check: A user, who is currently not signed in, requested to "
 "connect an authorization provider with the current user."
@@ -39,7 +43,7 @@ msgstr ""
 "Failed security check: A user, who is currently not signed in, requested to "
 "connect an authorisation provider with the current user."
 
-#: src/LoginWithAuthorizationProviderAction.php:154
+#: src/LoginWithAuthorizationProviderAction.php:180
 #, php-format
 msgid ""
 "Timeout for connecting user %s with authorization provider %s. Please "
@@ -48,20 +52,16 @@ msgstr ""
 "Timeout for connecting user %s with authorisation provider %s. Please "
 "restart connecting with the authorisation provider."
 
-#: src/LoginWithAuthorizationProviderAction.php:179
-msgid "The requested authorization provider could not be found"
-msgstr "The requested authorisation provider could not be found"
-
-#: src/LoginWithAuthorizationProviderAction.php:209
-#: src/LoginWithAuthorizationProviderAction.php:237
+#: src/LoginWithAuthorizationProviderAction.php:211
+#: src/LoginWithAuthorizationProviderAction.php:239
 msgid "OAuth 2.0 communication error"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:213
+#: src/LoginWithAuthorizationProviderAction.php:215
 msgid "Invalid state in communication with authorization provider."
 msgstr "Invalid state in communication with authorisation provider."
 
-#: src/LoginWithAuthorizationProviderAction.php:241
+#: src/LoginWithAuthorizationProviderAction.php:243
 msgid ""
 "Failed to get the access token or the user details from the authorization "
 "provider"
@@ -69,13 +69,13 @@ msgstr ""
 "Failed to get the access token or the user details from the authorisation "
 "provider"
 
-#: src/LoginWithAuthorizationProviderAction.php:262
+#: src/LoginWithAuthorizationProviderAction.php:264
 msgid ""
 "Invalid user account data received from authorizaton provider. Email missing."
 msgstr ""
 "Invalid user account data received from authorisaton provider. Email missing."
 
-#: src/LoginWithAuthorizationProviderAction.php:275
+#: src/LoginWithAuthorizationProviderAction.php:277
 msgid ""
 "The identity received by the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
@@ -85,25 +85,25 @@ msgstr ""
 "the requested user, because it is already used to sign in by another "
 "webtrees user."
 
-#: src/LoginWithAuthorizationProviderAction.php:286
+#: src/LoginWithAuthorizationProviderAction.php:288
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:300
+#: src/LoginWithAuthorizationProviderAction.php:302
 msgid "Redirect to webtrees registration page"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:313
+#: src/LoginWithAuthorizationProviderAction.php:315
 msgid "Automatic user registration after sign in with authorization provider"
 msgstr "Automatic user registration after sign in with authorisation provider"
 
-#: src/LoginWithAuthorizationProviderAction.php:333
+#: src/LoginWithAuthorizationProviderAction.php:338
 #, php-format
 msgid "The email address for user %s was updated to: %s"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:402
+#: src/LoginWithAuthorizationProviderAction.php:407
 msgid ""
 "Login with the provided user credentials denied. The username or email "
 "provided from the authorization provider might already exist in webtrees."
@@ -111,7 +111,7 @@ msgstr ""
 "Login with the provided user credentials denied. The username or email "
 "provided from the authorisation provider might already exist in webtrees."
 
-#: src/LoginWithAuthorizationProviderAction.php:445
+#: src/LoginWithAuthorizationProviderAction.php:450
 #, php-format
 msgid ""
 "The length of the \"%s\" exceeded the maximum length of %s and was reduced "
@@ -126,7 +126,7 @@ msgstr ""
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr "A custom module to implement a OAuth2 client for WebTrees."
 
-#: src/OAuth2Client.php:407 resources/views/login-with-provider.phtml:39
+#: src/OAuth2Client.php:407 resources/views/login-with-provider.phtml:44
 msgid "Sign in with"
 msgstr ""
 
@@ -236,11 +236,16 @@ msgstr ""
 msgid "Password (within webtrees)"
 msgstr ""
 
-#: resources/views/login-with-provider.phtml:35
+#: resources/views/login-with-provider.phtml:32
+#: resources/views/register-page.phtml:64
+msgid "Register with"
+msgstr ""
+
+#: resources/views/login-with-provider.phtml:36
 msgid "Connect with"
 msgstr ""
 
-#: resources/views/login-with-provider.phtml:37
+#: resources/views/login-with-provider.phtml:40
 msgid "Disconnect from"
 msgstr ""
 
@@ -277,10 +282,6 @@ msgid ""
 msgstr ""
 "Currently, the webtrees password cannot be reset for users, who sign in with "
 "an authorisation provider. Please contact the webtrees administrator."
-
-#: resources/views/register-page.phtml:64
-msgid "Register with"
-msgstr ""
 
 #: resources/views/register-page.phtml:64
 msgid "User account data from authorization provider cannot be changed"
@@ -406,16 +407,16 @@ msgid ""
 "This selection prevents a user with the same email address in webtrees and "
 "at the authorization provider from changing the email address in webtrees. "
 "If the email address at the authorization provider changes, the email "
-"address in webtrees will be updated when signing in. If the administrator "
+"address in webtrees will be updated during sign in. If the administrator "
 "changes the email address in the webtrees user management, the email address "
 "synchronization will no longer continue."
 msgstr ""
 "This selection prevents a user with the same email address in webtrees and "
-"at the authorisation provider from changing the email address in webtrees. "
-"If the email address at the authorisation provider changes, the email "
-"address in webtrees will be updated when signing in. If the administrator "
+"at the authorization provider from changing the email address in webtrees. "
+"If the email address at the authorization provider changes, the email "
+"address in webtrees will be updated during sign in. If the administrator "
 "changes the email address in the webtrees user management, the email address "
-"synchronisation will no longer continue."
+"synchronization will no longer continue."
 
 #: resources/views/settings.phtml:136
 msgid "Use webtrees password in parallel"
@@ -423,11 +424,11 @@ msgstr ""
 
 #: resources/views/settings.phtml:141
 msgid ""
-"If selecting this option, any user, who can sign in with an authorization "
-"provider, will additionally be allowed to sign in with a webtrees password."
+"This option allows users, who register with an authorization provider, to "
+"additionally sign in with a webtrees password."
 msgstr ""
-"If selecting this option, any user, who can sign in with an authorisation "
-"provider, will additionally be allowed to sign in with a webtrees password."
+"This option allows users, who register with an authorisation provider, to "
+"additionally sign in with a webtrees password."
 
 #: resources/views/settings.phtml:150
 msgid "Allow existing webtrees users to connect with an authorization provider"
