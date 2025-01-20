@@ -512,8 +512,8 @@ class OAuth2Client extends AbstractModule implements
                 self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU => boolval($this->getPreference(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, '0')),
                 self::PREF_DEBUGGING_ACTIVATED           => boolval($this->getPreference(self::PREF_DEBUGGING_ACTIVATED, '0')),
                 self::PREF_USE_WEBTREES_PASSWORD         => boolval($this->getPreference(self::PREF_USE_WEBTREES_PASSWORD, '0')),
-                self::PREF_SYNC_PROVIDER_EMAIL           => boolval($this->getPreference(self::PREF_SYNC_PROVIDER_EMAIL, '1')),
-                self::PREF_CONNECT_WITH_PROVIDERS           => boolval($this->getPreference(self::PREF_CONNECT_WITH_PROVIDERS, '0')),
+                self::PREF_SYNC_PROVIDER_EMAIL           => boolval($this->getPreference(self::PREF_SYNC_PROVIDER_EMAIL, '0')),
+                self::PREF_CONNECT_WITH_PROVIDERS        => boolval($this->getPreference(self::PREF_CONNECT_WITH_PROVIDERS, '0')),
             ]
         );
     }
