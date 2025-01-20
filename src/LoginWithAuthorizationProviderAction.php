@@ -267,10 +267,10 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
         }
 
-        //If we shall connect an existing user to a provider
         $provider_to_connect = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, '');
         $user_to_connect     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0);
- 
+
+        //If we shall connect an existing user to a provider        
         if($provider_to_connect === $provider_name && $user_to_connect !== 0) {
 
             if ($this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null) {
@@ -330,10 +330,13 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $user = $this->doLogin($email, $provider_name, $authorization_provider_id, $log_module->getLogPrefix());            
 
             //Update email address if we have not just newly connected the user and email shall be synchronized with provider
-            if ($user_to_connect === 0 && boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'))) {
-                $user->setEmail($email);
-                FlashMessages::addMessage(I18N::translate('The email address for user %s was updated to: %s', $user->userName(), $user->email()));
-                CustomModuleLog::addDebugLog($log_module, 'Updated email for user: ' . $user->userName());
+            if (    $user_to_connect === 0
+                &&  boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'))
+                &&  $user->email() !== $email) {
+
+                    $user->setEmail($email);
+                    FlashMessages::addMessage(I18N::translate('The email address for user %s was updated to: %s', $user->userName(), $user->email()));
+                    CustomModuleLog::addDebugLog($log_module, 'Updated email for user: ' . $user->userName());
             }
 
             if (Auth::isAdmin() && $this->upgrade_service->isUpgradeAvailable()) {
