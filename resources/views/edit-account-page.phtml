@@ -42,6 +42,7 @@ $edit_password  = boolval($oauth2_client->getPreference(OAuth2Client::PREF_USE_W
 $provider_name           = $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '');
 $is_oauth2_user          = $provider_name !== '';
 $signed_in_with_provider = $provider_name === Session::get(OAuth2Client::activeModuleName() . 'provider_name', '');
+$connect_with_providers  = boolval($oauth2_client->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'));
 
 if ($is_oauth2_user) {
 
@@ -56,6 +57,8 @@ if ($is_oauth2_user) {
     $different_email = $user->email() !== $user->getPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, '');
     $sync_email = boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'));
     $edit_email = ($different_email OR !$sync_email);
+
+    //Determine
 }
 
 ?>
@@ -241,10 +244,9 @@ if ($is_oauth2_user) {
 
 <?php if ($is_oauth2_user) : ?>
     <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_DISCONNECT]) ?>
-<?php else : ?>
+<?php elseif ($connect_with_providers) : ?>
     <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_CONNECT]) ?>
 <?php endif ?>
-
 
 <?php if ($show_delete_option) : ?>
     <div class="row mb-3">
