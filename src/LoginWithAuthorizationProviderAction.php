@@ -150,7 +150,6 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             return redirect($url);    
         }
-
         //If we shall connect an existing user to a provider, remember provider in session
         elseif(     $connect_action === OAuth2Client::CONNECT_ACTION_CONNECT
                 &&  $user === Auth::user()) {
@@ -162,7 +161,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             CustomModuleLog::addDebugLog($log_module, 'Received a request to connect the user ' . $user->userName() . ' to provider: ' . $provider_name);
         }
         //If session contains a user to connect, which is different from the logged in user, reset session values
-        elseif(Auth::id() !== Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0)) {
+        elseif(     0 !== Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0)
+                &&  Auth::id() !== Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0)) {
 
             self::deleteSessionValuesForProviderConnection();
 
