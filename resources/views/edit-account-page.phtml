@@ -55,12 +55,12 @@ if ($is_oauth2_user) {
     //Determine, whether the email address can be edited
     $different_email = $user->email() !== $user->getPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, '');
     $sync_email = boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'));
-    $edit_email = ($different_email OR !$sync_email);
+    $edit_email = ($different_email || !$sync_email);
 
     //Determine
 }
 
-$edit_password = !$is_oauth2_user OR boolval($oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD, '0'));
+$edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD, '0')));
 
 ?>
 
