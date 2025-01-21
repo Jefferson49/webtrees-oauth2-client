@@ -36,7 +36,6 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 //Check whether webtress password is used in parallel and can be edited
 $module_service = new ModuleService();
 $oauth2_client  = $module_service->findByName(OAuth2Client::activeModuleName());
-$edit_password  = boolval($oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD, '0'));
 
 //Check whether the user is logged in with an OAuth2 provider
 $provider_name           = $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '');
@@ -60,6 +59,8 @@ if ($is_oauth2_user) {
 
     //Determine
 }
+
+$edit_password = !$is_oauth2_user OR boolval($oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD, '0'));
 
 ?>
 
