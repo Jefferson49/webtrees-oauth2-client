@@ -257,20 +257,11 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 'real_name'                => $real_name,
                 'email'                    => $email,
             ]));
-        
-
-        //If no email was retrieved from authorization provider, redirect to login page
-        if ($email === '') {
-            $message = I18N::translate('Invalid user account data received from authorizaton provider. Email missing.');
-            FlashMessages::addMessage($message, 'danger');
-            CustomModuleLog::addDebugLog($log_module, $message);
-            return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
-        }
 
         $provider_to_connect = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, '');
         $user_to_connect     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0);
 
-        //If we shall connect an existing user to a provider        
+        //If we shall connect an existing user to a provider   
         if($provider_to_connect === $provider_name && $user_to_connect !== 0) {
 
             if ($this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null) {
@@ -298,6 +289,14 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
         //If user does not exist already, redirect to registration page based on the authorization provider user data
         if (!$email_found && $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) === null) {
+
+            //If no email was retrieved from authorization provider, redirect to login page
+            if ($email === '') {
+                $message = I18N::translate('Invalid user account data received from authorizaton provider. Email missing.');
+                FlashMessages::addMessage($message, 'danger');
+                CustomModuleLog::addDebugLog($log_module, $message);
+                return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
+            }
 
             FlashMessages::addMessage(I18N::translate('Redirect to webtrees registration page') . ': ' . $email, 'success');
             $title        = MoreI18N::xlate('Request a new user account');
