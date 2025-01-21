@@ -15,7 +15,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  * @var string $base_url
  * @var array  $trees_with_hidden_menu
  * @var bool   $show_login_menu
- * @var bool   $show_webtrees_in_login_menu
+ * @var bool   $show_webtrees_login_in_menu
  * @var bool   $dont_show_webtrees_login_menu
  * @var bool   $debugging_activated
  * @var bool   $use_webtrees_password
@@ -60,7 +60,7 @@ $redirect_url = OAuth2Client::getRedirectUrl();
 		<div class="alert alert-danger">
 			<p><?= I18N::translate('Currently, all sign in menus are deactivated/hidden. Please activate one of the sign in menus with the settings below. Hint: You can still access the original webtrees login page by typing the login route into the browser line, e.g.:') . ' http://my_site.net/webtrees/index.php?route=login' ?></p>
 		</div>
-	<?php elseif (!$show_webtrees_in_login_menu && $dont_show_webtrees_login_menu) : ?>
+	<?php elseif (!$show_webtrees_login_in_menu && $dont_show_webtrees_login_menu) : ?>
 		<div class="alert alert-danger">
 			<p><?= I18N::translate('Currently, all menus to directly sign in with webtrees are deactivated. Therefore, only sign in with authorization providers is possible. Please be sure that you establish a webtrees administrator account with an authorization provider. Otherwise, administrator sign in is not possible any more. Hint: You can still access the original webtrees login page by typing the login route into the browser line, e.g.:') . ' http://my_site.net/webtrees/index.php?route=login' ?></p>
 		</div>
@@ -90,7 +90,7 @@ $redirect_url = OAuth2Client::getRedirectUrl();
 				<?= I18N::translate('Show original webtrees sign in as menu item') ?>
 			</legend>
 			<div class="col-sm-9">
-				<?= view('components/checkbox', ['label' => MoreI18N::xlate('Show'), 'name' => OAuth2Client::PREF_SHOW_WEBTREES_IN_LOGIN_MENU, 'checked' => $show_webtrees_in_login_menu]) ?>
+				<?= view('components/checkbox', ['label' => MoreI18N::xlate('Show'), 'name' => OAuth2Client::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, 'checked' => $show_webtrees_login_in_menu]) ?>
 				<div class="form-text">
 					<?= I18N::translate('By selecting/unselecting this option, it is possible to activate/deactivate the sign in menu entry for webtrees. If deactivated, only sign in menu entries for authorization providers might be shown.'); ?>
 				</div>

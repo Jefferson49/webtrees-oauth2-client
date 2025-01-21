@@ -41,9 +41,11 @@ use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Html;
+use Fisharebest\Webtrees\Http\RequestHandlers\AccountEdit;
 use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
 use Fisharebest\Webtrees\Http\RequestHandlers\Logout;
+use Fisharebest\Webtrees\Http\RequestHandlers\RegisterPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Menu;
 use Fisharebest\Webtrees\Module\AbstractModule;
@@ -121,7 +123,9 @@ class OAuth2Client extends AbstractModule implements
 
     //Preferences
     public const PREF_SHOW_LOGIN_MENU = 'show_login_menu';
-    public const PREF_SHOW_WEBTREES_IN_LOGIN_MENU   = 'show_webtrees_in_login_menu';
+    public const PREF_SHOW_WEBTREES_LOGIN_IN_MENU   = 'show_webtrees_login_in_menu';
+    public const PREF_SHOW_REGISTER_IN_MENU   = 'show_register_in_menu';
+    public const PREF_SHOW_MY_ACCOUNT_IN_MENU   = 'show_my_account_in_menu';
     public const PREF_DONT_SHOW_WEBTREES_LOGIN_MENU = 'dont_show_webtrees_login_menu';
     public const PREF_DEBUGGING_ACTIVATED = 'debugging_activated';
     public const PREF_USE_WEBTREES_PASSWORD = 'use_webtrees_password';
@@ -392,71 +396,76 @@ class OAuth2Client extends AbstractModule implements
         $url = route(HomePage::class);
         $theme = Session::get('theme');
         $menu_title_shown = in_array($theme, ['webtrees', 'minimal', 'xenea', 'fab', 'rural', '_myartjaub_ruraltheme_', '_jc-theme-justlight_']);
-
+        $tree_name = $tree instanceof Tree ? $tree->name() : '';
         $submenus = [];
-        $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(Functions::getAllUsers());
 
-        //Add webtrees as submenu item, if preference is activated
-        if (boolval($this->getPreference(self::PREF_SHOW_WEBTREES_IN_LOGIN_MENU, '1'))) {
-            $submenus[] = new Menu(MoreI18N::xlate('Sign in'), route(LoginPage::class), 'menu-oauth2-client-item' , ['rel' => 'nofollow']);
+        //If no user is logged in
+        if (!Auth::check()) {
+
+            $menu_label = MoreI18N::xlate('Sign in');
+
+            //Add webtrees sign in menu as submenu item, if preference is activated
+            if (boolval($this->getPreference(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, '1'))) {
+                $submenus[] = new Menu(MoreI18N::xlate('Sign in'), route(LoginPage::class), 'menu-oauth2-client-item' , ['rel' => 'nofollow']);
+            }
+
+            //Add submenu items to sign in with authorization providers
+            $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(Functions::getAllUsers());
+
+            foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
+
+                $submenus[] = new Menu(I18N::translate('Sign in with') . ' ' . $sign_in_button_label, 
+                                route(LoginWithAuthorizationProviderAction::class, [
+                                    'tree'          => $tree_name,
+                                    'url'           => $url,
+                                    'provider_name' => $provider_name,
+                                ]),
+                                'menu-oauth2-client-item',
+                                ['rel' => 'nofollow']
+                            );
+            }
+
+            //Add webtrees register menu as submenu item, if preference is activated
+            if (boolval($this->getPreference(self::PREF_SHOW_REGISTER_IN_MENU, '1'))) {
+                $submenus[] = new Menu(MoreI18N::xlate('Request a new user account'), route(RegisterPage::class), 'menu-oauth2-client-item' , ['tree' => $tree_name]);
+            }
         }
+        //If an user is already logged in
+        else {
 
-        //Add submenu items for authorization providers
-        foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
+            $menu_label = MoreI18N::xlate('Sign out');
+    
+            //Add webtrees my account menu as submenu item, if preference is activated
+            if (boolval($this->getPreference(self::PREF_SHOW_MY_ACCOUNT_IN_MENU, '0'))) {
+                $submenus[] = new Menu(MoreI18N::xlate('My account'), route(AccountEdit::class), 'menu-oauth2-client-item' , ['tree' => $tree_name, 'user' => Auth::user()->id()]);
+            }
 
-            $submenus[] = new Menu(I18N::translate('Sign in with') . ' ' . $sign_in_button_label, 
-                            route(LoginWithAuthorizationProviderAction::class, [
-                                'tree'          => $tree instanceof Tree ? $tree->name() : null,
-                                'url'           => $url,
-                                'provider_name' => $provider_name,
-                            ]),
-                            'menu-oauth2-client-item',
-                            ['rel' => 'nofollow']
-                        );
-        }
-
-        //If an user is already logged in, show sign out menu
-        if (Auth::check()) {
+            //Add sign out as submenu item, if preference is activated
             $parameters = [
                 'data-wt-post-url'   => route(Logout::class),
                 'data-wt-reload-url' => route(HomePage::class)
             ];
+            $submenus[] = new Menu($menu_label, '#', 'menu-oauth2-client-item', $parameters);
+        }
 
-            //If theme shows menu titles, only show top menu with sign out
-            if ($menu_title_shown) {
-                return new Menu(MoreI18N::xlate('Sign out'), '#', 'menu-oauth2-client', $parameters);
-            }
-            //Show menu with sign out item
-            else {
-                $submenus = [];
-                $submenus[] = new Menu(MoreI18N::xlate('Sign out'), '#', 'menu-oauth2-client-item', $parameters);
-                return new Menu(MoreI18N::xlate('Sign out'), '#', 'menu-oauth2-client', ['rel' => 'nofollow'], $submenus);
-            }
-        } 
-        elseif ((sizeof($submenus) === 0)) {
+        //If no submenus
+        if ((sizeof($submenus) === 0)) {
 
-            //If no submenus and theme shows menu titles , only show top menu with link to webtrees login page
-            if ($menu_title_shown) {
-                return new Menu(MoreI18N::xlate('Sign in'), route(LoginPage::class), 'menu-oauth2-client' , ['rel' => 'nofollow']);
-            }
-            //Show menu with sign in item
-            else {
-                $submenus = [];
-                $submenus[] = new Menu(MoreI18N::xlate('Sign in'), route(LoginPage::class), 'menu-oauth2-client-item');
-                return new Menu(MoreI18N::xlate('Sign in'), '#', 'menu-oauth2-client', ['rel' => 'nofollow'], $submenus);
-            }
+            //Dont show menu at all
+            return null;
         }
         //If only one submenu item and theme shows menu titles, only show top menu with link
         elseif ((sizeof($submenus) === 1) && $menu_title_shown) {
+
             $menu = $submenus[0];
-            $menu->setLabel(MoreI18N::xlate('Sign in'));
+            $menu->setLabel($menu_label);
             $menu->setClass('menu-oauth2-client');
 
             return $menu;
         }
         //Show menu with submenus
         else {
-            return new Menu(MoreI18N::xlate('Sign in'), '#', 'menu-oauth2-client' , ['rel' => 'nofollow'], $submenus);
+            return new Menu($menu_label, '#', 'menu-oauth2-client' , ['rel' => 'nofollow'], $submenus);
         }
     }  
 
@@ -508,7 +517,7 @@ class OAuth2Client extends AbstractModule implements
                 'base_url'                               => Validator::attributes($request)->string('base_url'),
                 'trees_with_hidden_menu'                 => $this->getTreeNamesWithHiddenCustomMenu(),
                 self::PREF_SHOW_LOGIN_MENU               => boolval($this->getPreference(self::PREF_SHOW_LOGIN_MENU, '1')),
-                self::PREF_SHOW_WEBTREES_IN_LOGIN_MENU   => boolval($this->getPreference(self::PREF_SHOW_WEBTREES_IN_LOGIN_MENU, '1')),
+                self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU   => boolval($this->getPreference(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, '1')),
                 self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU => boolval($this->getPreference(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, '0')),
                 self::PREF_DEBUGGING_ACTIVATED           => boolval($this->getPreference(self::PREF_DEBUGGING_ACTIVATED, '0')),
                 self::PREF_USE_WEBTREES_PASSWORD         => boolval($this->getPreference(self::PREF_USE_WEBTREES_PASSWORD, '0')),
@@ -529,7 +538,7 @@ class OAuth2Client extends AbstractModule implements
     {
         $save                          = Validator::parsedBody($request)->string('save', '');
         $show_login_menu               = Validator::parsedBody($request)->boolean(self::PREF_SHOW_LOGIN_MENU, false);
-        $show_webtrees_in_login_menu   = Validator::parsedBody($request)->boolean(self::PREF_SHOW_WEBTREES_IN_LOGIN_MENU, false);
+        $show_webtrees_login_in_menu   = Validator::parsedBody($request)->boolean(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, false);
         $dont_show_webtrees_login_menu = Validator::parsedBody($request)->boolean(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, false);
         $debugging_activated           = Validator::parsedBody($request)->boolean(self::PREF_DEBUGGING_ACTIVATED, false);
         $sync_provider_email           = Validator::parsedBody($request)->boolean(self::PREF_SYNC_PROVIDER_EMAIL, false);
@@ -539,7 +548,7 @@ class OAuth2Client extends AbstractModule implements
         //Save the received settings to the user preferences
         if ($save === '1') {
 			$this->setPreference(self::PREF_SHOW_LOGIN_MENU, $show_login_menu ? '1' : '0');
-			$this->setPreference(self::PREF_SHOW_WEBTREES_IN_LOGIN_MENU, $show_webtrees_in_login_menu ? '1' : '0');
+			$this->setPreference(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, $show_webtrees_login_in_menu ? '1' : '0');
 			$this->setPreference(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, $dont_show_webtrees_login_menu ? '1' : '0');
 			$this->setPreference(self::PREF_DEBUGGING_ACTIVATED, $debugging_activated ? '1' : '0');
 			$this->setPreference(self::PREF_USE_WEBTREES_PASSWORD, $use_webtrees_password ? '1' : '0');
