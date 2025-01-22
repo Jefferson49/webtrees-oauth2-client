@@ -122,7 +122,6 @@ class OAuth2Client extends AbstractModule implements
 	public const ALERT_SUCCESS = 'alert_success';
 
     //Preferences
-    public const PREF_SHOW_LOGIN_MENU = 'show_login_menu';
     public const PREF_SHOW_WEBTREES_LOGIN_IN_MENU   = 'show_webtrees_login_in_menu';
     public const PREF_SHOW_REGISTER_IN_MENU   = 'show_register_in_menu';
     public const PREF_SHOW_MY_ACCOUNT_IN_MENU   = 'show_my_account_in_menu';
@@ -388,11 +387,6 @@ class OAuth2Client extends AbstractModule implements
      */
     public function getMenu(Tree $tree): ?Menu
     {
-        //If the custom module sign in menu is deactivated, return
-        if (!boolval($this->getPreference(self::PREF_SHOW_LOGIN_MENU, '1'))) {
-            return null;
-        }
-
         $url = route(HomePage::class);
         $theme = Session::get('theme');
         $menu_title_shown = in_array($theme, ['webtrees', 'minimal', 'xenea', 'fab', 'rural', '_myartjaub_ruraltheme_', '_jc-theme-justlight_']);
@@ -548,7 +542,6 @@ class OAuth2Client extends AbstractModule implements
                 'title'                                  => $this->title(),
                 'base_url'                               => Validator::attributes($request)->string('base_url'),
                 'trees_with_hidden_menu'                 => $this->getTreeNamesWithHiddenCustomMenu(),
-                self::PREF_SHOW_LOGIN_MENU               => boolval($this->getPreference(self::PREF_SHOW_LOGIN_MENU, '1')),
                 self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU   => boolval($this->getPreference(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, '1')),
                 self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU => boolval($this->getPreference(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, '0')),
                 self::PREF_DEBUGGING_ACTIVATED           => boolval($this->getPreference(self::PREF_DEBUGGING_ACTIVATED, '0')),
@@ -569,7 +562,6 @@ class OAuth2Client extends AbstractModule implements
     public function postAdminAction(ServerRequestInterface $request): ResponseInterface
     {
         $save                          = Validator::parsedBody($request)->string('save', '');
-        $show_login_menu               = Validator::parsedBody($request)->boolean(self::PREF_SHOW_LOGIN_MENU, false);
         $show_webtrees_login_in_menu   = Validator::parsedBody($request)->boolean(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, false);
         $dont_show_webtrees_login_menu = Validator::parsedBody($request)->boolean(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, false);
         $debugging_activated           = Validator::parsedBody($request)->boolean(self::PREF_DEBUGGING_ACTIVATED, false);
@@ -579,7 +571,6 @@ class OAuth2Client extends AbstractModule implements
 
         //Save the received settings to the user preferences
         if ($save === '1') {
-			$this->setPreference(self::PREF_SHOW_LOGIN_MENU, $show_login_menu ? '1' : '0');
 			$this->setPreference(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, $show_webtrees_login_in_menu ? '1' : '0');
 			$this->setPreference(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, $dont_show_webtrees_login_menu ? '1' : '0');
 			$this->setPreference(self::PREF_DEBUGGING_ACTIVATED, $debugging_activated ? '1' : '0');
@@ -625,7 +616,7 @@ class OAuth2Client extends AbstractModule implements
             //Show flash message for update of preferences
             $message = I18N::translate('The preferences for the custom module "%s" were sucessfully updated to the new module version %s.', $this->title(), self::CUSTOM_VERSION);
             FlashMessages::addMessage($message, 'success');	
-        }        
+        }
     }
 
     /**

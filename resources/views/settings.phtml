@@ -14,7 +14,6 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  * @var string $title
  * @var string $base_url
  * @var array  $trees_with_hidden_menu
- * @var bool   $show_login_menu
  * @var bool   $show_webtrees_login_in_menu
  * @var bool   $dont_show_webtrees_login_menu
  * @var bool   $debugging_activated
@@ -63,11 +62,7 @@ $modified_redirect_url = (OAuth2Client::getRedirectUrl(true) !== OAuth2Client::g
 		<?= I18N::translate('Settings for Sign In Menus') ?>	
 	</div>
 
-	<?php if (!$show_login_menu && $dont_show_webtrees_login_menu) : ?>
-		<div class="alert alert-danger">
-			<p><?= I18N::translate('Currently, all sign in menus are deactivated/hidden. Please activate one of the sign in menus with the settings below. Hint: You can still access the original webtrees login page by typing the login route into the browser line, e.g.:') . ' http://my_site.net/webtrees/index.php?route=login' ?></p>
-		</div>
-	<?php elseif (!$show_webtrees_login_in_menu && $dont_show_webtrees_login_menu) : ?>
+	<?php if (!$show_webtrees_login_in_menu && $dont_show_webtrees_login_menu) : ?>
 		<div class="alert alert-danger">
 			<p><?= I18N::translate('Currently, all menus to directly sign in with webtrees are deactivated. Therefore, only sign in with authorization providers is possible. Please be sure that you establish a webtrees administrator account with an authorization provider. Otherwise, administrator sign in is not possible any more. Hint: You can still access the original webtrees login page by typing the login route into the browser line, e.g.:') . ' http://my_site.net/webtrees/index.php?route=login' ?></p>
 		</div>
