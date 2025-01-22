@@ -396,7 +396,7 @@ class OAuth2Client extends AbstractModule implements
         $url = route(HomePage::class);
         $theme = Session::get('theme');
         $menu_title_shown = in_array($theme, ['webtrees', 'minimal', 'xenea', 'fab', 'rural', '_myartjaub_ruraltheme_', '_jc-theme-justlight_']);
-        $tree_name = $tree instanceof Tree ? $tree->name() : '';
+        $tree_name = $tree instanceof Tree ? $tree->name() : null;
         $submenus = [];
 
         //If no user is logged in
@@ -415,37 +415,67 @@ class OAuth2Client extends AbstractModule implements
             foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
                 $submenus[] = new Menu(I18N::translate('Sign in with') . ' ' . $sign_in_button_label, 
-                                route(LoginWithAuthorizationProviderAction::class, [
-                                    'tree'          => $tree_name,
-                                    'url'           => $url,
-                                    'provider_name' => $provider_name,
-                                ]),
-                                'menu-oauth2-client-item',
-                                ['rel' => 'nofollow']
-                            );
+                    route(LoginWithAuthorizationProviderAction::class, [
+                        'tree'          => $tree_name,
+                        'url'           => $url,
+                        'provider_name' => $provider_name,
+                    ]),
+                    'menu-oauth2-client-item',
+                    ['rel' => 'nofollow']
+                );
             }
 
             //Add webtrees register menu as submenu item, if preference is activated
             if (boolval($this->getPreference(self::PREF_SHOW_REGISTER_IN_MENU, '1'))) {
-                $submenus[] = new Menu(MoreI18N::xlate('Request a new user account'), route(RegisterPage::class), 'menu-oauth2-client-item' , ['tree' => $tree_name]);
+                $submenus[] = new Menu(MoreI18N::xlate('Request a new user account'), route(RegisterPage::class, ['tree' => $tree_name]), 'menu-oauth2-client-item');
             }
         }
         //If an user is already logged in
         else {
 
-            $menu_label = MoreI18N::xlate('Sign out');
+            $user = Auth::user();
+            $menu_label = $user->realName();
     
-            //Add webtrees my account menu as submenu item, if preference is activated
-            if (boolval($this->getPreference(self::PREF_SHOW_MY_ACCOUNT_IN_MENU, '0'))) {
-                $submenus[] = new Menu(MoreI18N::xlate('My account'), route(AccountEdit::class), 'menu-oauth2-client-item' , ['tree' => $tree_name, 'user' => Auth::user()->id()]);
-            }
-
-            //Add sign out as submenu item, if preference is activated
+            //Add sign out as submenu item
             $parameters = [
                 'data-wt-post-url'   => route(Logout::class),
                 'data-wt-reload-url' => route(HomePage::class)
             ];
-            $submenus[] = new Menu($menu_label, '#', 'menu-oauth2-client-item', $parameters);
+            $submenus[] = new Menu(MoreI18N::xlate('Sign out'), '#', 'menu-oauth2-client-item', $parameters);
+
+            //Add webtrees my account menu as submenu item, if preference is activated
+            if (boolval($this->getPreference(self::PREF_SHOW_MY_ACCOUNT_IN_MENU, '1'))) {
+                $submenus[] = new Menu(MoreI18N::xlate('My account'), route(AccountEdit::class, ['tree' => $tree_name, 'user' => Auth::user()->id()]), 'menu-oauth2-client-item');
+            }
+
+            //If user is connected with an authorization provider, offer disconnect
+            if ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== '') {
+                $sub_menu_label = I18N::translate('Disconnect from');
+                $connect_action =  OAuth2Client::CONNECT_ACTION_DISCONNECT;
+                $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(new Collection([$user]));
+            }
+            //If user is not connected with an provider, offer to connect to all available providers
+            else {
+                $sub_menu_label = I18N::translate('Connect with');
+                $connect_action =  OAuth2Client::CONNECT_ACTION_CONNECT;
+                $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels();                
+            }
+            
+            //Show submenu entries to connect or disconnect
+            foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
+
+                $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label, 
+                    route(LoginWithAuthorizationProviderAction::class, [
+                        'tree'            => $tree instanceof Tree ? $tree->name() : null,
+                        'url'             => $url,
+                        'provider_name'   => $provider_name,
+                        'user'            => $user !== null ? $user->id() : 0,
+                        'connect_action'  => $connect_action,
+                    ]),
+                    'menu-oauth2-client-item',
+                    ['rel' => 'nofollow']
+                );
+            }
         }
 
         //If no submenus
