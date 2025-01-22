@@ -461,20 +461,22 @@ class OAuth2Client extends AbstractModule implements
                 $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels();                
             }
             
-            //Show submenu entries to connect or disconnect
-            foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
+            //If users can connect/disconnect with providers, show submenu entries to connect or disconnect
+            if ($user->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '') !== '') {
+                foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
-                $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label, 
-                    route(LoginWithAuthorizationProviderAction::class, [
-                        'tree'            => $tree instanceof Tree ? $tree->name() : null,
-                        'url'             => $url,
-                        'provider_name'   => $provider_name,
-                        'user'            => $user !== null ? $user->id() : 0,
-                        'connect_action'  => $connect_action,
-                    ]),
-                    'menu-oauth2-client-item',
-                    ['rel' => 'nofollow']
-                );
+                    $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label, 
+                        route(LoginWithAuthorizationProviderAction::class, [
+                            'tree'            => $tree instanceof Tree ? $tree->name() : null,
+                            'url'             => $url,
+                            'provider_name'   => $provider_name,
+                            'user'            => $user !== null ? $user->id() : 0,
+                            'connect_action'  => $connect_action,
+                        ]),
+                        'menu-oauth2-client-item',
+                        ['rel' => 'nofollow']
+                    );
+                }
             }
         }
 
