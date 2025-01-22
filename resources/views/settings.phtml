@@ -80,20 +80,6 @@ $modified_redirect_url = (OAuth2Client::getRedirectUrl(true) !== OAuth2Client::g
 	<fieldset class="mb-3">
 		<div class="row">
 			<legend class="col-form-label col-sm-3">
-				<?= I18N::translate('Show a custom module specific sign in menu') ?>
-			</legend>
-			<div class="col-sm-9">
-				<?= view('components/checkbox', ['label' => MoreI18N::xlate('Show'), 'name' => OAuth2Client::PREF_SHOW_LOGIN_MENU, 'checked' => $show_login_menu]) ?>
-				<div class="form-text">
-					<?= I18N::translate('By selecting/unselecting this option, it is possible to show/hide a custom module specific sign in menu in the webtrees main menu.'); ?>
-				</div>
-			</div>
-		</div>
-	</fieldset>
-
-	<fieldset class="mb-3">
-		<div class="row">
-			<legend class="col-form-label col-sm-3">
 				<?= I18N::translate('Show original webtrees sign in as menu item') ?>
 			</legend>
 			<div class="col-sm-9">
