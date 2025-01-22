@@ -602,8 +602,15 @@ class OAuth2Client extends AbstractModule implements
     {
         $updated = false;
 
-        //Update custom module version if changed
+        // Update custom module version if changed
         if($this->getPreference(self::PREF_MODULE_VERSION, '') !== self::CUSTOM_VERSION) {
+
+            // Warning message if updating from 1.0.x versions
+            if (version_compare($this->getPreference(self::PREF_MODULE_VERSION, ''), '1.1.0' , '<=')) {
+                    
+                $message = I18N::translate('The redirect URL for OAuth 2.0 communication has changed in custom module versions >= 1.1.0. If certain connections with authorization providers fail, you might need to update the authorization provider settings with the new redirect URL.');
+                FlashMessages::addMessage($message, 'warning');	
+            }
 
             //Update module files
             if (require __DIR__ . '/../update_module_files.php') {
@@ -688,11 +695,12 @@ class OAuth2Client extends AbstractModule implements
     /**
      * Get the redirection URL for OAuth2 clients
      * 
-     * @param string base_url  The webtrees base ULR (from config.ini.php)
+     * @param string base_url           The webtrees base ULR (from config.ini.php)
+     * @param bool   replace_encodings  Whether to replace precent encodings
      * 
      * @return string
      */
-    public static function getRedirectUrl() : string {
+    public static function getRedirectUrl(bool $replace_encodings = true) : string {
 
         // Create an ugly URL for the route to the module as redirect URL
         // Note: Pretty URLs cannot be used, because they do not work with URL parameters
@@ -705,10 +713,27 @@ class OAuth2Client extends AbstractModule implements
         $redirectUrl = Html::url($url, $parameters) . self::REDIRECT_ROUTE;
 
         //Replace %2F in URL, because some providers do not accept it, e.g. Dropbox
-        $redirectUrl = str_replace('%2F', '/', $redirectUrl);
+        if ($replace_encodings) {
+            $redirectUrl = self::replacePercentEncodings($redirectUrl);
+        }
 
         return $redirectUrl;
     }
+
+    /**
+     * Replaces percent encodings (default %2F) in URLs 
+     * 
+     * @param string   url
+     * 
+     * @return string  converted url
+     */
+    public static function replacePercentEncodings(string $redirectUrl, array $percent_encodings = ['%2F' => '/']) : string {
+
+        $redirectUrl = str_replace('%2F', '/', $redirectUrl);
+
+        return $redirectUrl;       
+    }
+
 
     /**
      * Get the names of all trees, where the custom menu is hidden

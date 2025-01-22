@@ -25,6 +25,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 
 $uses_https   = strpos(Strtoupper($base_url), 'HTTPS://') === false ? false : true;
 $redirect_url = OAuth2Client::getRedirectUrl();
+$modified_redirect_url = (OAuth2Client::getRedirectUrl(true) !== OAuth2Client::getRedirectUrl(false));
 
 ?>
 
@@ -46,6 +47,12 @@ $redirect_url = OAuth2Client::getRedirectUrl();
     <div class="col-sm-9 wt-page-options-value">
         <input type="text" class="form-control" id="redirect_url-name" name="redirect_url" value="<?= e($redirect_url) ?>" dir="auto" required="required" disabled >
     </div>		
+	<div class="row mb-3"><?= view('icons/spacer') ?></div>
+	<?php if ($modified_redirect_url) : ?>
+		<div class="alert alert-warning">
+			<p><?= I18N::translate('The redirect URL for OAuth 2.0 communication has changed in custom module versions >= 1.1.0. If certain connections with authorization providers fail, you might need to update the authorization provider settings with the new redirect URL.') ?></p>
+		</div>
+	<?php endif ?>
 </div>
 
 <form method="post" id="settings-form">
