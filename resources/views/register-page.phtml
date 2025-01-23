@@ -13,7 +13,6 @@ use Fisharebest\Webtrees\View;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
-use Jefferson49\Webtrees\Module\OAuth2Client\Provider\AbstractAuthorizationProvider;
 
 /**
  * @var string    $captcha
@@ -28,14 +27,18 @@ use Jefferson49\Webtrees\Module\OAuth2Client\Provider\AbstractAuthorizationProvi
  * @var string    $random_password
  */
 
-$edit_user_name = true;
-$edit_real_name = true;
-$edit_email     = false;
-$edit_password  = false;
 
-//Check whether webtress password is used in parallel and can be edited
 $module_service = new ModuleService();
 $oauth2_client  = $module_service->findByName(OAuth2Client::activeModuleName());
+
+$edit_user_name = true;
+$edit_real_name = true;
+
+//Check whether email is allowed to be edited
+$edit_email     = !$oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL);
+
+//Check whether a webtress password is allowed to be used
+$edit_password  = $oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD);
 
 $provider_authorization = isset($provider_name) ? true : false;
 
@@ -61,7 +64,7 @@ if ($provider_authorization) {
 
     <?php if ($provider_authorization) : ?>
         <div class="h4">
-            <?= I18N::translate('Register with') .  ' ' . $provider->getSignInButtonLabel() . ' - ' . I18N::translate('User account data from authorization provider cannot be changed') ?>	
+            <?= I18N::translate('Request account with') .  ' ' . $provider->getSignInButtonLabel() . ' - ' . I18N::translate('Changing some of the received user data from %s might be disabled by the administrator', $provider->getSignInButtonLabel()) ?>	
         </div>
 
         <?php if (!$edit_user_name) : ?>    
