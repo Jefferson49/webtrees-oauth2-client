@@ -404,13 +404,13 @@ class OAuth2Client extends AbstractModule implements
             }
 
             //Add submenu items to sign in with authorization providers
-            $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(Functions::getAllUsers());
+            $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels();
 
             foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
                 $submenus[] = new Menu(I18N::translate('Sign in with') . ' ' . $sign_in_button_label, 
                     route(LoginWithAuthorizationProviderAction::class, [
-                        'tree'          => $tree_name,
+                        'tree'          => $tree instanceof Tree ? $tree->name() : null,
                         'url'           => $url,
                         'provider_name' => $provider_name,
                     ]),
@@ -461,7 +461,7 @@ class OAuth2Client extends AbstractModule implements
 
                     $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label, 
                         route(LoginWithAuthorizationProviderAction::class, [
-                            'tree'            => $tree instanceof Tree ? $tree->name() : null,
+                            'tree'            => $tree_name,
                             'url'             => $url,
                             'provider_name'   => $provider_name,
                             'user'            => $user !== null ? $user->id() : 0,
