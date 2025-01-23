@@ -29,7 +29,7 @@ $register = $register ?? false;
 $provider_of_user = $user !== null ? $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') : '';
 
 if ($register) {
-    $label = I18N::translate('Register with');
+    $label = I18N::translate('Request a new user account with');
     $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels(); 
 }
 elseif ($connect_action === OAuth2Client::CONNECT_ACTION_CONNECT) {
