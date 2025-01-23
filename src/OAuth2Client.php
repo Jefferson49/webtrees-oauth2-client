@@ -444,19 +444,19 @@ class OAuth2Client extends AbstractModule implements
 
             //If user is connected with an authorization provider, offer disconnect
             if ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== '') {
-                $sub_menu_label = I18N::translate('Disconnect from');
+                $sub_menu_label = I18N::translate('Disconnect account from');
                 $connect_action =  OAuth2Client::CONNECT_ACTION_DISCONNECT;
                 $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(new Collection([$user]));
             }
             //If user is not connected with an provider, offer to connect to all available providers
             else {
-                $sub_menu_label = I18N::translate('Connect with');
+                $sub_menu_label = I18N::translate('Connect account with');
                 $connect_action =  OAuth2Client::CONNECT_ACTION_CONNECT;
                 $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels();                
             }
             
-            //If users can connect/disconnect with providers, show submenu entries to connect or disconnect
-            if ($user->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '') !== '') {
+            //If users are allowed to connect/disconnect with providers, show submenu entries to connect or disconnect
+            if ($this->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '') !== '') {
                 foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
                     $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label, 
