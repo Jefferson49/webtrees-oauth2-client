@@ -50,6 +50,7 @@ use Fisharebest\Webtrees\Services\UpgradeService;
 use Fisharebest\Webtrees\Services\UserService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Site;
+use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Services\ModuleService;
@@ -102,28 +103,30 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $user            = Validator::attributes($request)->user();
-        $tree            = Validator::attributes($request)->treeOptional();
 
+        $tree_name       = Validator::queryParams($request)->string('tree', '');
         $code            = Validator::queryParams($request)->string('code', '');
         $state           = Validator::queryParams($request)->string('state', '');
         $provider_name   = Validator::queryParams($request)->string('provider_name', '');
         $url             = Validator::queryParams($request)->isLocalUrl()->string('url', route(HomePage::class));
         $connect_action  = Validator::queryParams($request)->string('connect_action', OAuth2Client::CONNECT_ACTION_NONE);
 
-        $oauth2_client = $this->module_service->findByName(OAuth2Client::activeModuleName());
-        $log_module = Functions::moduleLogInterface($oauth2_client);
+        $tree            = Functions::getTreeByName($tree_name);
+        $oauth2_client   = $this->module_service->findByName(OAuth2Client::activeModuleName());
+        $log_module      = Functions::moduleLogInterface($oauth2_client);
 
         //Save/load the provider name to/from the session
         if ($provider_name !== '') {
             Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME, $provider_name);
             Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, $url);
-            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, $tree);
+            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, $tree instanceof Tree ? $tree->name() : '');
             $retreived_provider_name_from_session = false;
         }
         else {
             $provider_name = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME);
             $url           = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, route(HomePage::class));
-            $tree          = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, null);
+            $tree_name     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, '');
+            $tree          = Functions::getTreeByName($tree_name);
             $retreived_provider_name_from_session = true;
         }
 
@@ -132,7 +135,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //Check if requested provider is available
         if ($provider === null) {
             FlashMessages::addMessage(I18N::translate('The requested authorization provider could not be found') . ': ' . $provider_name, 'danger');
-            return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));            
+            return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));            
         }
         if (!$retreived_provider_name_from_session) {
             CustomModuleLog::addDebugLog($log_module, 'Found the requested authorization provider' . ': ' . $provider_name);
@@ -213,7 +216,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         
             return $this->viewResponse(OAuth2Client::viewsNamespace() . '::alert', [
                 'title'        => I18N::translate('OAuth 2.0 communication error'),
-                'tree'          => $tree instanceof Tree ? $tree->name() : null,
+                'tree'         => $tree instanceof Tree ? $tree->name() : null,
                 'alert_type'   => OAuth2Client::ALERT_DANGER, 
                 'module_name'  => $oauth2_client->title(),
                 'text'         => I18N::translate('Invalid state in communication with authorization provider.'),
@@ -272,7 +275,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 $message = I18N::translate('The identity received by the authorization provider cannot be connected to the requested user, because it is already used to sign in by another webtrees user.');
                 FlashMessages::addMessage($message, 'danger');
                 CustomModuleLog::addDebugLog($log_module, $message);
-                return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
+                return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
             }
 
             $user = $this->user_service->find($user_to_connect);
@@ -299,7 +302,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 $message = I18N::translate('Invalid user account data received from authorizaton provider. Email or username missing.');
                 FlashMessages::addMessage($message, 'danger');
                 CustomModuleLog::addDebugLog($log_module, $message);
-                return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
+                return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
             }
 
             CustomModuleLog::addDebugLog($log_module, 'Redirecting to webtrees registration');
@@ -309,14 +312,14 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 throw new HttpNotFoundException();
             }
 
-            $message = I18N::translate('Creating new webtrees user account based on the received user data from the authorization provider');
+            $message = I18N::translate('A new webtrees user account is requested based on the user data received from the authorization provider.');
             FlashMessages::addMessage($message, 'success');
             CustomModuleLog::addDebugLog($log_module, $message);
 
+            //Generate a request a new webtrees user account
             $random_password  = md5($accessToken->getToken() . time());
 
             $params = [
-                'tree'            => $tree instanceof Tree ? $tree->name() : null,
                 'comments'        => I18N::translate('Automatic user registration after sign in with authorization provider'),
                 'email'           => $email,
                 'password'        => $random_password,
@@ -324,10 +327,12 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 'username'        => $user_name,
             ];
 
-            //Request a new user account with a module specific registration handler
             $request         = Functions::getFromContainer(ServerRequestInterface::class);
-            $request_handler = new RegisterAction(new DeactivatedCaptchaService, new EmailService, new RateLimitService(), new UserService);
+            $request         = $request->withAttribute('tree', $tree instanceof Tree ? $tree: null);
             $request         = $request->withParsedBody($params);
+
+            //Use a deactivated captcha service to call the request handler directly from the code
+            $request_handler = new RegisterAction(new DeactivatedCaptchaService, new EmailService, new RateLimitService(), new UserService);
         
             return $request_handler->handle($request);
         }            
