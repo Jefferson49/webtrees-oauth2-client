@@ -418,11 +418,6 @@ class OAuth2Client extends AbstractModule implements
                     ['rel' => 'nofollow']
                 );
             }
-
-            //Add webtrees register menu as submenu item, if preference is activated
-            if (boolval($this->getPreference(self::PREF_SHOW_REGISTER_IN_MENU, '1'))) {
-                $submenus[] = new Menu(MoreI18N::xlate('Request a new user account'), route(RegisterPage::class, ['tree' => $tree_name]), 'menu-oauth2-client-item');
-            }
         }
         //If an user is already logged in
         else {
