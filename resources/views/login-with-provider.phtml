@@ -8,7 +8,6 @@ use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\User;
-use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\LoginWithAuthorizationProviderAction;
 use Illuminate\Support\Collection;
@@ -42,7 +41,7 @@ elseif ($connect_action === OAuth2Client::CONNECT_ACTION_DISCONNECT) {
 }
 else {
     $label = I18N::translate('Sign in with');
-    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(Functions::getAllUsers());
+    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels();
 }
 
 
