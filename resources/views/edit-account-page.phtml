@@ -68,18 +68,16 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
     <?= $title ?>
 </h2>
 
-<?php if ($is_oauth2_user && $signed_in_with_provider) : ?>
-    <div class="h4">
+<div class="h4">
+    <?php if ($is_oauth2_user && $signed_in_with_provider) : ?>
         <?= I18N::translate('Signed in with %s', $provider->getSignInButtonLabel()) ?>
-        <?php if (!$edit_email) : ?>        
-            <?= ' - ' . I18N::translate('The email address provided from the authorization provider cannot be changed') ?>
-        <?php endif ?>
-    </div>
-<?php elseif ($is_oauth2_user && !$signed_in_with_provider) : ?>
-    <div class="h4">
-        <?= I18N::translate('This user can sign in with %s', $provider->getSignInButtonLabel()) .  ' - ' . I18N::translate('The administrator might have disabled to change some of the received user data') ?>	
-    </div>
-<?php endif ?>
+    <?php elseif ($is_oauth2_user && !$signed_in_with_provider) : ?>
+        <?= I18N::translate('This user can sign in with %s', $provider->getSignInButtonLabel()) ?>	
+    <?php endif ?>
+    <?php if ($is_oauth2_user && (!$edit_email OR !$edit_password)) : ?>
+        <?= ' - ' . I18N::translate('The administrator might have disabled to change the email address or the password') ?>
+    <?php endif ?>
+</div>
 
 <form method="post" class="wt-page-options wt-page-options-my-account">
 
@@ -158,7 +156,7 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
     <div class="row">
         <label class="col-sm-3 col-form-label wt-page-options-label" for="password">
             <?php if ($is_oauth2_user) : ?>
-                <?= I18N::translate('Password (within webtrees)') ?>
+                <?= MoreI18N::xlate('Password') ?>
             <?php else : ?>
                 <?= MoreI18N::xlate('Password') ?>
             <?php endif ?>    

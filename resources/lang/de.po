@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-25 06:32+0100\n"
-"PO-Revision-Date: 2025-01-25 06:33+0100\n"
+"POT-Creation-Date: 2025-01-25 07:24+0100\n"
+"PO-Revision-Date: 2025-01-25 07:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -271,30 +271,17 @@ msgid "Signed in with %s"
 msgstr "Angemeldet mit %s"
 
 #: resources/views/edit-account-page.phtml:75
-msgid ""
-"The email address provided from the authorization provider cannot be changed"
-msgstr ""
-"Die vom Autorisierungsanbieter bereitgestellte E-Mail-Adresse kann nicht "
-"geändert werden"
-
-#: resources/views/edit-account-page.phtml:80
 #, php-format
 msgid "This user can sign in with %s"
 msgstr "Dieser Benutzer kann sich mit %s anmelden"
 
-#: resources/views/edit-account-page.phtml:80
-#: resources/views/register-page.phtml:67
+#: resources/views/edit-account-page.phtml:78
 msgid ""
-"The administrator might have disabled to change some of the received user "
-"data"
+"The administrator might have disabled to change the email address or the "
+"password"
 msgstr ""
-"Der Administrator hat möglicherweise die Änderung einiger der empfangenen "
-"Benutzerdaten deaktiviert"
-
-#: resources/views/edit-account-page.phtml:161
-#: resources/views/register-page.phtml:124
-msgid "Password (within webtrees)"
-msgstr "Passwort (innerhalb von webtrees)"
+"Der Administrator hat möglicherweise die Änderung der E-Mail-Adresse oder "
+"des Passworts deaktiviert"
 
 #: resources/views/login-with-provider.phtml:32
 msgid "Request a new user account with"
@@ -347,6 +334,18 @@ msgstr ""
 #: resources/views/register-page.phtml:67
 msgid "Request account with"
 msgstr "Benutzerkonto anfragen mit"
+
+#: resources/views/register-page.phtml:67
+msgid ""
+"The administrator might have disabled to change some of the received user "
+"data"
+msgstr ""
+"Der Administrator hat möglicherweise die Änderung einiger der empfangenen "
+"Benutzerdaten deaktiviert"
+
+#: resources/views/register-page.phtml:124
+msgid "Password (within webtrees)"
+msgstr "Passwort (innerhalb von webtrees)"
 
 #: resources/views/register-page.phtml:141
 msgid "Further registration data - Please complete and continue"
@@ -516,6 +515,13 @@ msgstr ""
 "Wenn Sie diese Option auswählen, werden zusätzliche Debug-Informationen über "
 "den Protokollfluss zwischen webtrees und dem Autorisierungsanbieter in den "
 "Website-Logs von webtrees protokolliert."
+
+#~ msgid ""
+#~ "The email address provided from the authorization provider cannot be "
+#~ "changed"
+#~ msgstr ""
+#~ "Die vom Autorisierungsanbieter bereitgestellte E-Mail-Adresse kann nicht "
+#~ "geändert werden"
 
 #~ msgid ""
 #~ "Mandatory user account data from the authorization provider cannot be "
