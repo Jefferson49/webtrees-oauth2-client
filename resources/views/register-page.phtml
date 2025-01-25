@@ -64,7 +64,7 @@ if ($provider_authorization) {
 
     <?php if ($provider_authorization) : ?>
         <div class="h4">
-            <?= I18N::translate('Request account with') .  ' ' . $provider->getSignInButtonLabel() . ' - ' . I18N::translate('Changing some of the received user data from %s might be disabled by the administrator', $provider->getSignInButtonLabel()) ?>	
+            <?= I18N::translate('Request account with') .  ' ' . $provider->getSignInButtonLabel() . ' - ' . I18N::translate('The administrator might have disabled to change some of the received user data', $provider->getSignInButtonLabel()) ?>	
         </div>
 
         <?php if (!$edit_user_name) : ?>    

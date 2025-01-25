@@ -38,11 +38,14 @@ use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Http\Exceptions\HttpNotFoundException;
 use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
+use Fisharebest\Webtrees\Http\RequestHandlers\RegisterAction;
 use Fisharebest\Webtrees\Http\ViewResponseTrait;
 use Fisharebest\Webtrees\Http\RequestHandlers\UpgradeWizardPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Log;
 use Fisharebest\Webtrees\Services\CaptchaService;
+use Fisharebest\Webtrees\Services\EmailService;
+use Fisharebest\Webtrees\Services\RateLimitService;
 use Fisharebest\Webtrees\Services\UpgradeService;
 use Fisharebest\Webtrees\Services\UserService;
 use Fisharebest\Webtrees\Session;
@@ -50,6 +53,7 @@ use Fisharebest\Webtrees\Site;
 use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Services\ModuleService;
+use Jefferson49\Webtrees\Helpers\DeactivatedCaptchaService;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLog;
@@ -284,43 +288,48 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             self::deleteSessionValuesForProviderConnection();
         }
 
-        //Check if user can be found by email
-        $email_found = $this->user_service->findByEmail($email) !== null;
+        //Check if username/email already exists
+        $existing_credentials = (($this->user_service->findByEmail($email) !== null) OR ($this->user_service->findByUserName($user_name) !== null));
 
-        //If user does not exist already, redirect to registration page based on the authorization provider user data
-        if (!$email_found && $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) === null) {
+        //If user does not exist already, register based on the authorization provider user data
+        if (!$existing_credentials && $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) === null) {
 
             //If no email was retrieved from authorization provider, redirect to login page
-            if ($email === '') {
-                $message = I18N::translate('Invalid user account data received from authorizaton provider. Email missing.');
+            if ($email === '' OR $user_name === '') {
+                $message = I18N::translate('Invalid user account data received from authorizaton provider. Email or username missing.');
                 FlashMessages::addMessage($message, 'danger');
                 CustomModuleLog::addDebugLog($log_module, $message);
                 return redirect(route(LoginPage::class, ['tree' => $tree, 'url' => $url]));
             }
 
-            FlashMessages::addMessage(I18N::translate('Redirect to webtrees registration page') . ': ' . $email, 'success');
-            $title        = MoreI18N::xlate('Request a new user account');
-            $show_caution = Site::getPreference('SHOW_REGISTER_CAUTION') === '1';
+            CustomModuleLog::addDebugLog($log_module, 'Redirecting to webtrees registration');
 
             //Check if registration is allowed
             if (Site::getPreference('USE_REGISTRATION_MODULE') !== '1') {
                 throw new HttpNotFoundException();
             }
 
+            $message = I18N::translate('Creating new webtrees user account based on the received user data from the authorization provider');
+            FlashMessages::addMessage($message, 'success');
+            CustomModuleLog::addDebugLog($log_module, $message);
+
             $random_password  = md5($accessToken->getToken() . time());
-                
-            return $this->viewResponse(OAuth2Client::viewsNamespace() . '::register-page', [
-                'captcha'         => $this->captcha_service->createCaptcha(),
+
+            $params = [
+                'tree'            => $tree instanceof Tree ? $tree->name() : null,
                 'comments'        => I18N::translate('Automatic user registration after sign in with authorization provider'),
                 'email'           => $email,
+                'password'        => $random_password,
                 'realname'        => $real_name,
-                'show_caution'    => $show_caution,
-                'title'           => $title,
-                'tree'            => $tree instanceof Tree ? $tree->name() : null,
                 'username'        => $user_name,
-                'random_password' => $random_password,
-                'provider_name'   => $provider_name,
-            ]);
+            ];
+
+            //Request a new user account with a module specific registration handler
+            $request         = Functions::getFromContainer(ServerRequestInterface::class);
+            $request_handler = new RegisterAction(new DeactivatedCaptchaService, new EmailService, new RateLimitService(), new UserService);
+            $request         = $request->withParsedBody($params);
+        
+            return $request_handler->handle($request);
         }            
 
         //Login
@@ -403,7 +412,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             //If time stamp is different from 0 (i.e. user already logged in at least once before)
             if ($user->getPreference(UserInterface::PREF_TIMESTAMP_ACTIVE) !== '0') {
                 Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The provided username/email from the authorization provider is identical to an existing webtrees user, who has already logged in before: ' . $provider_name . ' ' . $authorization_provider_id);
-                throw new Exception(I18N::translate('Login with the provided user credentials denied. The username or email provided from the authorization provider might already exist in webtrees.'));
+                throw new Exception(I18N::translate('Login with the provided user credentials denied. The username or email provided from the authorization provider might already exist in webtrees. If you want to connect an existing webtrees user to an authorization provider, select: My pages / My account / Connect with'));
             }
         }
 

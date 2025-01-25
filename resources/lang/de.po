@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-23 06:30+0100\n"
-"PO-Revision-Date: 2025-01-23 06:31+0100\n"
+"POT-Creation-Date: 2025-01-25 06:32+0100\n"
+"PO-Revision-Date: 2025-01-25 06:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -26,17 +26,17 @@ msgstr ""
 "Angaben für die Option \"%s\". Bitte prüfen Sie die Konfiguration in der "
 "folgenden Datei: data/config.ini.php"
 
-#: src/LoginWithAuthorizationProviderAction.php:130
+#: src/LoginWithAuthorizationProviderAction.php:134
 msgid "The requested authorization provider could not be found"
 msgstr "Der angeforderte Autorisierungsanbieter konnte nicht gefunden werden"
 
-#: src/LoginWithAuthorizationProviderAction.php:147
+#: src/LoginWithAuthorizationProviderAction.php:151
 #, php-format
 msgid "Disconnected the user %s from provider: %s"
 msgstr ""
 "Die Verknüpfung von Benutzer %s mit Autorisierungsanbieter %s wurde gelöst"
 
-#: src/LoginWithAuthorizationProviderAction.php:169
+#: src/LoginWithAuthorizationProviderAction.php:173
 msgid ""
 "Failed security check: A user, who is currently not signed in, requested to "
 "connect an authorization provider with the current user."
@@ -45,7 +45,7 @@ msgstr ""
 "angemeldet ist, hat angefordert, einen Autorisierungsanbieter mit dem "
 "aktuellen Benutzer zu verbinden."
 
-#: src/LoginWithAuthorizationProviderAction.php:180
+#: src/LoginWithAuthorizationProviderAction.php:184
 #, php-format
 msgid ""
 "Timeout for connecting user %s with authorization provider %s. Please "
@@ -55,17 +55,17 @@ msgstr ""
 "Autorisierungsanbieter %s. Bitte starten Sie die Verknüpfung mit dem "
 "Autorisierungsanbieter neu."
 
-#: src/LoginWithAuthorizationProviderAction.php:211
-#: src/LoginWithAuthorizationProviderAction.php:239
+#: src/LoginWithAuthorizationProviderAction.php:215
+#: src/LoginWithAuthorizationProviderAction.php:243
 msgid "OAuth 2.0 communication error"
 msgstr "OAuth 2.0 Kommunikationsfehler"
 
-#: src/LoginWithAuthorizationProviderAction.php:215
+#: src/LoginWithAuthorizationProviderAction.php:219
 msgid "Invalid state in communication with authorization provider."
 msgstr ""
 "Ungültiger Zustand in der Kommunikation mit dem Autorisierungsanbieter."
 
-#: src/LoginWithAuthorizationProviderAction.php:243
+#: src/LoginWithAuthorizationProviderAction.php:247
 msgid ""
 "Failed to get the access token or the user details from the authorization "
 "provider"
@@ -73,7 +73,7 @@ msgstr ""
 "Fehler beim Empfang des Zugriffs-Tokens oder der Benutzer-Daten vom "
 "Autorisierungsanbieter"
 
-#: src/LoginWithAuthorizationProviderAction.php:268
+#: src/LoginWithAuthorizationProviderAction.php:272
 msgid ""
 "The identity received by the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
@@ -83,43 +83,53 @@ msgstr ""
 "angeforderten Benutzer verknüpft werden, da sie bereits von einem anderen "
 "webtrees-Benutzer für die Anmeldung verwendet wird."
 
-#: src/LoginWithAuthorizationProviderAction.php:279
+#: src/LoginWithAuthorizationProviderAction.php:283
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr ""
 "Erfolgreiche Verknüpfung des existierenden Benutzers %s mit "
 "Autorisierungsanbieter: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:295
+#: src/LoginWithAuthorizationProviderAction.php:299
 msgid ""
-"Invalid user account data received from authorizaton provider. Email missing."
+"Invalid user account data received from authorizaton provider. Email or "
+"username missing."
 msgstr ""
-"Vom Autorisierungsanbieter wurden keine validen Daten empfangen. Email fehlt."
+"Vom Autorisierungsanbieter wurden keine validen Daten empfangen. Email oder "
+"Benutzernamen fehlt."
 
-#: src/LoginWithAuthorizationProviderAction.php:301
-msgid "Redirect to webtrees registration page"
-msgstr "Weiterleitung zur webtrees-Registrierungsseite"
+#: src/LoginWithAuthorizationProviderAction.php:312
+msgid ""
+"Creating new webtrees user account based on the received user data from the "
+"authorization provider"
+msgstr ""
+"Erstellen eines neuen webtrees Benutzerkontos basierend auf den vom "
+"Autorisierungsanbieter erhaltenen Benutzerdaten"
 
-#: src/LoginWithAuthorizationProviderAction.php:314
+#: src/LoginWithAuthorizationProviderAction.php:320
 msgid "Automatic user registration after sign in with authorization provider"
 msgstr ""
 "Automatische Benutzer-Registrierung nach Einloggen mit Autorisierungsanbieter"
 
-#: src/LoginWithAuthorizationProviderAction.php:337
+#: src/LoginWithAuthorizationProviderAction.php:346
 #, php-format
 msgid "The email address for user %s was updated to: %s"
 msgstr "Die Email-Adresse für Benutzer %s wurde aktualisiert zu: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:406
+#: src/LoginWithAuthorizationProviderAction.php:415
 msgid ""
 "Login with the provided user credentials denied. The username or email "
-"provided from the authorization provider might already exist in webtrees."
+"provided from the authorization provider might already exist in webtrees. If "
+"you want to connect an existing webtrees user to an authorization provider, "
+"select: My pages / My account / Connect with"
 msgstr ""
-"Anmeldung mit den angegebenen Benutzeranmeldeinformationen verweigert. Der "
-"vom Autorisierungsanbieter angegebene Benutzername oder die E-Mail-Adresse "
-"ist möglicherweise bereits in Webtrees vorhanden."
+"Anmeldung mit den angegebenen Benutzerdaten abgelehnt. Der vom "
+"Autorisierungsanbieter angegebene Benutzername oder die angegebene E-Mail-"
+"Adresse ist möglicherweise bereits in webtrees vorhanden. Wenn Sie einen "
+"vorhandenen webtrees-Benutzer mit einem Autorisierungsanbieter verbinden "
+"möchten, wählen Sie: Meine Seiten / Mein Konto / Verknüpfen mit"
 
-#: src/LoginWithAuthorizationProviderAction.php:449
+#: src/LoginWithAuthorizationProviderAction.php:458
 #, php-format
 msgid ""
 "The length of the \"%s\" exceeded the maximum length of %s and was reduced "
@@ -273,14 +283,16 @@ msgid "This user can sign in with %s"
 msgstr "Dieser Benutzer kann sich mit %s anmelden"
 
 #: resources/views/edit-account-page.phtml:80
+#: resources/views/register-page.phtml:67
 msgid ""
-"Mandatory user account data from the authorization provider cannot be changed"
+"The administrator might have disabled to change some of the received user "
+"data"
 msgstr ""
-"Obligatorische Benutzer-Daten vom Autorisierungsanbieter können nicht "
-"geändert werden"
+"Der Administrator hat möglicherweise die Änderung einiger der empfangenen "
+"Benutzerdaten deaktiviert"
 
 #: resources/views/edit-account-page.phtml:161
-#: resources/views/register-page.phtml:121
+#: resources/views/register-page.phtml:124
 msgid "Password (within webtrees)"
 msgstr "Passwort (innerhalb von webtrees)"
 
@@ -332,15 +344,11 @@ msgstr ""
 "Autorisierungsanbieter anmelden, nicht zurückgesetzt werden. Bitte wenden "
 "Sie sich an den webtrees-Administrator."
 
-#: resources/views/register-page.phtml:64
-msgid "Register with"
-msgstr "Registrierung mit"
+#: resources/views/register-page.phtml:67
+msgid "Request account with"
+msgstr "Benutzerkonto anfragen mit"
 
-#: resources/views/register-page.phtml:64
-msgid "User account data from authorization provider cannot be changed"
-msgstr "Benutzer-Daten vom Autorisierungsanbieter können nicht geändert werden"
-
-#: resources/views/register-page.phtml:138
+#: resources/views/register-page.phtml:141
 msgid "Further registration data - Please complete and continue"
 msgstr "Weitere Registrierungsdaten - Bitte vervollständigen und fortsetzen"
 
@@ -508,6 +516,23 @@ msgstr ""
 "Wenn Sie diese Option auswählen, werden zusätzliche Debug-Informationen über "
 "den Protokollfluss zwischen webtrees und dem Autorisierungsanbieter in den "
 "Website-Logs von webtrees protokolliert."
+
+#~ msgid ""
+#~ "Mandatory user account data from the authorization provider cannot be "
+#~ "changed"
+#~ msgstr ""
+#~ "Obligatorische Benutzer-Daten vom Autorisierungsanbieter können nicht "
+#~ "geändert werden"
+
+#~ msgid "Redirect to webtrees registration page"
+#~ msgstr "Weiterleitung zur webtrees-Registrierungsseite"
+
+#~ msgid "Register with"
+#~ msgstr "Registrierung mit"
+
+#~ msgid "User account data from authorization provider cannot be changed"
+#~ msgstr ""
+#~ "Benutzer-Daten vom Autorisierungsanbieter können nicht geändert werden"
 
 #~ msgid ""
 #~ "Currently, all sign in menus are deactivated/hidden. Please activate one "

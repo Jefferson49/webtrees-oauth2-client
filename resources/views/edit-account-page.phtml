@@ -77,7 +77,7 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
     </div>
 <?php elseif ($is_oauth2_user && !$signed_in_with_provider) : ?>
     <div class="h4">
-        <?= I18N::translate('This user can sign in with %s', $provider->getSignInButtonLabel()) .  ' - ' . I18N::translate('Mandatory user account data from the authorization provider cannot be changed') ?>	
+        <?= I18N::translate('This user can sign in with %s', $provider->getSignInButtonLabel()) .  ' - ' . I18N::translate('The administrator might have disabled to change some of the received user data') ?>	
     </div>
 <?php endif ?>
 
