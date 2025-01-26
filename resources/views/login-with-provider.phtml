@@ -18,16 +18,14 @@ use Illuminate\Support\Collection;
  * @var string    $url
  * @var User      $user
  * @var string    $connect_action
- * @var bool      $register
  */
 
-$user = $user ?? null;
-$connect_action = $connect_action ?? OAuth2Client::CONNECT_ACTION_NONE;
-$url = $url ?? route(HomePage::class);
-$register = $register ?? false;
+$user             = $user ?? null;
+$connect_action   = $connect_action ?? OAuth2Client::CONNECT_ACTION_NONE;
+$url              = $url ?? route(HomePage::class);
 $provider_of_user = $user !== null ? $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') : '';
 
-if ($register) {
+if ($connect_action === OAuth2Client::CONNECT_ACTION_REGISTER) {
     $label = I18N::translate('Request a new user account with');
     $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels(); 
 }

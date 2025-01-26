@@ -150,6 +150,7 @@ class OAuth2Client extends AbstractModule implements
     public const CONNECT_ACTION_NONE = 'connect_action_none';
     public const CONNECT_ACTION_CONNECT = 'connect_action_connect';
     public const CONNECT_ACTION_DISCONNECT = 'connect_action_disconnect';
+    public const CONNECT_ACTION_REGISTER = 'connect_action_register';
 
 
    /**

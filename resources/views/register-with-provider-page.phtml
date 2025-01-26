@@ -42,6 +42,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\RegisterWithProvide
         <label class="col-sm-3 col-form-label wt-page-options-label">
             <?= I18N::translate('Request a new account with') . ' ' . $provider_name ?>
         </label>
+
         <div class="col-sm-9 wt-page-options-value">
             <form method="post" class="wt-page-options wt-page-options-register-with-provider" action="<?= e(route(RegisterWithProviderAction::class, [
                     'tree'           => $tree instanceof Tree ? $tree->name() : null,

@@ -38,14 +38,11 @@ use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Http\Exceptions\HttpNotFoundException;
 use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
-use Fisharebest\Webtrees\Http\RequestHandlers\RegisterAction;
 use Fisharebest\Webtrees\Http\ViewResponseTrait;
 use Fisharebest\Webtrees\Http\RequestHandlers\UpgradeWizardPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Log;
 use Fisharebest\Webtrees\Services\CaptchaService;
-use Fisharebest\Webtrees\Services\EmailService;
-use Fisharebest\Webtrees\Services\RateLimitService;
 use Fisharebest\Webtrees\Services\UpgradeService;
 use Fisharebest\Webtrees\Services\UserService;
 use Fisharebest\Webtrees\Session;
@@ -54,7 +51,6 @@ use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Services\ModuleService;
-use Jefferson49\Webtrees\Helpers\DeactivatedCaptchaService;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLog;
@@ -305,16 +301,16 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
             }
 
-            CustomModuleLog::addDebugLog($log_module, 'Redirecting to webtrees registration');
-
             //Check if registration is allowed
             if (Site::getPreference('USE_REGISTRATION_MODULE') !== '1') {
                 throw new HttpNotFoundException();
             }
 
-            $message = I18N::translate('A new webtrees user account is requested based on the user data received from the authorization provider.');
-            FlashMessages::addMessage($message, 'success');
-            CustomModuleLog::addDebugLog($log_module, $message);
+            FlashMessages::addMessage(I18N::translate('Currently, no webtrees user account is related to the user data received from the authorization provider.'));
+            FlashMessages::addMessage(I18N::translate('Please press "continue" to request the creation of a new webtrees user acccount based on the data from the authorization provider.'));
+            FlashMessages::addMessage(I18N::translate('If you already have a webtrees user account, you might want to "quit" and choose to connect the existing webtrees account with the authorization provider. Please use to the related menu items.'));
+
+            CustomModuleLog::addDebugLog($log_module, 'Forward to register with provider page');
 
             //Show register with provider page
             return $this->viewResponse(OAuth2Client::viewsNamespace() . '::register-with-provider-page', [
@@ -454,7 +450,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         }
 
         if ($add_flash_message && Strlen($value) > $length) {
-            FlashMessages::addMessage(I18N::translate('The length of the "%s" exceeded the maximum length of %s and was reduced to %s characters.', MoreI18N::xlate($name), $length, $length));
+            //FlashMessages::addMessage(I18N::translate('The length of "%s" exceeded the maximum length of %s and was reduced to %s characters.', MoreI18N::xlate($name), $length, $length));
         }
 
         return substr($value, 0, $length);

@@ -108,8 +108,8 @@ class RegisterWithProviderAction implements RequestHandlerInterface
             'comments'        => I18N::translate('Automatic user registration after sign in with authorization provider'),
             'email'           => $email,
             'password'        => $random_password,
-            'real_name'       => $real_name,
-            'user_name'       => $user_name,
+            'realname'        => $real_name,
+            'username'        => $user_name,
         ];
 
         $request         = Functions::getFromContainer(ServerRequestInterface::class);

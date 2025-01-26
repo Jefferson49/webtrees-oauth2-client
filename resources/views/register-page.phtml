@@ -169,7 +169,7 @@ if ($provider_authorization) {
 </form>
 
 <?php if (!$provider_authorization) : ?>
-    <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'register' => true]) ?>
+    <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'connect_action' => OAuth2Client::CONNECT_ACTION_REGISTER]) ?>
 
     <?php View::push('javascript') ?>
     <script>
