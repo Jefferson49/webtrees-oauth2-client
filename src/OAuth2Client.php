@@ -45,7 +45,6 @@ use Fisharebest\Webtrees\Http\RequestHandlers\AccountEdit;
 use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
 use Fisharebest\Webtrees\Http\RequestHandlers\Logout;
-use Fisharebest\Webtrees\Http\RequestHandlers\RegisterPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Menu;
 use Fisharebest\Webtrees\Module\AbstractModule;
@@ -70,6 +69,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\LoginWithAuthorizationProviderAction;
+use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\RegisterWithProviderAction;
 use GuzzleHttp\Client;
 use Illuminate\Support\Collection;
 use GuzzleHttp\Exception\GuzzleException;
@@ -103,6 +103,7 @@ class OAuth2Client extends AbstractModule implements
 
     //Routes
 	public const REDIRECT_ROUTE = '/OAuth2Client';
+	public const REGISTER_PROVIDER_ROUTE = '/register-with-provider-action{/tree}';
 
 	//Github repository
 	public const GITHUB_REPO = 'Jefferson49/OAuth2-Client';
@@ -201,6 +202,12 @@ class OAuth2Client extends AbstractModule implements
         $router
         ->get(LoginWithAuthorizationProviderAction::class, self::REDIRECT_ROUTE)
         ->allows(RequestMethodInterface::METHOD_POST);
+
+        //Register a route for the RegisterWithProviderAction request handler
+        $router = Registry::routeFactory()->routeMap();                 
+        $router
+        ->get(RegisterWithProviderAction::class, self::REGISTER_PROVIDER_ROUTE)
+        ->allows(RequestMethodInterface::METHOD_POST);        
     }
 	
     /**

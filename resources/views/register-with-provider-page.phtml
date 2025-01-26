@@ -1,0 +1,71 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Jefferson49\Webtrees\Module\OAuth2Client;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
+use Fisharebest\Webtrees\Tree;
+use Jefferson49\Webtrees\Internationalization\MoreI18N;
+use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\RegisterWithProviderAction;
+
+
+/**
+ * @var string    $captcha
+ * @var bool      $show_caution
+ * @var string    $title
+ * @var Tree|null $tree
+ * @var string    $url
+ * @var string    $email
+ * @var string    $password_token
+ * @var string    $real_name
+ * @var string    $user_name
+ * @var string    $provider_name
+ */
+?>
+
+<h2 class="wt-page-title">
+    <?= $title ?>
+</h2>
+
+<div class="row mb-3"><?= view('icons/spacer') ?></div>
+
+<?php if ($show_caution) : ?>
+    <div class="wt-register-caution">
+        <?= MoreI18N::xlate('<p>Notice: By completing and submitting this form, you agree:</p><ul><li>to protect the privacy of living individuals listed on our site;</li><li>and in the text box below, to explain to whom you are related, or to provide us with information on someone who should be listed on our website.</li></ul>') ?>
+    </div>
+<?php endif ?>
+
+<div class="wt-page-options wt-page-options-login">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label wt-page-options-label">
+            <?= I18N::translate('Request a new account with') . ' ' . $provider_name ?>
+        </label>
+        <div class="col-sm-9 wt-page-options-value">
+            <form method="post" class="wt-page-options wt-page-options-register-with-provider" action="<?= e(route(RegisterWithProviderAction::class, [
+                    'tree'           => $tree instanceof Tree ? $tree->name() : null,
+                    'password_token' => $password_token,
+                    'email'          => $email,
+                    'real_name'      => $real_name,
+                    'user_name'      => $user_name,
+                    ])) ?>" >
+
+                <?= $captcha ?>
+
+                <button class="btn btn-primary">
+                    <?= MoreI18N::xlate('continue') ?>
+                </button>
+
+                <a href="<?= e(route(LoginPage::class, [
+                    'tree' => $tree instanceof Tree ? $tree->name() : null,
+                    'url'  => $url,
+                    ])) ?>" type="submit" class="btn btn-secondary">
+                    <?=  MoreI18N::xlate('cancel') ?>
+                </a>
+
+                <?= csrf_field() ?>
+            </form>
+        </div>
+    </div>
+</div>

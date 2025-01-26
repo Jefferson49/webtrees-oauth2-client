@@ -316,25 +316,19 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             FlashMessages::addMessage($message, 'success');
             CustomModuleLog::addDebugLog($log_module, $message);
 
-            //Generate a request a new webtrees user account
-            $random_password  = md5($accessToken->getToken() . time());
-
-            $params = [
-                'comments'        => I18N::translate('Automatic user registration after sign in with authorization provider'),
-                'email'           => $email,
-                'password'        => $random_password,
-                'realname'        => $real_name,
-                'username'        => $user_name,
-            ];
-
-            $request         = Functions::getFromContainer(ServerRequestInterface::class);
-            $request         = $request->withAttribute('tree', $tree instanceof Tree ? $tree: null);
-            $request         = $request->withParsedBody($params);
-
-            //Use a deactivated captcha service to call the request handler directly from the code
-            $request_handler = new RegisterAction(new DeactivatedCaptchaService, new EmailService, new RateLimitService(), new UserService);
-        
-            return $request_handler->handle($request);
+            //Show register with provider page
+            return $this->viewResponse(OAuth2Client::viewsNamespace() . '::register-with-provider-page', [
+                'captcha'        => $this->captcha_service->createCaptcha(),
+                'show_caution'   => Site::getPreference('SHOW_REGISTER_CAUTION') === '1',
+                'title'          => I18N::translate('Request a new user account with an authorization provider'),
+                'tree'           => $tree,
+                'url'            => $url,
+                'provider_name'  => $provider_name,
+                'email'          => $email,
+                'password_token' => $accessToken->getToken(),
+                'real_name'      => $real_name,
+                'user_name'      => $user_name,
+            ]);
         }            
 
         //Login
