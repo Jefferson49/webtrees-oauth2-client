@@ -264,10 +264,13 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $provider_to_connect = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, '');
         $user_to_connect     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0);
 
+        //Check if username/email already exists
+        $existing_credentials = (($this->user_service->findByEmail($email) !== null) OR ($this->user_service->findByUserName($user_name) !== null));
+
         //If we shall connect an existing user to a provider   
         if($provider_to_connect === $provider_name && $user_to_connect !== 0) {
 
-            if ($this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null) {
+            if ($existing_credentials OR $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null) {
                 $message = I18N::translate('The identity received by the authorization provider cannot be connected to the requested user, because it is already used to sign in by another webtrees user.');
                 FlashMessages::addMessage($message, 'danger');
                 CustomModuleLog::addDebugLog($log_module, $message);
@@ -286,9 +289,6 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             //Reset session values
             self::deleteSessionValuesForProviderConnection();
         }
-
-        //Check if username/email already exists
-        $existing_credentials = (($this->user_service->findByEmail($email) !== null) OR ($this->user_service->findByUserName($user_name) !== null));
 
         //If user does not exist already, register based on the authorization provider user data
         if (!$existing_credentials && $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) === null) {
