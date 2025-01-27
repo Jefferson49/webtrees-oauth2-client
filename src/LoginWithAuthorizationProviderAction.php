@@ -293,22 +293,35 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //If user does not exist already, register based on the authorization provider user data
         if (!$existing_credentials && $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) === null) {
 
-            //If no email was retrieved from authorization provider, redirect to login page
-            if ($email === '' OR $user_name === '') {
-                $message = I18N::translate('Invalid user account data received from authorizaton provider. Email or username missing.');
-                FlashMessages::addMessage($message, 'danger');
-                CustomModuleLog::addDebugLog($log_module, $message);
+            //If user did not request to register (i.e. sign in and no account was found)
+            if ($connect_action !== OAuth2Client::CONNECT_ACTION_REGISTER) {
+                FlashMessages::addMessage(I18N::translate('Currently, no webtrees user account is related to the user data received from the authorization provider.'));
+            }
+
+            // If provider does not support registration, show messages and redirect to login page
+            if (!$provider::supportsRegistration()) {
+                FlashMessages::addMessage(I18N::translate('It is not possible to request a webtrees account with %s.', $provider_name));
+                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
+                CustomModuleLog::addDebugLog($log_module, 'Provider does not support webtrees registration.');
                 return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
             }
-
-            //Check if registration is allowed
-            if (Site::getPreference('USE_REGISTRATION_MODULE') !== '1') {
-                throw new HttpNotFoundException();
+            // If no email was retrieved from authorization provider, show messages and redirect to login page
+            elseif ($email === '' OR $user_name === '') {
+                FlashMessages::addMessage(I18N::translate('Invalid user data received from %s. Email or username missing.', $provider_name), 'danger');
+                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
+                CustomModuleLog::addDebugLog($log_module, 'Invalid user account data received from authorizaton provider. Email or username missing.');
+                return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
             }
+            else {
+                //Check if registration is allowed
+                if (Site::getPreference('USE_REGISTRATION_MODULE') !== '1') {
+                    FlashMessages::addMessage(I18N::translate('Requesting a new webtrees user account is currently not allowed.'));
+                    throw new HttpNotFoundException();
+                }
 
-            FlashMessages::addMessage(I18N::translate('Currently, no webtrees user account is related to the user data received from the authorization provider.'));
-            FlashMessages::addMessage(I18N::translate('Please press "continue" to request the creation of a new webtrees user acccount based on the data from the authorization provider.'));
-            FlashMessages::addMessage(I18N::translate('If you already have a webtrees user account, you might want to "quit" and choose to connect the existing webtrees account with the authorization provider. Please use to the related menu items.'));
+                FlashMessages::addMessage(I18N::translate('Press "continue" to request a new webtrees user acccount with %s.', $provider_name));
+                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
+            }
 
             CustomModuleLog::addDebugLog($log_module, 'Forward to register with provider page');
 
@@ -406,8 +419,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             //If time stamp is different from 0 (i.e. user already logged in at least once before)
             if ($user->getPreference(UserInterface::PREF_TIMESTAMP_ACTIVE) !== '0') {
-                Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The provided username/email from the authorization provider is identical to an existing webtrees user, who has already logged in before: ' . $provider_name . ' ' . $authorization_provider_id);
-                throw new Exception(I18N::translate('Login with the provided user credentials denied. The username or email provided from the authorization provider might already exist in webtrees. If you want to connect an existing webtrees user to an authorization provider, select: My pages / My account / Connect with'));
+                Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The email address or username already exists: ' . $provider_name . ' ' . $authorization_provider_id);
+                throw new Exception(I18N::translate('Login denied. The email address or username already exists. To connect an existing user, select: My pages / My account / Connect with'));
             }
         }
 
