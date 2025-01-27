@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-27 18:21+0100\n"
-"PO-Revision-Date: 2025-01-27 18:28+0100\n"
+"POT-Creation-Date: 2025-01-27 19:04+0100\n"
+"PO-Revision-Date: 2025-01-27 19:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -73,7 +73,7 @@ msgstr ""
 "Fehler beim Empfang des Zugriffs-Tokens oder der Benutzer-Daten vom "
 "Autorisierungsanbieter"
 
-#: src/LoginWithAuthorizationProviderAction.php:271
+#: src/LoginWithAuthorizationProviderAction.php:274
 msgid ""
 "The identity received by the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
@@ -83,7 +83,7 @@ msgstr ""
 "angeforderten Benutzer verknüpft werden, da sie bereits von einem anderen "
 "webtrees-Benutzer für die Anmeldung verwendet wird."
 
-#: src/LoginWithAuthorizationProviderAction.php:282
+#: src/LoginWithAuthorizationProviderAction.php:285
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr ""
@@ -106,6 +106,7 @@ msgstr "Es ist nicht möglich, ein webtrees-Konto mit %s anzufordern."
 #: src/LoginWithAuthorizationProviderAction.php:304
 #: src/LoginWithAuthorizationProviderAction.php:311
 #: src/LoginWithAuthorizationProviderAction.php:323
+#: src/LoginWithAuthorizationProviderAction.php:424
 #, php-format
 msgid ""
 "To connect an existing user with %s, sign in and select: My pages / My "
@@ -120,7 +121,7 @@ msgid "Invalid user data received from %s. Email or username missing."
 msgstr ""
 "Ungültige Benutzerdaten von %s empfangen. E-Mail oder Benutzername fehlt."
 
-#: src/LoginWithAuthorizationProviderAction.php:317
+#: src/LoginWithAuthorizationProviderAction.php:318
 msgid "Requesting a new webtrees user account is currently not allowed."
 msgstr ""
 "Das Anfordern eines neuen webtrees-Benutzerkontos ist derzeit nicht erlaubt."
@@ -143,13 +144,10 @@ msgid "The email address for user %s was updated to: %s"
 msgstr "Die Email-Adresse für Benutzer %s wurde aktualisiert zu: %s"
 
 #: src/LoginWithAuthorizationProviderAction.php:423
-msgid ""
-"Login denied. The email address or username already exists. To connect an "
-"existing user, select: My pages / My account / Connect with"
+msgid "Login denied. The email address or username already exists."
 msgstr ""
-"Anmeldung verweigert. Die E-Mail-Adresse oder der Benutzername existiert "
-"bereits. Um einen bestehenden Benutzer zu verbinden, wählen Sie: Meine "
-"Seiten / Mein Konto / Verknüpfen mit"
+"Anmeldung verweigert. Die E-Mail-Adresse oder der Benutzername ist bereits "
+"vorhanden."
 
 #: src/OAuth2Client.php:223
 msgid "OAuth2 Client"
@@ -537,6 +535,14 @@ msgstr ""
 "Wenn Sie diese Option auswählen, werden zusätzliche Debug-Informationen über "
 "den Protokollfluss zwischen webtrees und dem Autorisierungsanbieter in den "
 "Website-Logs von webtrees protokolliert."
+
+#~ msgid ""
+#~ "Login denied. The email address or username already exists. To connect an "
+#~ "existing user, select: My pages / My account / Connect with"
+#~ msgstr ""
+#~ "Anmeldung verweigert. Die E-Mail-Adresse oder der Benutzername existiert "
+#~ "bereits. Um einen bestehenden Benutzer zu verbinden, wählen Sie: Meine "
+#~ "Seiten / Mein Konto / Verknüpfen mit"
 
 #~ msgid ""
 #~ "If you already have a webtrees user account, you might want to \"quit\" "

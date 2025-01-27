@@ -420,7 +420,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             //If time stamp is different from 0 (i.e. user already logged in at least once before)
             if ($user->getPreference(UserInterface::PREF_TIMESTAMP_ACTIVE) !== '0') {
                 Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The email address or username already exists: ' . $provider_name . ' ' . $authorization_provider_id);
-                throw new Exception(I18N::translate('Login denied. The email address or username already exists. To connect an existing user, select: My pages / My account / Connect with'));
+                throw new Exception(I18N::translate('Login denied. The email address or username already exists.') . ' ' .
+                                    I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
             }
         }
 
