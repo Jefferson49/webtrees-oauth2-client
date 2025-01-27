@@ -113,6 +113,7 @@ class AuthorizationProviderFactory
      * Read the options of the provider from the webtrees config.ini.php file
      * 
      * @param string $name  Authorization provider name
+     * 
      * @return array        An array with the options. Empty if options could not be read completely.
      */ 
 
@@ -162,20 +163,52 @@ class AuthorizationProviderFactory
     }
 
 	/**
+     * Whether a provider provides enough user data for a webtrees registration, e.g. username and email
+     * 
+     * @param string $name  Authorization provider name
+     * 
+     * @return bool
+     */ 
+
+     public static function providerSupportsRegistration(string $name): bool {
+
+        $options = [];
+        $allowed = false;
+        $name_space = str_replace('\\\\', '\\',__NAMESPACE__ );
+        $name_space_provider = str_replace('Factories', 'Provider\\', $name_space);
+        $provider_names = self::getAuthorizatonProviderNames();
+
+        foreach ($provider_names as $class_name => $provider_name) {
+            if ($provider_name === $name) {
+                $reflectionMethod = new ReflectionMethod($name_space_provider . $class_name, 'supportsRegistration');
+                $allowed = $reflectionMethod->invoke(null);
+                break;
+            }
+        }
+
+        return $allowed;
+     }
+
+	/**
      * Get the sign in button labels for all active authorization providers
+     * 
+     * @param bool $registration If true, only providers are included, which provide enough user data for a webtrees registration
      * 
      * @return array [provider_name => label]
      */ 
 
-    public static function getSignInButtonLabels(): array {    
+    public static function getSignInButtonLabels($registration = false): array {    
 
         $provider_names = self::getAuthorizatonProviderNames();
 
         $sign_in_button_labels = [];
 
-        //Remove any providers from list, for which no sufficient config is available
+        //Remove any providers from list, for which no sufficient config is available, or which do not allow webtrees registration
         foreach($provider_names as $class_name => $provider_name) {
             if(self::readProviderOptionsFromConfigFile($provider_name) === []) {
+                unset($provider_names[$class_name]);
+            }
+            if($registration && !self::providerSupportsRegistration($provider_name)) {
                 unset($provider_names[$class_name]);
             }
         }
@@ -197,14 +230,16 @@ class AuthorizationProviderFactory
 	/**
      * Get sign in button labels for a set of users
      * 
-     * @param  Collection [User]
+     * @param Collection [User]  $users
+     * @param bool               $registration If true, only providers are included, which provide enough user data for a webtrees registration
+     * 
      * 
      * @return array [provider_name => label]
      */ 
 
-    public static function getSignInButtonLabelsByUsers(Collection $users): array {
+    public static function getSignInButtonLabelsByUsers(Collection $users, $registration = false): array {
 
-        $labels = self::getSignInButtonLabels();
+        $labels = self::getSignInButtonLabels($registration);
         $labels_for_users = [];
     
         foreach($users as $user) {

@@ -27,7 +27,7 @@ $provider_of_user = $user !== null ? $user->getPreference(OAuth2Client::USER_PRE
 
 if ($connect_action === OAuth2Client::CONNECT_ACTION_REGISTER) {
     $label = I18N::translate('Request a new user account with');
-    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels(); 
+    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels(true); 
 }
 elseif ($connect_action === OAuth2Client::CONNECT_ACTION_CONNECT) {
     $label = I18N::translate('Connect with');

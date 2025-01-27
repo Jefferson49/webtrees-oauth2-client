@@ -198,4 +198,15 @@ abstract class AbstractAuthorizationProvider
             'urlResourceOwnerDetails',        
         ];
     }
+
+    /**
+     * Whether the provider provides enough user data for a webtrees registration, e.g. username and email
+     *
+     * @return bool
+     */
+    public static function supportsRegistration() : bool {
+
+        //As a default, it is assumed that enough user data is provided
+        return true;
+    }       
 }

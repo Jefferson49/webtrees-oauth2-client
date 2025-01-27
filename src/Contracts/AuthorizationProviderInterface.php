@@ -126,4 +126,11 @@ interface AuthorizationProviderInterface
      *                 Options include `clientId`, `clientSecret`, `redirectUri`, etc.
      */
     public static function getRequiredOptions() : array;
+
+    /**
+     * Whether the provider provides enough user data for a webtrees registration, e.g. username and email
+     *
+     * @return bool
+     */
+    public static function supportsRegistration() : bool;    
 }

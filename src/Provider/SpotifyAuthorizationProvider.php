@@ -108,4 +108,15 @@ class SpotifyAuthorizationProvider extends AbstractAuthorizationProvider impleme
             'clientSecret',
         ];
     }
+
+    /**
+     * Whether the provider provides enough user data for a webtrees registration, e.g. username and email
+     *
+     * @return bool
+     */
+    public static function supportsRegistration() : bool {
+
+        //False, since Spotify does not provide an email address
+        return false;
+    }       
 }
