@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-27 19:04+0100\n"
-"PO-Revision-Date: 2025-01-27 19:05+0100\n"
+"POT-Creation-Date: 2025-01-28 19:59+0100\n"
+"PO-Revision-Date: 2025-01-28 19:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -272,14 +272,14 @@ msgstr ""
 msgid "Custom module"
 msgstr "Benutzerdefiniertes Modul"
 
-#: resources/views/edit-account-page.phtml:49
+#: resources/views/edit-account-page.phtml:67
 #, php-format
 msgid ""
-"The authorization provider \"%s\" is not available. Please check the "
-"configuration in the following file: data/config.ini.php"
+"The authorization provider \"%s\" is not available. Please contact the "
+"webtrees administrator."
 msgstr ""
-"Der  Authorisierungsanbieter \"%s\" ist nicht verfügbar. Bitte prüfen Sie "
-"die Konfiguration in der folgenden Datei: data/config.ini.php"
+"The authorization provider \"%s\" is not available. Please contact the "
+"webtrees administrator."
 
 #: resources/views/edit-account-page.phtml:73
 #, php-format

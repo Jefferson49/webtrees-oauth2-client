@@ -253,17 +253,4 @@ class AuthorizationProviderFactory
 
         return $labels_for_users;
     }
-
-	/**
-     * Whether a provider name is an available and valid provider
-     * 
-     * @param string $provider_name
-     * 
-     * @return bool
-     */ 
-
-    public static function isValidProvider(string $provider_name): bool {        
-
-        return in_array($provider_name, self::getAuthorizatonProviderNames());
-    }
 }

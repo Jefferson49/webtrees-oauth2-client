@@ -45,19 +45,13 @@ $connect_with_providers  = boolval($oauth2_client->getPreference(OAuth2Client::P
 
 if ($is_oauth2_user) {
 
-    if (!AuthorizationProviderFactory::isValidProvider($provider_name)) {
-        FlashMessages::addMessage(I18N::translate('The authorization provider "%s" is not available. Please check the configuration in the following file: data/config.ini.php', $provider_name), 'danger');
-        return;
-    }
-
-    $provider = (new AuthorizationProviderFactory())::make($provider_name, '');
+    $provider = AuthorizationProviderFactory::make($provider_name, '');
+    $provider_label = $provider !== null ?  $provider->getSignInButtonLabel() : $provider_name;
 
     //Determine, whether the email address can be edited
     $different_email = $user->email() !== $user->getPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, '');
     $sync_email = boolval($oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL, '0'));
     $edit_email = ($different_email || !$sync_email);
-
-    //Determine
 }
 
 $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD, '0')));
@@ -68,11 +62,17 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
     <?= $title ?>
 </h2>
 
+<?php if ($provider === null) : ?>
+    <div class="alert alert-danger">
+        <p><?= I18N::translate('The authorization provider "%s" is not available. Please contact the webtrees administrator.', $provider_name) ?></p>
+    </div>
+<?php endif ?>
+
 <div class="h4">
     <?php if ($is_oauth2_user && $signed_in_with_provider) : ?>
-        <?= I18N::translate('Signed in with %s', $provider->getSignInButtonLabel()) ?>
+        <?= I18N::translate('Signed in with %s', $provider_label) ?>
     <?php elseif ($is_oauth2_user && !$signed_in_with_provider) : ?>
-        <?= I18N::translate('This user can sign in with %s', $provider->getSignInButtonLabel()) ?>	
+        <?= I18N::translate('This user can sign in with %s', $provider_label) ?>
     <?php endif ?>
     <?php if ($is_oauth2_user && (!$edit_email OR !$edit_password)) : ?>
         <?= ' - ' . I18N::translate('The administrator might have disabled to change the email address or the password') ?>

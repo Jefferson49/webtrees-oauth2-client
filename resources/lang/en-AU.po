@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-27 18:28+0100\n"
-"PO-Revision-Date: 2025-01-27 18:33+0100\n"
+"POT-Creation-Date: 2025-01-28 19:58+0100\n"
+"PO-Revision-Date: 2025-01-28 19:59+0100\n"
 "Last-Translator: Rick Malkin <rick@alineofmalkins.com>\n"
 "Language-Team: \n"
 "Language: en_AU\n"
@@ -69,7 +69,7 @@ msgstr ""
 "Failed to get the access token or the user details from the authorisation "
 "provider"
 
-#: src/LoginWithAuthorizationProviderAction.php:271
+#: src/LoginWithAuthorizationProviderAction.php:274
 msgid ""
 "The identity received by the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
@@ -79,7 +79,7 @@ msgstr ""
 "the requested user, because it is already used to sign in by another "
 "webtrees user."
 
-#: src/LoginWithAuthorizationProviderAction.php:282
+#: src/LoginWithAuthorizationProviderAction.php:285
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr ""
@@ -100,6 +100,7 @@ msgstr ""
 #: src/LoginWithAuthorizationProviderAction.php:304
 #: src/LoginWithAuthorizationProviderAction.php:311
 #: src/LoginWithAuthorizationProviderAction.php:323
+#: src/LoginWithAuthorizationProviderAction.php:424
 #, php-format
 msgid ""
 "To connect an existing user with %s, sign in and select: My pages / My "
@@ -111,7 +112,7 @@ msgstr ""
 msgid "Invalid user data received from %s. Email or username missing."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:317
+#: src/LoginWithAuthorizationProviderAction.php:318
 msgid "Requesting a new webtrees user account is currently not allowed."
 msgstr ""
 
@@ -130,9 +131,7 @@ msgid "The email address for user %s was updated to: %s"
 msgstr ""
 
 #: src/LoginWithAuthorizationProviderAction.php:423
-msgid ""
-"Login denied. The email address or username already exists. To connect an "
-"existing user, select: My pages / My account / Connect with"
+msgid "Login denied. The email address or username already exists."
 msgstr ""
 
 #: src/OAuth2Client.php:223
@@ -236,14 +235,14 @@ msgstr "Automatic user registration after sign in with authorisation provider"
 msgid "Custom module"
 msgstr ""
 
-#: resources/views/edit-account-page.phtml:49
+#: resources/views/edit-account-page.phtml:67
 #, php-format
 msgid ""
-"The authorization provider \"%s\" is not available. Please check the "
-"configuration in the following file: data/config.ini.php"
+"The authorization provider \"%s\" is not available. Please contact the "
+"webtrees administrator."
 msgstr ""
-"The authorisation provider \"%s\" is not available. Please check the "
-"configuration in the following file: data/config.ini.php"
+"The authorisation provider \"%s\" is not available. Please contact the "
+"webtrees administrator."
 
 #: resources/views/edit-account-page.phtml:73
 #, php-format
