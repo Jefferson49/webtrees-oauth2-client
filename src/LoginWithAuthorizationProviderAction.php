@@ -478,7 +478,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
      *
      * @return User
      */
-    private function findUserByAuthorizationProviderId(string $provider_name, string $authorization_provider_id): User|null
+    private function findUserByAuthorizationProviderId(string $provider_name, string $authorization_provider_id): ?User
     {
         $users = Functions::getAllUsers();
 
