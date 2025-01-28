@@ -344,7 +344,7 @@ The module was developed and tested with [webtrees 2.1.21 and 2.2.1](https://web
 You can help to translate this module. The translation is based on [gettext](https://en.wikipedia.org/wiki/Gettext) and uses .po files, which can be found in [/resources/lang/](resources/lang/). You can use a local editor like [Poedit](https://poedit.net/) or notepad++ to work on translations and provide them in the [Github repository](https://github.com/Jefferson49/webtrees-oauth2-client) of the module. You can do this via a pull request (if you know how to do), or by opening a new issue and attaching a .po file. Updated translations will be included in the next release of this module.
 
 Currently, the following languages are available:
-+ English
++ English (Australian, British)
 + German
 
 ## Bugs and Feature Requests
