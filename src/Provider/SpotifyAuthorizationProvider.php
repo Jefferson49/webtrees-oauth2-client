@@ -89,7 +89,7 @@ class SpotifyAuthorizationProvider extends AbstractAuthorizationProvider impleme
         $user_data      = $user->getUserData();
         $resource_owner = $user->getRessourceOwner();
 
-        //Apply specific user data provided by Github
+        //Handle specific user data provided by Spotify
         $user->setUserName('Spt:'. $resource_owner->getId());
         $user->setRealName($user_data['display_name'] ?? '');
 

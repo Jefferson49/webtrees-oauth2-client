@@ -82,8 +82,7 @@ class WordPressAuthorizationProvider extends AbstractAuthorizationProvider imple
         $user           = parent::getUserData($token);
         $user_data      = $user->getUserData();
 
-        //Apply specific user data provided by Github
-
+        //Apply specific user data provided by WordPress
         $first_name   = $user_data['first_name']   ?? '';
         $last_name    = $user_data['last_name']    ?? '';
         $display_name = $user_data['display_name'] ?? '';
