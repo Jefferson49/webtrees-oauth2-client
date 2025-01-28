@@ -19,9 +19,9 @@ This README file contains the following main sections:
     + [Github](#github)
     + [Google](#google)
     + [Joomla](#joomla)
+    + [Spotify](#spotify)
     + [WordPress](#wordpress)
 +   [Trouble Shooting](#trouble-shooting)
-+   [Mapping of the User Data to webtrees](#mapping-of-the-user-data-to-webtrees)
 +   [Concept](#concept)
     + [Definitons](#definitions)
     + [Protocol Flow](#protocol-flow)
@@ -63,6 +63,7 @@ Currently, the following authorization providers are supported:
 + **Github**
 + **Google**
 + **Joomla** (with a specific authorization provider extension installed in Joomla)
++ **Spotify**
 + **WordPress** (with a specific authorization provider plugin installed in WordPress)
 
 To use further authorization providers, the following approaches are available:
@@ -238,6 +239,25 @@ Joomla_signInButtonLabel='xxx'
     + **Joomla_urlAuthorize**='JOOMLA_BASE_URL/index.php' (JOOMLA_BASE_URL from your Joomla installation, e.g. 'https://mysite.net/joomla')
     + **Joomla_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
+### Spotify
++ Open the [Spotify](https://open.spotify.com/login) page and log into your Dropbox account
++ Open the [Create apps page]( https://developer.spotify.com/dashboard/create)
++ Insert an "App name" and an "App description"
++ Insert a "Website", e.g. the URL of your website
++ Insert the "Redirect URIs". See chapter [General Configuration](#general-configuration) about how to get the redirect URL from the webtrees custom module settings.
++ Press "Add" button to add the redirect URI.
++ Select the checkbox for "Web API"
++ Agree to the terms of service
++ Press "Save" button
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Spotify_clientId='xxx'
+Spotify_clientSecret='xxx'
+```
++ Insert the configuration details from your Spotify app into the newly included configuration lines of your config.ini.php file:
+    + **Spotify_clientId**='...' (value shown in Spotify, like described above)
+    + **Spotify_clientSecret**='...' (value shown in Spotify, like described above)
+
 ### WordPress
 + Download the WordPress plugin [WP OAuth Server](https://wordpress.org/plugins/miniorange-oauth-20-server/)
 + Install the plugin in the WordPress administration backend
@@ -290,23 +310,6 @@ Although OAuth 2 is a standard protocol and is used on lots of websites, the aut
 + Check the server configuration for any redirects from sub-domains, e.g. https://www.my_site.net to https://my_site.net
 + If using the WordPress authorization provider, check the [PHP/Apache configuration](#phpapache-configuration)
 
-## Mapping of the User Data to webtrees
-The user data (i.e. user name, real name, email address), which is received with the OAuth 2.0 protocol from the authorization provider, is mapped to a webtrees user. Since there might be differences regarding availablility and changability of the user data, the following mapping is used:
-+ **primary**: The primary key of the user data within the authorization provider. The primary key **cannot be changed** within webtrees and usually also cannot be changed within the authorization provider. If the primary key within the authorization provider is changed by any means, this will result in loosing the link of the user data between webtrees and the authorization provider.
-+ **mandatory**: A mandatory part of the user data, which can only be changed within the authorization provider and is not allowed to be changed within webtrees. Mandatory parts of the user data **are updated** in webtrees if changed within the authorization provider.
-+ **optional**: An optional part of the user data, which can be changed within webtrees. Optional user data will not be updated/synchronized between the authorization provider and webtrees.
-
-The following table shows the mapping of the user data for the different authorization providers:
-
-|Authorization provider|user name|real name|email address|
-|:---------------------|:--------|:--------|:------------|
-|Generic|mandatory|optional|**primary**|
-|Dropbox|**primary**|optional|mandatory|
-|Github|**primary**|optional|mandatory|
-|Google|optional|optional|**primary**|
-|Joomla|**primary**|optional|mandatory|
-|WordPress|**primary**|optional|mandatory|
-
 ## Definitions 
 [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749) defines several roles, which are used in OAuth. In the context of the OAuth 2.0 Client and webtrees single sign on, the OAuth [roles](https://datatracker.ietf.org/doc/html/rfc6749#section-1.1) and definitions are used as follows:
 + **Resource Owner**: The webtrees user.
@@ -335,7 +338,7 @@ The following figure shows how the protocol flow of [RFC 6749](https://datatrack
 ![Protocol Flow](resources/img/protocol_flow.jpg)
 
 ## Webtrees Version
-The module was developed and tested with [webtrees 2.1.21 and 2.2.0](https://webtrees.net/download), but should also run with any other 2.1/2.2 versions.
+The module was developed and tested with [webtrees 2.1.21 and 2.2.1](https://webtrees.net/download), but should also run with any other 2.1/2.2 versions.
 
 ## Translation
 You can help to translate this module. The translation is based on [gettext](https://en.wikipedia.org/wiki/Gettext) and uses .po files, which can be found in [/resources/lang/](resources/lang/). You can use a local editor like [Poedit](https://poedit.net/) or notepad++ to work on translations and provide them in the [Github repository](https://github.com/Jefferson49/webtrees-oauth2-client) of the module. You can do this via a pull request (if you know how to do), or by opening a new issue and attaching a .po file. Updated translations will be included in the next release of this module.
@@ -359,7 +362,7 @@ You should have received a copy of the GNU General Public License along with thi
 ## Contributions and Copyrights
 + webtrees
     + [webtrees](https://webtrees.net): online genealogy
-    + Copyright (c) 2024 [webtrees development team](http://webtrees.net)
+    + Copyright (c) 2025 [webtrees development team](http://webtrees.net)
 + League
     + [oauth2-client](https://github.com/thephpleague/oauth2-client)
         + Copyright (c) 2013-2023 Alex Bilbie
@@ -367,11 +370,14 @@ You should have received a copy of the GNU General Public License along with thi
         + Copyright (c) 2015 Steven Maguire
     + [oauth2-google](https://github.com/thephpleague/oauth2-google)
         + Copyright (c) 2015 Woody Gilk
++ stevenmaguire
+    + [oauth2-dropbox](https://github.com/stevenmaguire/oauth2-dropbox)
+        + Copyright (c) 2015-2021 Steven Maguire
 + Vesta Common (webtrees custom module)
     + [Cissee\WebtreesExt\More18N](https://github.com/vesta-webtrees-2-custom-modules/vesta_common/blob/master/patchedWebtrees/MoreI18N.php)
-        + Copyright (c) 2019 – 2024 Richard Cissée
+        + Copyright (c) 2019 – 2025 Richard Cissée
 + OAuth2Client (webtrees custom module)
-    + Copyright (c) 2024 [Jefferson49](https://github.com/Jefferson49)
+    + Copyright (c) 2025 [Jefferson49](https://github.com/Jefferson49)
 
 ## Github Repository
 https://github.com/Jefferson49/webtrees-oauth2-client
