@@ -34,7 +34,9 @@ This README file contains the following main sections:
 ## What are the benefits of this module?
 + The module provides single sign on ([SSO](https://en.wikipedia.org/wiki/Single_sign-on)) into the [webtrees](https://webtrees.net) application based on the [OAuth 2.0](https://en.wikipedia.org/wiki/OAuth) standard.
 + A pre-configured set of authorization providers can be selected during webtrees login.
-+ If choosing to sign on with an authorization provider, the user account data (i.e. user name, real name, email address) of the authorization provider is used for the user account in webtrees.
++ If choosing to register with an authorization provider, the user account data (i.e. user name, real name, email address) of the authorization provider is used to create a new user account in webtrees.
++ Alternatively, an existing webtrees user can be connected to an authorization provider. In this case, the user credentials in webtrees stay the same. However, an additional way to sign into the webtrees account is provided.
++ If offered by the authorization provider, multi factor authorization ([MFA](https://en.wikipedia.org/wiki/Multi-factor_authentication)) can be used for webtrees sign in.
 
 [<img src="resources/img/login_page_with_authorization_providers.jpg"/>](resources/img/login_page_with_authorization_providers.jpg)
 
