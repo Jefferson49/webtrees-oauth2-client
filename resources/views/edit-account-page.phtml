@@ -242,9 +242,15 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
 </form>
 
 <?php if ($is_oauth2_user) : ?>
-    <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_DISCONNECT]) ?>
+    //If users are allowed to connect/disconnect with providers, show button to connect
+    <?php if (boolval($oauth2_client->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'))) : ?>
+        <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_DISCONNECT]) ?>
+    <?php endif ?>
 <?php elseif ($connect_with_providers) : ?>
-    <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_CONNECT]) ?>
+    //If users are allowed to connect/disconnect with providers, show button to disconnect
+    <?php if (boolval($oauth2_client->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'))) : ?>
+        <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_CONNECT]) ?>
+    <?php endif ?>
 <?php endif ?>
 
 <?php if ($show_delete_option) : ?>

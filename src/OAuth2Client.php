@@ -459,7 +459,7 @@ class OAuth2Client extends AbstractModule implements
             }
             
             //If users are allowed to connect/disconnect with providers, show submenu entries to connect or disconnect
-            if ($this->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '') !== '') {
+            if (boolval($this->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'))) {
                 foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
                     $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label, 
