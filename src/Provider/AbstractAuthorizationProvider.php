@@ -32,7 +32,6 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\OAuth2Client\Provider;
 
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\User;
 use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;

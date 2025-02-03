@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4baebedb634125fc9a1bd92f5fb6730",
+    "content-hash": "3172cd3cbaf890568dc0f03f3df82191",
     "packages": [
+        {
+            "name": "bahuma/oauth2-nextcloud",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bahuma20/oauth2-nextcloud.git",
+                "reference": "a1813cc288d569642cad612b99880fa738a38574"
+            },
+            "require": {
+                "league/oauth2-client": "^2.0",
+                "php": "^7.4||^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bahuma\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Bahuma\\OAuth2\\Client\\Test\\": "test/src/"
+                }
+            },
+            "scripts": {
+                "check": [
+                    "phpcs src tests --standard=PSR12 -sp"
+                ],
+                "cs-fix": [
+                    "phpcbf src tests --standard=PSR12 -p"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Max Bachhuber",
+                    "email": "max.bachhuber@bahuma.io",
+                    "homepage": "https://bahuma.io"
+                },
+                {
+                    "name": "Aleix Quintana Alsius",
+                    "email": "kinta@communia.org",
+                    "homepage": "https://communia.org"
+                }
+            ],
+            "description": "Nextcloud OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "time": "2023-05-11T12:23:05+00:00"
+        },
         {
             "name": "jefferson49/webtrees-common",
             "version": "1.2.8",
