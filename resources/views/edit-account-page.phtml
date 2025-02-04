@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
 use Fisharebest\Webtrees\Contracts\UserInterface;
-use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Http\RequestHandlers\AccountDelete;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
@@ -62,7 +61,7 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
     <?= $title ?>
 </h2>
 
-<?php if ($provider === null) : ?>
+<?php if ($is_oauth2_user && $provider === null) : ?>
     <div class="alert alert-danger">
         <p><?= I18N::translate('The authorization provider "%s" is not available. Please contact the webtrees administrator.', $provider_name) ?></p>
     </div>
@@ -242,12 +241,10 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
 </form>
 
 <?php if ($is_oauth2_user) : ?>
-    //If users are allowed to connect/disconnect with providers, show button to connect
     <?php if (boolval($oauth2_client->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'))) : ?>
         <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_DISCONNECT]) ?>
     <?php endif ?>
 <?php elseif ($connect_with_providers) : ?>
-    //If users are allowed to connect/disconnect with providers, show button to disconnect
     <?php if (boolval($oauth2_client->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'))) : ?>
         <?= view(OAuth2Client::viewsNamespace() . '::login-with-provider', ['tree' => $tree, 'user' => $user, 'connect_action' => OAuth2Client::CONNECT_ACTION_CONNECT]) ?>
     <?php endif ?>
