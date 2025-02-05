@@ -19,6 +19,7 @@ This README file contains the following main sections:
     + [Github](#github)
     + [Google](#google)
     + [Joomla](#joomla)
+    + [Nextcloud](#nextcloud)
     + [Spotify](#spotify)
     + [WordPress](#wordpress)
 +   [Trouble Shooting](#trouble-shooting)
@@ -65,6 +66,7 @@ Currently, the following authorization providers are supported:
 + **Github**
 + **Google**
 + **Joomla** (with a specific authorization provider extension installed in Joomla)
++ **Nextcloud**
 + **Spotify**
 + **WordPress** (with a specific authorization provider plugin installed in WordPress)
 
@@ -236,10 +238,26 @@ Joomla_urlAuthorize='xxx'
 Joomla_signInButtonLabel='xxx'
 ```
 + Insert the configuration details from the Joomla OAuth 2.0 Server into the newly included configuration lines of your config.ini.php file:
-    + **Joomla_clientId**='...' (value for "Client ID" shown in the Joomla extension, like described above)
-    + **Joomla_clientSecret**='...' (value for "Client Secret"  shown in the Joomla extension, like described above)
+    + **Joomla_clientId**='...' (value for "Client ID" shown in Nextcloud)
+    + **Joomla_clientSecret**='...' (value for "Client Secret"  shown in Nextcloud)
     + **Joomla_urlAuthorize**='JOOMLA_BASE_URL/index.php' (JOOMLA_BASE_URL from your Joomla installation, e.g. 'https://mysite.net/joomla')
     + **Joomla_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
+
+### Nextcloud
++ Open the chapter about OAuth2 configuration in the [Nextcloud Administration Manual](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/oauth2.html#add-an-oauth2-application)
++ Configure a new OAuth2 client app in Nextcloud like described in chapter "Add an OAuth2 Application"
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Nextcloud_clientId='xxx'
+Nextcloud_clientSecret='xxx'
+Nextcloud_nextcloudUrl='xxx'
+Nextcloud_signInButtonLabel='xxx'
+```
++ Insert the configuration details from your Nextcloud server into the newly added configuration lines of your config.ini.php file:
+    + **Nextcloud_clientId**='...' (value for "Client Identifyer" shown in Nextcloud)
+    + **Nextcloud_clientSecret**='...' (value for "Client Secret"  shown in Nextcloud)
+    + **Nextcloud_nextcloudUrl**='NEXTCLOUD_BASE_URL' (NEXTCLOUD_BASE_URL from your Nextcloud installation, e.g. 'https://mysite.net/nextcloud')
+    + **Nextcloud_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Spotify
 + Open the [Spotify](https://open.spotify.com/login) page and log into your Dropbox account
