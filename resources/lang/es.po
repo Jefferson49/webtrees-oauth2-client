@@ -1,0 +1,537 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OAuth2-Client for webtrees 2\n"
+"POT-Creation-Date: 2025-02-08 09:07+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: src/Factories/AuthorizationProviderFactory.php:157
+#, php-format
+msgid ""
+"The configuration for the authorization provider \"%s\" does not include "
+"data for the option \"%s\". Please check the configuration in the following "
+"file: data/config.ini.php"
+msgstr ""
+"La configuración para el proveedor de autorización \"%s\" no incluye datos "
+"para la opción \"%s\". Compruebe la configuración en el siguiente archivo: "
+"data/config.ini.php"
+
+#: src/LoginWithAuthorizationProviderAction.php:133
+msgid "The requested authorization provider could not be found"
+msgstr "No se ha encontrado el proveedor de autorización solicitado"
+
+#: src/LoginWithAuthorizationProviderAction.php:150
+#, php-format
+msgid "Disconnected the user %s from provider: %s"
+msgstr "Desconectado el usuario %s del proveedor: %s"
+
+#: src/LoginWithAuthorizationProviderAction.php:172
+msgid ""
+"Failed security check: A user, who is currently not signed in, requested to "
+"connect an authorization provider with the current user."
+msgstr ""
+"Comprobación de seguridad fallida: Un usuario, que actualmente no ha "
+"iniciado sesión, solicitó conectar un proveedor de autorización con el "
+"usuario actual."
+
+#: src/LoginWithAuthorizationProviderAction.php:183
+#, php-format
+msgid ""
+"Timeout for connecting user %s with authorization provider %s. Please "
+"restart connecting with the authorization provider."
+msgstr ""
+"Tiempo de espera para la conexión del usuario %s con el proveedor de "
+"autorización %s. Por favor, reinicie la conexión con el proveedor de "
+"autorización."
+
+#: src/LoginWithAuthorizationProviderAction.php:214
+#: src/LoginWithAuthorizationProviderAction.php:242
+msgid "OAuth 2.0 communication error"
+msgstr "Error de comunicación OAuth 2.0"
+
+#: src/LoginWithAuthorizationProviderAction.php:218
+msgid "Invalid state in communication with authorization provider."
+msgstr "Estado no válido en la comunicación con el proveedor de autorización."
+
+#: src/LoginWithAuthorizationProviderAction.php:246
+msgid ""
+"Failed to get the access token or the user details from the authorization "
+"provider"
+msgstr ""
+"No se ha podido obtener el token de acceso o los datos de usuario del "
+"proveedor de autorización"
+
+#: src/LoginWithAuthorizationProviderAction.php:274
+msgid ""
+"The identity received by the authorization provider cannot be connected to "
+"the requested user, because it is already used to sign in by another "
+"webtrees user."
+msgstr ""
+"La identidad recibida por el proveedor de autorización no puede conectarse "
+"con el usuario solicitado, porque ya ha sido utilizada para iniciar sesión "
+"por otro usuario de webtrees."
+
+#: src/LoginWithAuthorizationProviderAction.php:285
+#, php-format
+msgid "Sucessfully connected existing user %s with provider: %s"
+msgstr "Conectado con éxito el usuario existente %s con el proveedor: %s"
+
+#: src/LoginWithAuthorizationProviderAction.php:298
+msgid ""
+"Currently, no webtrees user account is related to the user data received "
+"from the authorization provider."
+msgstr ""
+"Actualmente, ninguna cuenta de usuario de webtrees está relacionada con los "
+"datos de usuario recibidos del proveedor de autorización."
+
+#: src/LoginWithAuthorizationProviderAction.php:303
+#, php-format
+msgid "It is not possible to request a webtrees account with %s."
+msgstr "No es posible solicitar una cuenta webtrees con %s."
+
+#: src/LoginWithAuthorizationProviderAction.php:304
+#: src/LoginWithAuthorizationProviderAction.php:311
+#: src/LoginWithAuthorizationProviderAction.php:323
+#: src/LoginWithAuthorizationProviderAction.php:424
+#, php-format
+msgid ""
+"To connect an existing user with %s, sign in and select: My pages / My "
+"account / Connect with"
+msgstr ""
+"Para conectar un usuario existente con %s, inicie sesión y seleccione: Mis "
+"páginas / Mi cuenta / Conectar con"
+
+#: src/LoginWithAuthorizationProviderAction.php:310
+#, php-format
+msgid "Invalid user data received from %s. Email or username missing."
+msgstr ""
+"Datos de usuario no válidos recibidos de %s. Falta el correo electrónico o "
+"el nombre de usuario."
+
+#: src/LoginWithAuthorizationProviderAction.php:318
+msgid "Requesting a new webtrees user account is currently not allowed."
+msgstr ""
+"Actualmente no está permitido solicitar una nueva cuenta de usuario de "
+"webtrees."
+
+#: src/LoginWithAuthorizationProviderAction.php:322
+#, php-format
+msgid "Press \"continue\" to request a new webtrees user acccount with %s."
+msgstr ""
+"Pulse \"continuar\" para solicitar una nueva cuenta de usuario webtrees con "
+"%s."
+
+#: src/LoginWithAuthorizationProviderAction.php:332
+msgid "Request a new user account with an authorization provider"
+msgstr "Solicitar una nueva cuenta de usuario con un proveedor de autorización"
+
+#: src/LoginWithAuthorizationProviderAction.php:354
+#, php-format
+msgid "The email address for user %s was updated to: %s"
+msgstr ""
+"La dirección de correo electrónico del usuario %s se ha actualizado a: %s"
+
+#: src/LoginWithAuthorizationProviderAction.php:423
+msgid "Login denied. The email address or username already exists."
+msgstr ""
+"Login denegado. La dirección de correo electrónico o el nombre de usuario ya "
+"existen."
+
+#: src/OAuth2Client.php:223
+msgid "OAuth2 Client"
+msgstr "Cliente OAuth2"
+
+#: src/OAuth2Client.php:236
+msgid "A custom module to implement a OAuth2 client for webtrees."
+msgstr ""
+"Un módulo personalizado para implementar un cliente OAuth2 para webtrees."
+
+#: src/OAuth2Client.php:419 resources/views/login-with-provider.phtml:41
+msgid "Sign in with"
+msgstr "Identifícate con"
+
+#: src/OAuth2Client.php:450
+msgid "Disconnect account from"
+msgstr "Desconectar cuenta de"
+
+#: src/OAuth2Client.php:456
+msgid "Connect account with"
+msgstr "Conectar la cuenta con"
+
+#: src/OAuth2Client.php:586
+#, php-format
+msgid "The preferences for the module \"%s\" were updated."
+msgstr "Se han actualizado las preferencias del módulo \"%s\"."
+
+#: src/OAuth2Client.php:607 resources/views/settings.phtml:52
+msgid ""
+"The redirect URL for OAuth 2.0 communication has changed in custom module "
+"versions >= 1.1.0. If certain connections with authorization providers fail, "
+"you might need to update the authorization provider settings with the new "
+"redirect URL."
+msgstr ""
+"La URL de redirección para la comunicación OAuth 2.0 ha cambiado en las "
+"versiones del módulo personalizado >= 1.1.0. Si algunas conexiones con "
+"proveedores de autorización fallan, es posible que tenga que actualizar la "
+"configuración del proveedor de autorización con la nueva URL de redirección."
+
+#: src/OAuth2Client.php:620
+#, php-format
+msgid ""
+"The preferences for the custom module \"%s\" were sucessfully updated to the "
+"new module version %s."
+msgstr ""
+"Las preferencias del módulo personalizado \"%s\" se han actualizado "
+"correctamente a la nueva versión del módulo %s."
+
+#: src/OAuth2Client.php:652
+#, php-format
+msgid ""
+"The custom module \"%s\" is activated in parallel to the %s custom module. "
+"This can lead to unintended behavior. If using the %s module, it is strongly "
+"recommended to deactivate the \"%s\" module, because the identical "
+"functionality is also integrated in the %s module."
+msgstr ""
+"El módulo personalizado \"%s\" se activa en paralelo al módulo personalizado "
+"%s. Esto puede dar lugar a comportamientos no deseados. Si utiliza el módulo "
+"%s, se recomienda encarecidamente desactivar el módulo \"%s\", ya que la "
+"funcionalidad idéntica también está integrada en el módulo %s."
+
+#: src/OAuth2Client.php:657
+#, php-format
+msgid ""
+"The custom module \"%s\" is activated in parallel to the %s custom module. "
+"This can lead to unintended behavior, because both of the modules have "
+"registered the same custom view \"%s\". It is strongly recommended to "
+"deactivate one of the modules."
+msgstr ""
+"El módulo personalizado \"%s\" se activa en paralelo al módulo personalizado "
+"%s. Esto puede provocar un comportamiento no deseado, ya que ambos módulos "
+"han registrado la misma vista personalizada \"%s\". Se recomienda "
+"encarecidamente desactivar uno de los módulos."
+
+#: src/OAuth2Client.php:681
+#, php-format
+msgid ""
+"The custom module view \"%s\" is not registered as replacement for the "
+"standard webtrees view. There might be another module installed, which "
+"registered the same custom view. This can lead to unintended behavior. It is "
+"strongly recommended to deactivate one of the modules. The path of the "
+"parallel view is: %s"
+msgstr ""
+"La vista personalizada del módulo \"%s\" no está registrada como reemplazo "
+"de la vista estándar de webtrees. Puede que haya otro módulo instalado que "
+"haya registrado la misma vista personalizada. Esto puede provocar un "
+"comportamiento no deseado. Se recomienda encarecidamente desactivar uno de "
+"los módulos. La ruta de la vista paralela es: %s"
+
+#: src/Provider/AbstractAuthorizationProvider.php:133
+msgid ""
+"Error while trying to get an access token from the authorization provider. "
+"Check the setting for urlAccessToken in the webtrees configuration. Check "
+"the server access logs (or .htaccess configuration files) whether any 301 or "
+"302 redirects are applied, which might convert POST into GET requests."
+msgstr ""
+"Error al intentar obtener un token de acceso del proveedor de autorización. "
+"Compruebe la configuración de urlAccessToken en la configuración de "
+"webtrees. Compruebe en los registros de acceso al servidor (o en los "
+"archivos de configuración .htaccess) si se aplica alguna redirección 301 o "
+"302, que podría convertir las solicitudes POST en GET."
+
+#: src/Provider/AbstractAuthorizationProvider.php:165
+msgid "Invalid user data received from the authorization provider"
+msgstr "Datos de usuario no válidos recibidos del proveedor de autorización"
+
+#: src/Provider/AbstractAuthorizationProvider.php:165
+msgid ""
+"Check the setting for urlResourceOwnerDetails in the webtrees configuration."
+msgstr ""
+"Compruebe la configuración de urlResourceOwnerDetails en la configuración de "
+"webtrees."
+
+#: src/RequestHandlers/RegisterWithProviderAction.php:108
+msgid "Automatic user registration after sign in with authorization provider"
+msgstr ""
+"Registro automático de usuarios tras iniciar sesión con el proveedor de "
+"autorizaciones"
+
+#: resources/views/alert.phtml:24
+msgid "Custom module"
+msgstr "Módulo personalizado"
+
+#: resources/views/edit-account-page.phtml:66
+#, php-format
+msgid ""
+"The authorization provider \"%s\" is not available. Please contact the "
+"webtrees administrator."
+msgstr ""
+"El proveedor de autorización \"%s\" no está disponible. Póngase en contacto "
+"con el administrador de webtrees."
+
+#: resources/views/edit-account-page.phtml:72
+#, php-format
+msgid "Signed in with %s"
+msgstr "Registrado con %s"
+
+#: resources/views/edit-account-page.phtml:74
+#, php-format
+msgid "This user can sign in with %s"
+msgstr "Este usuario puede iniciar sesión con %s"
+
+#: resources/views/edit-account-page.phtml:77
+msgid ""
+"The administrator might have disabled to change the email address or the "
+"password"
+msgstr ""
+"El administrador podría haber desactivado para cambiar la dirección de "
+"correo electrónico o la contraseña"
+
+#: resources/views/login-with-provider.phtml:29
+msgid "Request a new user account with"
+msgstr "Solicitar una nueva cuenta de usuario con"
+
+#: resources/views/login-with-provider.phtml:33
+msgid "Connect with"
+msgstr "Conectar con"
+
+#: resources/views/login-with-provider.phtml:37
+msgid "Disconnect from"
+msgstr "Desconectar de"
+
+#: resources/views/password-request-page.phtml:51
+msgid "Sign in with an authorization provider"
+msgstr "Iniciar sesión con un proveedor de autorización"
+
+#: resources/views/password-request-page.phtml:54
+msgid ""
+"In this view, you can only request a webtrees password. The authorization "
+"provider password is managed by the authorization provider and cannot be "
+"changed within webtrees."
+msgstr ""
+"En esta vista, sólo se puede solicitar una contraseña de webtrees. La "
+"contraseña del proveedor de autorización la gestiona el proveedor de "
+"autorización y no se puede cambiar dentro de webtrees."
+
+#: resources/views/password-reset-page.phtml:37
+msgid ""
+"The request to reset the passwort belongs to a user, who can sign in with an "
+"authorization provider. In this view, you can only change the webtrees "
+"password. The authorization provider password is managed by the "
+"authorization provider and cannot be changed within webtrees."
+msgstr ""
+"La solicitud para restablecer la contraseña pertenece a un usuario, que "
+"puede iniciar sesión con un proveedor de autorización. En esta vista, sólo "
+"se puede cambiar la contraseña de webtrees. La contraseña del proveedor de "
+"autorización es gestionada por el proveedor de autorización y no se puede "
+"cambiar dentro de webtrees."
+
+#: resources/views/password-reset-page.phtml:79
+msgid ""
+"Currently, the webtrees password cannot be reset for users, who sign in with "
+"an authorization provider. Please contact the webtrees administrator."
+msgstr ""
+"Actualmente, la contraseña de webtrees no se puede restablecer para los "
+"usuarios que se registran con un proveedor de autorización. Póngase en "
+"contacto con el administrador de webtrees."
+
+#: resources/views/register-page.phtml:67
+msgid "Request account with"
+msgstr "Solicitar cuenta con"
+
+#: resources/views/register-page.phtml:67
+msgid ""
+"The administrator might have disabled to change some of the received user "
+"data"
+msgstr ""
+"El administrador podría haber deshabilitado para cambiar algunos de los "
+"datos de usuario recibidos"
+
+#: resources/views/register-page.phtml:124
+msgid "Password (within webtrees)"
+msgstr "Contraseña (dentro de webtrees)"
+
+#: resources/views/register-page.phtml:141
+msgid "Further registration data - Please complete and continue"
+msgstr "Otros datos de registro - Rellene y continúe"
+
+#: resources/views/register-with-provider-page.phtml:43
+msgid "Request a new account with"
+msgstr "Solicitar una nueva cuenta con"
+
+#: resources/views/settings.phtml:31
+msgid "Control panel"
+msgstr "Panel de control"
+
+#: resources/views/settings.phtml:39
+msgid ""
+"Currently, webtrees does not use the HTTPS protocol. If signing in with "
+"authorization providers, it is urgently recommended to use HTTPS in order to "
+"encrypt the communication with the authorization provider. If your server "
+"supports the protocol, HTTPS can be activated by changing \"base_url\" in "
+"the webtrees \"config.ini.php\" file. Currently, \"base_url\" does not start "
+"with \"https://\"."
+msgstr ""
+"Actualmente, webtrees no utiliza el protocolo HTTPS. Si se registra con "
+"proveedores de autorización, se recomienda encarecidamente utilizar HTTPS "
+"para cifrar la comunicación con el proveedor de autorización. Si su servidor "
+"soporta el protocolo, HTTPS puede ser activado cambiando \"base_url\" en el "
+"archivo \"config.ini.php\" de webtrees. Actualmente, \"base_url\" no empieza "
+"por \"https://\"."
+
+#: resources/views/settings.phtml:62
+msgid "Settings for Sign In Menus"
+msgstr "Configuración de los menús de inicio de sesión"
+
+#: resources/views/settings.phtml:67
+msgid ""
+"Currently, all menus to directly sign in with webtrees are deactivated. "
+"Therefore, only sign in with authorization providers is possible. Please be "
+"sure that you establish a webtrees administrator account with an "
+"authorization provider. Otherwise, administrator sign in is not possible any "
+"more. Hint: You can still access the original webtrees login page by typing "
+"the login route into the browser line, e.g.:"
+msgstr ""
+"Actualmente, todos los menús para iniciar sesión directamente con webtrees "
+"están desactivados. Por lo tanto, sólo es posible iniciar sesión con "
+"proveedores de autorización. Asegúrese de establecer una cuenta de "
+"administrador de webtrees con un proveedor de autorización. De lo contrario, "
+"ya no será posible iniciar sesión como administrador. Sugerencia: Aún puede "
+"acceder a la página de inicio de sesión original de webtrees escribiendo la "
+"ruta de inicio de sesión en la línea del navegador, p. ej:"
+
+#: resources/views/settings.phtml:71
+#, php-format
+msgid ""
+"Currently, the webtrees sign in menu is deactivated and the custom module "
+"sign in menu is hidden for the following trees: %s. Some of the users will "
+"not be able to sign in. Please consider to activate one of the sign in menus "
+"with the settings below."
+msgstr ""
+"Actualmente, el menú de inicio de sesión de webtrees está desactivado y el "
+"menú de inicio de sesión del módulo personalizado está oculto para los "
+"siguientes árboles: %s. Algunos usuarios no podrán iniciar sesión. Por "
+"favor, considere la posibilidad de activar uno de los menús de inicio de "
+"sesión con la configuración de abajo."
+
+#: resources/views/settings.phtml:78
+msgid "Show original webtrees sign in as menu item"
+msgstr "Mostrar el inicio de sesión original de webtrees como opción de menú"
+
+#: resources/views/settings.phtml:83
+msgid ""
+"By selecting/unselecting this option, it is possible to activate/deactivate "
+"the sign in menu entry for webtrees. If deactivated, only sign in menu "
+"entries for authorization providers might be shown."
+msgstr ""
+"Seleccionando/deseleccionando esta opción, es posible activar/desactivar la "
+"entrada del menú de inicio de sesión para webtrees. Si se desactiva, es "
+"posible que sólo se muestren las entradas del menú de inicio de sesión para "
+"los proveedores de autorización."
+
+#: resources/views/settings.phtml:92
+msgid "Hide the webtrees sign in menu"
+msgstr "Ocultar el menú de inicio de sesión de webtrees"
+
+#: resources/views/settings.phtml:95
+msgid "Hide"
+msgstr "Ocultar"
+
+#: resources/views/settings.phtml:97
+msgid ""
+"By selecting this option, it is possible to hide the original webtrees sign "
+"in menu. This might be helpful if the custom module specific top menu for "
+"sign in is used instead."
+msgstr ""
+"Seleccionando esta opción, es posible ocultar el menú de inicio de sesión "
+"original de webtrees. Esto puede ser útil si en su lugar se utiliza el menú "
+"superior específico del módulo personalizado para el inicio de sesión."
+
+#: resources/views/settings.phtml:104
+msgid "Settings for Password, Email, and Connection Management"
+msgstr ""
+"Configuración de la gestión de contraseñas, correo electrónico y conexiones"
+
+#: resources/views/settings.phtml:110
+msgid "Keep email address synchronized with authorization provider"
+msgstr ""
+"Mantener la dirección de correo electrónico sincronizada con el proveedor de "
+"autorización"
+
+#: resources/views/settings.phtml:113
+msgid "Keep synchronized"
+msgstr "Mantener sincronizado"
+
+#: resources/views/settings.phtml:115
+msgid ""
+"This selection prevents a user with the same email address in webtrees and "
+"at the authorization provider from changing the email address in webtrees. "
+"If the email address at the authorization provider changes, the email "
+"address in webtrees will be updated during sign in. If the administrator "
+"changes the email address in the webtrees user management, the email address "
+"synchronization will no longer continue."
+msgstr ""
+"Esta selección impide que un usuario con la misma dirección de correo "
+"electrónico en webtrees y en el proveedor de autorización cambie la "
+"dirección de correo electrónico en webtrees. Si la dirección de correo "
+"electrónico en el proveedor de autorización cambia, la dirección de correo "
+"electrónico en webtrees se actualizará durante el inicio de sesión. Si el "
+"administrador cambia la dirección de correo electrónico en la gestión de "
+"usuarios de webtrees, la sincronización de direcciones de correo electrónico "
+"ya no continuará."
+
+#: resources/views/settings.phtml:124
+msgid "Use webtrees password in parallel"
+msgstr "Utilizar la contraseña webtrees en paralelo"
+
+#: resources/views/settings.phtml:129
+msgid ""
+"This option allows users, who register with an authorization provider, to "
+"additionally sign in with a webtrees password."
+msgstr ""
+"Esta opción permite a los usuarios, que se registran con un proveedor de "
+"autorización, iniciar sesión adicionalmente con una contraseña de webtrees."
+
+#: resources/views/settings.phtml:138
+msgid "Allow existing webtrees users to connect with an authorization provider"
+msgstr ""
+"Permitir a los usuarios existentes de webtrees conectarse con un proveedor "
+"de autorización"
+
+#: resources/views/settings.phtml:143
+msgid ""
+"If selecting this option, an existing webtrees user can connect the webtrees "
+"account with an authorization provider. This will allow users to "
+"additionally sign in with an authorization providers while still using the "
+"webtrees user and password."
+msgstr ""
+"Si selecciona esta opción, un usuario existente de webtrees puede conectar "
+"la cuenta de webtrees con un proveedor de autorización. Esto permitirá a los "
+"usuarios iniciar sesión adicionalmente con un proveedor de autorización sin "
+"dejar de utilizar el usuario y la contraseña de webtrees."
+
+#: resources/views/settings.phtml:149
+msgid "Debug Settings"
+msgstr "Configuración de depuración"
+
+#: resources/views/settings.phtml:155
+msgid "Debug logs"
+msgstr "Registros de depuración"
+
+#: resources/views/settings.phtml:160
+msgid ""
+"By selecting this option, additional debug information about the protocol "
+"flow between webtrees and the authorization provider will be logged in the "
+"webtrees website logs."
+msgstr ""
+"Al seleccionar esta opción, se registrará información de depuración "
+"adicional sobre el flujo del protocolo entre webtrees y el proveedor de "
+"autorización en los registros del sitio web de webtrees."
