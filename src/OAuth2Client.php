@@ -99,7 +99,7 @@ class OAuth2Client extends AbstractModule implements
     private Collection $custom_view_list;
 
 	//Custom module version
-	public const CUSTOM_VERSION = '1.1.2';
+	public const CUSTOM_VERSION = '1.1.3';
 
     //Routes
 	public const REDIRECT_ROUTE = '/OAuth2Client';
