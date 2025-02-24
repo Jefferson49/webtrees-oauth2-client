@@ -106,7 +106,7 @@ class OAuth2Client extends AbstractModule implements
 	public const REGISTER_PROVIDER_ROUTE = '/register-with-provider-action{/tree}';
 
 	//Github repository
-	public const GITHUB_REPO = 'Jefferson49/OAuth2-Client';
+	public const GITHUB_REPO = 'Jefferson49/webtrees-oauth2-client';
 
 	//Github API URL to get the information about the latest releases
 	public const GITHUB_API_LATEST_VERSION = 'https://api.github.com/repos/'. self::GITHUB_REPO . '/releases/latest';
