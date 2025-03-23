@@ -238,8 +238,8 @@ Joomla_urlAuthorize='xxx'
 Joomla_signInButtonLabel='xxx'
 ```
 + Insert the configuration details from the Joomla OAuth 2.0 Server into the newly included configuration lines of your config.ini.php file:
-    + **Joomla_clientId**='...' (value for "Client ID" shown in Nextcloud)
-    + **Joomla_clientSecret**='...' (value for "Client Secret"  shown in Nextcloud)
+    + **Joomla_clientId**='...' (value for "Client ID" shown in Joomla)
+    + **Joomla_clientSecret**='...' (value for "Client Secret"  shown in Joomla)
     + **Joomla_urlAuthorize**='JOOMLA_BASE_URL/index.php' (JOOMLA_BASE_URL from your Joomla installation, e.g. 'https://mysite.net/joomla')
     + **Joomla_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
