@@ -255,10 +255,10 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $authorization_provider_id = $user_data_from_provider->getAuthorizationProviderUserId();
 
         CustomModuleLog::addDebugLog($log_module, 'Adjusted user data from authorization provider to webtrees' . ': ' . json_encode([
-                'authorization_provider_i' => $authorization_provider_id,
-                'user_name'                => $user_name, 
-                'real_name'                => $real_name,
-                'email'                    => $email,
+                'authorization_provider_id' => $authorization_provider_id,
+                'user_name'                 => $user_name, 
+                'real_name'                 => $real_name,
+                'email'                     => $email,
             ]));
 
         $provider_to_connect = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, '');

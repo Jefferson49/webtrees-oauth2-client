@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3172cd3cbaf890568dc0f03f3df82191",
+    "content-hash": "44508df822033fadd226ab185e9ba103",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
@@ -323,6 +323,67 @@
                 "oauth2"
             ],
             "time": "2025-01-11T17:22:28+00:00"
+        },
+        {
+            "name": "stevenmaguire/oauth2-keycloak",
+            "version": "5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stevenmaguire/oauth2-keycloak.git",
+                "reference": "1b690b7377dfe7a23e1590373f37e12cf40a6d75"
+            },
+            "require": {
+                "firebase/php-jwt": "^6.0",
+                "league/oauth2-client": "^2.0",
+                "php": "~7.2 || ~8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.5.0",
+                "phpunit/phpunit": "~9.6.4",
+                "squizlabs/php_codesniffer": "~3.7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stevenmaguire\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Stevenmaguire\\OAuth2\\Client\\Test\\": "test/src/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "@putenv XDEBUG_MODE=coverage",
+                    "phpunit --colors=always"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steven Maguire",
+                    "email": "stevenmaguire@gmail.com",
+                    "homepage": "https://github.com/stevenmaguire"
+                }
+            ],
+            "description": "Keycloak OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "keywords": [
+                "authorisation",
+                "authorization",
+                "client",
+                "keycloak",
+                "oauth",
+                "oauth2"
+            ],
+            "time": "2021-05-13T08:24:09+00:00"
         }
     ],
     "packages-dev": [],

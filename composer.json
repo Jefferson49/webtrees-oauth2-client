@@ -11,7 +11,11 @@
         {
             "url": "https://github.com/bahuma20/oauth2-nextcloud.git",
             "type": "git"
-        }           
+        },
+        {
+            "url": "https://github.com/stevenmaguire/oauth2-keycloak.git",
+            "type": "git"
+        }
     ],
     "require": {
         "bahuma/oauth2-nextcloud": "=2.0.0",
@@ -19,10 +23,12 @@
         "league/oauth2-client": "=2.8.0",
         "league/oauth2-github": "=3.1.1",
         "league/oauth2-google": "=4.0.1",
-        "stevenmaguire/oauth2-dropbox": "dev-Remove-scope-from-getAccessToken"
+        "stevenmaguire/oauth2-dropbox": "dev-Remove-scope-from-getAccessToken",
+        "stevenmaguire/oauth2-keycloak": "=5.1.0"
     },
     "replace": {
         "guzzlehttp/guzzle": "*",
-        "paragonie/random_compat": "*"
+        "paragonie/random_compat": "*",
+        "firebase/php-jwt": "*"
     }    
 }
