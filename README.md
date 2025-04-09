@@ -18,6 +18,7 @@ This README file contains the following main sections:
     + [Dropbox](#dropbox)
     + [Github](#github)
     + [Google](#google)
+    + [Keycloak](#keycloak)
     + [Joomla](#joomla)
     + [Nextcloud](#nextcloud)
     + [Spotify](#spotify)
@@ -217,6 +218,32 @@ Google_clientSecret='xxx'
     + **Google_clientId**='...' (value shown in Google, like described above)
     + **Google_clientSecret**='...' (value shown in Google, like described above)
 + Press the "OK" button in the Google browser page
+
+### Keycloak
++ Log into your Keycloak administration backend and select or create a realm
++ Create a new client with "Client" / "Create client"
++ In "General settings" enter a "Client ID" and select "OpenID Connect" for "Client type"
++ In "Capability config" switch on "Client authentication" and "Authorization". For "Authentication flow" activate "Standard flow".
+* Note: Any time switching on/off the "Client authentification", the "Client credentials" (e.g. "Client Secret") will also be modified/updated. Therefore, you will need to update the "Client Secret" in the webtrees config.ini.php accordingly; otherwise the authentification might fail.
++ In "Login settings", enter the "Valid redirect URIs". See chapter [General Configuration](#general-configuration) about how to get the redirect URL from the webtrees custom module settings.
++ Press "Save" button.
++ With "Client Scopes" / "New client scope", create an additional "openid" scope (if it does not exist already).
++ Enable the "include in token scope" slider for the additional "openid" scope.
++ In "Clients" / "Client scopes" / "Add client scopes", add the additional "openid" scope to the webtrees client as "Default" scope.
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Keycloak_clientId='xxx'
+Keycloak_clientSecret='xxx'
+Keycloak_authServerUrl='xxx'
+Keycloak_realm='xxx'
+Keycloak_signInButtonLabel='xxx'
+```
++ Insert the configuration details from your Keycloak installation into the newly included configuration lines of your config.ini.php file:
+    + **Keycloak_clientId**='...' (value for "Client ID" shown in Keycloak)
+    + **Keycloak_clientSecret**='...' (value for "Client Secret"  shown in Keycloak, "Clients" / "Credentials" / "Client secret")
+    + **Keycloak_authServerUrl**='...' (URL of your Keycloak server)
+    + **Keycloak_realm**='xxx' (value for "Realm name" shown in Keycloak)
+    + **Keycloak_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Joomla
 + Download the Joomla extension [joomla-oauth2-server](https://github.com/Jefferson49/joomla-oauth2-server/releases/latest)
