@@ -8,6 +8,7 @@ use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginAction;
 use Fisharebest\Webtrees\Http\RequestHandlers\PasswordRequestPage;
 use Fisharebest\Webtrees\Http\RequestHandlers\RegisterPage;
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Tree;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
@@ -29,57 +30,66 @@ if (!isset($url) OR
     $url = route(HomePage::class);
 }
 
+$module_service = new ModuleService();
+$oauth2_client  = $module_service->findByName(OAuth2Client::activeModuleName());
+
 ?>
 
 <h2 class="wt-page-title">
     <?= MoreI18N::xlate('Welcome to this genealogy website') ?>
 </h2>
 
-<p>
-    <?= nl2br($welcome, false) ?>
-</p>
+<?php if ($oauth2_client->getPreference(OAuth2Client::PREF_HIDE_WEBTREES_SIGN_IN) !== '1') : ?>
+    <p>
+        <?= nl2br($welcome, false) ?>
+    </p>
+<?php else : ?>
+    <br>
+<?php endif ?>
 
 <form method="post" action="<?= e(route(LoginAction::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>" class="wt-page-options wt-page-options-login">
     <input type="hidden" name="url" value="<?= e($url) ?>">
 
-    <div class="row">
-        <label class="col-sm-3 col-form-label wt-page-options-label" for="username">
-            <?= MoreI18N::xlate('Username') ?>
-        </label>
-        <div class="col-sm-9 wt-page-options-value">
-            <input class="form-control" type="text" id="username" name="username" required="required" value="<?= e($username) ?>" autocomplete="username">
+    <?php if ($oauth2_client->getPreference(OAuth2Client::PREF_HIDE_WEBTREES_SIGN_IN) !== '1') : ?>
+        <div class="row">
+            <label class="col-sm-3 col-form-label wt-page-options-label" for="username">
+                <?= MoreI18N::xlate('Username') ?>
+            </label>
+            <div class="col-sm-9 wt-page-options-value">
+                <input class="form-control" type="text" id="username" name="username" required="required" value="<?= e($username) ?>" autocomplete="username">
+            </div>
         </div>
-    </div>
 
-    <div class="row mb-3">
-        <label class="col-sm-3 col-form-label wt-page-options-label" for="password">
-            <?= MoreI18N::xlate('Password') ?>
-        </label>
-        <div class="col-sm-9 wt-page-options-value">
-            <input autocomplete="current-password" class="form-control" id="password" name="password" required="required" type="password" data-wt-show-password-text="<?= e(MoreI18N::xlate('show')) ?>" data-wt-show-password-title="<?= e(MoreI18N::xlate('Show password')) ?>" data-wt-hide-password-text="<?= e(MoreI18N::xlate('hide')) ?>" data-wt-hide-password-title="<?= e(MoreI18N::xlate('Hide password')) ?>">
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label wt-page-options-label" for="password">
+                <?= MoreI18N::xlate('Password') ?>
+            </label>
+            <div class="col-sm-9 wt-page-options-value">
+                <input autocomplete="current-password" class="form-control" id="password" name="password" required="required" type="password" data-wt-show-password-text="<?= e(MoreI18N::xlate('show')) ?>" data-wt-show-password-title="<?= e(MoreI18N::xlate('Show password')) ?>" data-wt-hide-password-text="<?= e(MoreI18N::xlate('hide')) ?>" data-wt-hide-password-title="<?= e(MoreI18N::xlate('Hide password')) ?>">
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-sm-3 col-form-label wt-page-options-label">
-        </div>
-        <div class="col-sm-9 wt-page-options-value">
-            <button class="btn btn-primary" type="submit">
-                <?= /* I18N: A button label. */
-                MoreI18N::xlate('sign in') ?>
-            </button>
+        <div class="row">
+            <div class="col-sm-3 col-form-label wt-page-options-label">
+            </div>
+            <div class="col-sm-9 wt-page-options-value">
+                <button class="btn btn-primary" type="submit">
+                    <?= /* I18N: A button label. */
+                    MoreI18N::xlate('sign in') ?>
+                </button>
 
-            <a class="btn btn-link" href="<?= e(route(PasswordRequestPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>">
-                <?= MoreI18N::xlate('Forgot password?') ?>
-            </a>
-
-            <?php if ($can_register) : ?>
-                <a class="btn btn-link" href="<?= e(route(RegisterPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>">
-                    <?= MoreI18N::xlate('Request a new user account') ?>
+                <a class="btn btn-link" href="<?= e(route(PasswordRequestPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>">
+                    <?= MoreI18N::xlate('Forgot password?') ?>
                 </a>
-            <?php endif ?>
+
+                <?php if ($can_register) : ?>
+                    <a class="btn btn-link" href="<?= e(route(RegisterPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>">
+                        <?= MoreI18N::xlate('Request a new user account') ?>
+                    </a>
+                <?php endif ?>
+            </div>
         </div>
-    </div>
+    <?php endif ?>        
 
     <?= csrf_field() ?>
 </form>
