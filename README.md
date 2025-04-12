@@ -173,8 +173,8 @@ Dropbox_clientId='xxx'
 Dropbox_clientSecret='xxx'
 ```
 + Insert the configuration details from your Dropbox App into the newly included configuration lines of your config.ini.php file:
-    + **Dropbox_clientId**='...' (value shown in Dropbox, like described above)
-    + **Dropbox_clientSecret**='...' (value shown in Dropbox, like described above)
+    + **Dropbox_clientId**='...' (value for "App key" shown in Dropbox, like described above)
+    + **Dropbox_clientSecret**='...' (value for "App secret" shown in Dropbox, like described above)
 
 ### Github
 + Open the [Github](https://github.com/) page and log into your Github account
