@@ -5,10 +5,6 @@
             "type": "git"
         },
         {
-            "url": "https://github.com/Jefferson49/oauth2-dropbox.git",
-            "type": "git"
-        },
-        {
             "url": "https://github.com/bahuma20/oauth2-nextcloud.git",
             "type": "git"
         },
@@ -20,10 +16,10 @@
     "require": {
         "bahuma/oauth2-nextcloud": "=2.0.0",
         "jefferson49/webtrees-common": ">=1.2.8",
-        "league/oauth2-client": "=2.8.0",
+        "league/oauth2-client": "=2.8.1",
         "league/oauth2-github": "=3.1.1",
         "league/oauth2-google": "=4.0.1",
-        "stevenmaguire/oauth2-dropbox": "dev-Remove-scope-from-getAccessToken",
+        "stevenmaguire/oauth2-dropbox": "=3.1.0",
         "stevenmaguire/oauth2-keycloak": "=5.1.0"
     },
     "replace": {
