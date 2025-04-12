@@ -38,6 +38,8 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
+use Psr\Http\Message\ResponseInterface;
+
 use Exception;
 
 
@@ -126,11 +128,22 @@ abstract class AbstractAuthorizationProvider
         catch (IdentityProviderException $e) {
             $message  = $e->getMessage();
             $response = $e->getResponseBody();
-            $status_code = $response->getStatusCode();
-            $reason_phrase = $response->getReasonPhrase();
-            $error_text = ' Error message: ' . $message . ', Status code: ' .  $status_code . ', Reason phrase: ' . $reason_phrase . ' .';
 
-            throw new IdentityProviderException($error_text . I18N::translate('Error while trying to get an access token from the authorization provider. Check the setting for urlAccessToken in the webtrees configuration. Check the server access logs (or .htaccess configuration files) whether any 301 or 302 redirects are applied, which might convert POST into GET requests.'), 0, 0);
+            if ($response instanceof ResponseInterface) {
+                $status_code = $response->getStatusCode();
+                $reason_phrase = $response->getReasonPhrase();    
+            }
+            else {
+                $status_code = '';
+                $reason_phrase = '';    
+            }
+
+            $error_text =   'Error message: ' . $message . 
+                            ($status_code   !== '' ? ', Status code: '. $status_code : '') . 
+                            ($reason_phrase !== '' ? ', Reason phrase: '. $reason_phrase : '') .
+                            '.';
+
+            throw new IdentityProviderException($error_text . ' ' . I18N::translate('Error while trying to get an access token from the authorization provider. Check the setting for urlAccessToken in the webtrees configuration. Check the server access logs for errors. Check the server configuration for redirects.'), 0, 0);
         }
     }
 

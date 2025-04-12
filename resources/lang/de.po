@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-04-12 10:03+0200\n"
-"PO-Revision-Date: 2025-04-12 10:07+0200\n"
+"POT-Creation-Date: 2025-04-12 11:08+0200\n"
+"PO-Revision-Date: 2025-04-12 11:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -239,24 +239,23 @@ msgstr ""
 "führen. Es wird dringend empfohlen, eines der Module zu deaktivieren. Der "
 "Pfad für den Custom View ist: %s"
 
-#: src/Provider/AbstractAuthorizationProvider.php:133
+#: src/Provider/AbstractAuthorizationProvider.php:145
 msgid ""
 "Error while trying to get an access token from the authorization provider. "
 "Check the setting for urlAccessToken in the webtrees configuration. Check "
-"the server access logs (or .htaccess configuration files) whether any 301 or "
-"302 redirects are applied, which might convert POST into GET requests."
+"the server access logs for errors. Check the server configuration for "
+"redirects."
 msgstr ""
-"Beim Versuch, ein Zugriffstoken vom Autorisierungsanbieter abzurufen, ist "
-"ein Fehler aufgetreten. Überprüfen Sie die Einstellung für urlAccessToken in "
-"der webtrees Konfiguration. Überprüfen Sie die Server-Zugriffsprotokolle "
-"(oder .htaccess Konfigurationsdateien), ob 301- oder 302-Weiterleitungen "
-"angewendet werden, die möglicherweise POST- in GET-Anfragen umwandeln."
+"Beim Abrufen eines Zugriffstokens vom Autorisierungsanbieter ist ein Fehler "
+"aufgetreten. Überprüfen Sie die Einstellung für „urlAccessToken“ in der "
+"webtrees-Konfiguration. Überprüfen Sie die Serverzugriffsprotokolle auf "
+"Fehler. Überprüfen Sie die Serverkonfiguration auf Weiterleitungen."
 
-#: src/Provider/AbstractAuthorizationProvider.php:165
+#: src/Provider/AbstractAuthorizationProvider.php:177
 msgid "Invalid user data received from the authorization provider"
 msgstr "Ungültige Benutzerdaten vom Authorisierungsanbieter empfangen"
 
-#: src/Provider/AbstractAuthorizationProvider.php:165
+#: src/Provider/AbstractAuthorizationProvider.php:177
 msgid ""
 "Check the setting for urlResourceOwnerDetails in the webtrees configuration."
 msgstr ""
