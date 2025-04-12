@@ -233,17 +233,18 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                     'email'     => $user_data_from_provider->email(),
                     ]));
 
-            } catch (IdentityProviderException $e) {
+            } catch (Exception $e) {
 
                 // Failed to get the access token or user details.
-                CustomModuleLog::addDebugLog($log_module, 'Failed to get the access token or user details' . ': ' . $e->getMessage());
+                $error_message = $e->getMessage() . ' ' . $e->getFile() . ' ' . $e->getLine();
+                CustomModuleLog::addDebugLog($log_module, 'Failed to get the access token or user details' . ': ' . $error_message);
 
                 return $this->viewResponse(OAuth2Client::viewsNamespace() . '::alert', [
                     'title'        => I18N::translate('OAuth 2.0 communication error'),
                     'tree'         => $tree instanceof Tree ? $tree : null,
                     'alert_type'   => OAuth2Client::ALERT_DANGER,
                     'module_name'  => $oauth2_client->title(),
-                    'text'         => I18N::translate('Failed to get the access token or the user details from the authorization provider') . ': ' . $e->getMessage(),
+                    'text'         => I18N::translate('Failed to get the access token or the user details from the authorization provider') . ': ' . $error_message,
             ]);
             }
         }
