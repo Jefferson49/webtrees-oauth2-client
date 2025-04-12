@@ -265,12 +265,23 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $user_to_connect     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0);
 
         //Check if username/email already exists
-        $existing_credentials = (($this->user_service->findByEmail($email) !== null) OR ($this->user_service->findByUserName($user_name) !== null));
+        $existing_user = $this->user_service->findByEmail($email) ?? $this->user_service->findByUserName($user_name);
+
+        //Check if the authorizatiohn provider is already connected with an user
+        $provider_id_is_connected = $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null;
+
+        //Check if user has not signed in before (i.e. existing user, no provider name, no login timestamp)
+        $existing_user_not_signed_in_yet = false;   
+        if ($existing_user !== null && ($existing_user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') === '') && ($existing_user->getPreference(UserInterface::PREF_TIMESTAMP_ACTIVE) === '0')) {
+            $existing_user_not_signed_in_yet = true;
+        }
 
         //If we shall connect an existing user to a provider   
         if($provider_to_connect === $provider_name && $user_to_connect !== 0) {
 
-            if ($existing_credentials OR $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null) {
+            //We do not connect an existing user who has not signed in yet, because it might have been registered based on an authorization provider (and not signed in yet)
+            //We do not connect users with an authorization provider user ID, which is already connected to another user
+            if ($existing_user_not_signed_in_yet OR $provider_id_is_connected) {
                 $message = I18N::translate('The identity received by the authorization provider cannot be connected to the requested user, because it is already used to sign in by another webtrees user.');
                 FlashMessages::addMessage($message, 'danger');
                 CustomModuleLog::addDebugLog($log_module, $message);
@@ -291,7 +302,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         }
 
         //If user does not exist already, register based on the authorization provider user data
-        if (!$existing_credentials && $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) === null) {
+        if ($existing_user === null && !$provider_id_is_connected) {
 
             //If user did not request to register (i.e. sign in and no account was found)
             if ($connect_action !== OAuth2Client::CONNECT_ACTION_REGISTER) {
