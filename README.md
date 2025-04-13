@@ -20,8 +20,8 @@ This README file contains the following main sections:
     + [Dropbox](#dropbox)
     + [Github](#github)
     + [Google](#google)
-    + [Keycloak](#keycloak)
     + [Joomla](#joomla)
+    + [Keycloak](#keycloak)
     + [Nextcloud](#nextcloud)
     + [Spotify](#spotify)
     + [WordPress](#wordpress)
@@ -79,6 +79,7 @@ Currently, the following authorization providers are supported:
 + **Github**
 + **Google**
 + **Joomla** (with a specific authorization provider extension installed in Joomla)
++ **Keycloak**
 + **Nextcloud**
 + **Spotify**
 + **WordPress** (with a specific authorization provider plugin installed in WordPress)
@@ -231,6 +232,31 @@ Google_clientSecret='xxx'
     + **Google_clientSecret**='...' (value shown in Google, like described above)
 + Press the "OK" button in the Google browser page
 
+### Joomla
++ Download the Joomla extension [joomla-oauth2-server](https://github.com/Jefferson49/joomla-oauth2-server/releases/latest)
++ Install the extension in the Joomla administration backend
++ Open the backend menu: Components / OAuth2 Server / Configure OAuth
++ Click on the button "Add client"
++ Enter a name for "Client Name", e.g. "webtrees"
++ Enter the "Authorized Redirect URL" for the webtrees OAuth 2.0 client. See chapter [General Configuration](#general-configuration) about how to get the redirect URL from the webtrees custom module settings
++ Find the following configuration parameters in the list of OAuth clients, which are needed for the webtrees configuration in config.ini.php below:
+    + Client ID
+    + Client Secret
++ Click on "Endpoint URLs" to find the following configuration parameter, which is needed for the webtrees configuration in config.ini.php below:
+    + Authorize Endpoint 
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Joomla_clientId='xxx'
+Joomla_clientSecret='xxx'
+Joomla_urlAuthorize='xxx'
+Joomla_signInButtonLabel='xxx'
+```
++ Insert the configuration details from the Joomla OAuth 2.0 Server into the newly included configuration lines of your config.ini.php file:
+    + **Joomla_clientId**='...' (value for "Client ID" shown in Joomla)
+    + **Joomla_clientSecret**='...' (value for "Client Secret"  shown in Joomla)
+    + **Joomla_urlAuthorize**='JOOMLA_BASE_URL/index.php' (JOOMLA_BASE_URL from your Joomla installation, e.g. 'https://mysite.net/joomla')
+    + **Joomla_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
+
 ### Keycloak
 + Log into your Keycloak administration backend and select or create a realm
 + Create a new client with "Client" / "Create client"
@@ -256,31 +282,6 @@ Keycloak_signInButtonLabel='xxx'
     + **Keycloak_authServerUrl**='...' (URL of your Keycloak server)
     + **Keycloak_realm**='xxx' (value for "Realm name" shown in Keycloak)
     + **Keycloak_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
-
-### Joomla
-+ Download the Joomla extension [joomla-oauth2-server](https://github.com/Jefferson49/joomla-oauth2-server/releases/latest)
-+ Install the extension in the Joomla administration backend
-+ Open the backend menu: Components / OAuth2 Server / Configure OAuth
-+ Click on the button "Add client"
-+ Enter a name for "Client Name", e.g. "webtrees"
-+ Enter the "Authorized Redirect URL" for the webtrees OAuth 2.0 client. See chapter [General Configuration](#general-configuration) about how to get the redirect URL from the webtrees custom module settings
-+ Find the following configuration parameters in the list of OAuth clients, which are needed for the webtrees configuration in config.ini.php below:
-    + Client ID
-    + Client Secret
-+ Click on "Endpoint URLs" to find the following configuration parameter, which is needed for the webtrees configuration in config.ini.php below:
-    + Authorize Endpoint 
-+ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
-```PHP
-Joomla_clientId='xxx'
-Joomla_clientSecret='xxx'
-Joomla_urlAuthorize='xxx'
-Joomla_signInButtonLabel='xxx'
-```
-+ Insert the configuration details from the Joomla OAuth 2.0 Server into the newly included configuration lines of your config.ini.php file:
-    + **Joomla_clientId**='...' (value for "Client ID" shown in Joomla)
-    + **Joomla_clientSecret**='...' (value for "Client Secret"  shown in Joomla)
-    + **Joomla_urlAuthorize**='JOOMLA_BASE_URL/index.php' (JOOMLA_BASE_URL from your Joomla installation, e.g. 'https://mysite.net/joomla')
-    + **Joomla_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Nextcloud
 + Open the chapter about OAuth2 configuration in the [Nextcloud Administration Manual](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/oauth2.html#add-an-oauth2-application)
