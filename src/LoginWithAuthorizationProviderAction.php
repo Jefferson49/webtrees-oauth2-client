@@ -301,9 +301,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             //Reset session values
             self::deleteSessionValuesForProviderConnection();
         }
-
         //If user does not exist already and user is not connected already, register based on the authorization provider user data
-        if ($existing_user === null && !$provider_id_is_connected) {
+        elseif ($existing_user === null && !$provider_id_is_connected) {
 
             //If user did not request to register (i.e. signed in and no account was found)
             if ($connect_action !== OAuth2Client::CONNECT_ACTION_REGISTER) {
