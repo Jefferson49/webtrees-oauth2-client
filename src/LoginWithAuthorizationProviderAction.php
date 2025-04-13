@@ -268,7 +268,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //Check if username/email already exists
         $existing_user = $this->user_service->findByEmail($email) ?? $this->user_service->findByUserName($user_name);
 
-        //Check if the authorizatiohn provider is already connected with an user
+        //Check if the authorizatiohn provider ID is already connected with an user
         $provider_id_is_connected = $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null;
 
         //Check if user has not signed in before (i.e. existing user, no provider name, no login timestamp)
@@ -302,10 +302,10 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             self::deleteSessionValuesForProviderConnection();
         }
 
-        //If user does not exist already, register based on the authorization provider user data
+        //If user does not exist already and user is not connected already, register based on the authorization provider user data
         if ($existing_user === null && !$provider_id_is_connected) {
 
-            //If user did not request to register (i.e. sign in and no account was found)
+            //If user did not request to register (i.e. signed in and no account was found)
             if ($connect_action !== OAuth2Client::CONNECT_ACTION_REGISTER) {
                 FlashMessages::addMessage(I18N::translate('Currently, no webtrees user account is related to the user data received from the authorization provider.'));
             }
@@ -435,6 +435,14 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 throw new Exception(I18N::translate('Login denied. The email address or username already exists.') . ' ' .
                                     I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
             }
+        }
+        //If user has authorization provider, but provider/ID does not match
+        elseif (    ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== $provider_name) 
+                OR  ($user->getPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, '') !== $authorization_provider_id)) {
+
+                Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The email address or username already exists: ' . $provider_name . ' ' . $authorization_provider_id);
+                throw new Exception(I18N::translate('Login denied. The email address or username already exists.') . ' ' .
+                                    I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
         }
 
         Auth::login($user);
