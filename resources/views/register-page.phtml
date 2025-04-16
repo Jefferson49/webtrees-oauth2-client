@@ -34,13 +34,14 @@ $oauth2_client  = $module_service->findByName(OAuth2Client::activeModuleName());
 $edit_user_name = true;
 $edit_real_name = true;
 
+//Check if registration with authorization provider is requested
+$provider_authorization = isset($provider_name) ? true : false;
+
 //Check whether email is allowed to be edited
-$edit_email     = !$oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL);
+$edit_email     = (!$provider_authorization OR !$oauth2_client->getPreference(OAuth2Client::PREF_SYNC_PROVIDER_EMAIL));
 
 //Check whether a webtress password is allowed to be used
 $edit_password  = $oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD);
-
-$provider_authorization = isset($provider_name) ? true : false;
 
 if ($provider_authorization) {
     $provider_name = $provider_authorization ? Session::get(OAuth2Client::activeModuleName() . 'provider_name') : '';
