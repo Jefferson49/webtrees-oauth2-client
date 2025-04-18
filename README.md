@@ -23,6 +23,7 @@ This README file contains the following main sections:
     + [Joomla](#joomla)
     + [Keycloak](#keycloak)
     + [Nextcloud](#nextcloud)
+    + [PocketID](#pocketid)
     + [Spotify](#spotify)
     + [WordPress](#wordpress)
 +   [Trouble Shooting](#trouble-shooting)
@@ -74,13 +75,14 @@ The OAuth 2.0 Client for webtrees uses the OAuth 2.0 implementation of the [The 
 
 Currently, the following authorization providers are supported:
 + **Generic** (can be configured for several authorization providers)
-+ **Authentik**
++ **Authentik** (can be configured with the Generic provider)
 + **Dropbox**
 + **Github**
 + **Google**
 + **Joomla** (with a specific authorization provider extension installed in Joomla)
 + **Keycloak**
 + **Nextcloud**
++ **PocketID** (can be configured with the Generic provider)
 + **Spotify**
 + **WordPress** (with a specific authorization provider plugin installed in WordPress)
 
@@ -298,6 +300,9 @@ Nextcloud_signInButtonLabel='xxx'
     + **Nextcloud_clientSecret**='...' (value for "Client Secret"  shown in Nextcloud)
     + **Nextcloud_nextcloudUrl**='NEXTCLOUD_BASE_URL' (NEXTCLOUD_BASE_URL from your Nextcloud installation, e.g. 'https://mysite.net/nextcloud')
     + **Nextcloud_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
+
+### PocketID
+It was reported by a user that PocketID was successfully connected with the [Generic](#generic) authorization provider. However, the details of the configuration of PocketID and the Generic provider are not known to the module author.
 
 ### Spotify
 + Open the [Spotify](https://open.spotify.com/login) page and log into your Dropbox account
