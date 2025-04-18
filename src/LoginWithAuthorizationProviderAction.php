@@ -227,7 +227,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         
                 // Using the access token, we can get the user data of the resource owner
                 $user_data_from_provider = $provider->getUserData($accessToken);
-                CustomModuleLog::addDebugLog($log_module, 'Received user data from authorzation provider' . ': ' . json_encode([
+                CustomModuleLog::addDebugLog($log_module, 'Received user data from authorization provider' . ': ' . json_encode([
                     'user_name' => $user_data_from_provider->userName(),
                     'real_name' => $user_data_from_provider->realName(),
                     'email'     => $user_data_from_provider->email(),
