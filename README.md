@@ -53,8 +53,8 @@ It is **highly recommended to use** the **HTTPS** protocol for your webtrees ins
 Please check whether your **webtrees BASE_URL** in the config.ini.php file **starts with "https"**, e.g. https://my_site.net/webtrees.
 
 ## Installation
-+ Download the [latest release](https://github.com/Jefferson49/webtrees-oauth2-client/releases/latest) of the module
-+ Copy the folder "oauth2_client" into the "module_v4" folder of your webtrees installation
++ Download the [latest release](https://github.com/Jefferson49/webtrees-oauth2-client/releases/latest) of the module by downloading the "**oauth2_client_v\*.zip**" file from "Assets". Do not download "Source code.zip".
++ Unzip the downloaded file and copy the included folder "oauth2_client" into the "module_v4" folder of your webtrees installation
 + Check if the module is activated in the control panel:
   + Login to webtrees as an administrator
 	+ Go to "Control Panel/All Modules", and find the module called "ExtendedImportExport"
