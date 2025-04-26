@@ -326,7 +326,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             else {
                 //Check if registration is allowed
                 if (Site::getPreference('USE_REGISTRATION_MODULE') !== '1') {
-                    FlashMessages::addMessage(I18N::translate('Requesting a new webtrees user account is currently not allowed.'));
+                    FlashMessages::addMessage(I18N::translate('Requesting a new webtrees user account is currently not allowed.'), 'danger');
                     throw new HttpNotFoundException();
                 }
 
