@@ -22,6 +22,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\RegisterWithProvide
  * @var string    $real_name
  * @var string    $user_name
  * @var string    $provider_name
+ * @var string    $comments
  */
 ?>
 
@@ -37,36 +38,46 @@ use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\RegisterWithProvide
     </div>
 <?php endif ?>
 
-<div class="wt-page-options wt-page-options-login">
-    <div class="row mb-3">
+<form method="post" class="wt-page-options wt-page-options-register-with-provider" action="<?= e(route(RegisterWithProviderAction::class, [
+        'tree'           => $tree instanceof Tree ? $tree->name() : null,
+        'password_token' => $password_token,
+        'email'          => $email,
+        'real_name'      => $real_name,
+        'user_name'      => $user_name,
+        ])) ?>" >
+
+    <?= $captcha ?>                 
+
+    <div class="row">
+        <label class="col-sm-3 col-form-label wt-page-options-label" for="comment">
+            <?= MoreI18N::xlate('Comments') ?>
+        </label>
+        <div class="col-sm-9 wt-page-options-value">
+            <textarea class="form-control" id="comments" name="comments" placeholder="<?php /* I18N: placeholder text for registration-comments field */
+            MoreI18N::xlate('Explain why you are requesting an account.') ?>" rows="4" maxlength="255" dir="auto" required="required"><?= e($comments) ?></textarea>
+            <div class="form-text">
+                <?= MoreI18N::xlate('Use this field to tell the site administrator why you are requesting an account and how you are related to the genealogy displayed on this site. You can also use this to enter any other comments you may have for the site administrator.') ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb">
         <label class="col-sm-3 col-form-label wt-page-options-label">
             <?= I18N::translate('Request a new account with') . ' ' . $provider_name ?>
         </label>
 
         <div class="col-sm-9 wt-page-options-value">
-            <form method="post" class="wt-page-options wt-page-options-register-with-provider" action="<?= e(route(RegisterWithProviderAction::class, [
-                    'tree'           => $tree instanceof Tree ? $tree->name() : null,
-                    'password_token' => $password_token,
-                    'email'          => $email,
-                    'real_name'      => $real_name,
-                    'user_name'      => $user_name,
-                    ])) ?>" >
-
-                <?= $captcha ?>
-
-                <button class="btn btn-primary">
-                    <?= MoreI18N::xlate('continue') ?>
-                </button>
-
-                <a href="<?= e(route(LoginPage::class, [
-                    'tree' => $tree instanceof Tree ? $tree->name() : null,
-                    'url'  => $url,
-                    ])) ?>" type="submit" class="btn btn-secondary">
-                    <?=  MoreI18N::xlate('cancel') ?>
-                </a>
-
-                <?= csrf_field() ?>
-            </form>
+            <button class="btn btn-primary">
+                <?= MoreI18N::xlate('continue') ?>
+            </button>
+            <a href="<?= e(route(LoginPage::class, [
+                'tree' => $tree instanceof Tree ? $tree->name() : null,
+                'url'  => $url,
+                ])) ?>" type="submit" class="btn btn-secondary">
+                <?=  MoreI18N::xlate('cancel') ?>
+            </a>
         </div>
-    </div>
-</div>
+    </div>      
+
+    <?= csrf_field() ?>
+</form>

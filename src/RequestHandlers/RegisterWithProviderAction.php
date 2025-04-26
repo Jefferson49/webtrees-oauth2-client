@@ -89,6 +89,7 @@ class RegisterWithProviderAction implements RequestHandlerInterface
         $email              = Validator::queryParams($request)->string('email', '');
         $real_name          = Validator::queryParams($request)->string('real_name', '');
         $user_name          = Validator::queryParams($request)->string('user_name', '');
+        $comments           = Validator::parsedBody($request)->string('comments');
 
         try {
             if ($this->captcha_service->isRobot($request)) {
@@ -105,7 +106,7 @@ class RegisterWithProviderAction implements RequestHandlerInterface
         $random_password  = md5($password_token . time());
 
         $params = [
-            'comments'        => I18N::translate('Automatic user registration after sign in with authorization provider'),
+            'comments'        => $comments,
             'email'           => $email,
             'password'        => $random_password,
             'realname'        => $real_name,

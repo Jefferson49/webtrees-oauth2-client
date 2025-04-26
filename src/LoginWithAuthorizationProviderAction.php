@@ -348,6 +348,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 'password_token' => $accessToken->getToken(),
                 'real_name'      => $real_name,
                 'user_name'      => $user_name,
+                'comments'       => '',
             ]);
         }            
 
