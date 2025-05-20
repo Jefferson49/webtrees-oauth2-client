@@ -11,7 +11,11 @@
         {
             "url": "https://github.com/stevenmaguire/oauth2-keycloak.git",
             "type": "git"
-        }
+        },
+        {
+            "url": "https://github.com/jefferson49/oauth2-kanidm.git",
+            "type": "git"
+        }        
     ],
     "require": {
         "bahuma/oauth2-nextcloud": "=2.0.0",
@@ -20,7 +24,8 @@
         "league/oauth2-github": "=3.1.1",
         "league/oauth2-google": "=4.0.1",
         "stevenmaguire/oauth2-dropbox": "=3.1.0",
-        "stevenmaguire/oauth2-keycloak": "=5.1.0"
+        "stevenmaguire/oauth2-keycloak": "=5.1.0",
+        "jefferson49/oauth2-kanidm": "dev-main"
     },
     "replace": {
         "guzzlehttp/guzzle": "*",

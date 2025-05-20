@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a815732380c174be952fc928445148c2",
+    "content-hash": "7a15d28b90d50cf7576d4b0a2e0f488c",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
@@ -59,6 +59,45 @@
             ],
             "description": "Nextcloud OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
             "time": "2023-05-11T12:23:05+00:00"
+        },
+        {
+            "name": "jefferson49/oauth2-kanidm",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jefferson49/oauth2-kanidm.git",
+                "reference": "c1d124a5a235c66961e86e3d488ea9941ed62d72"
+            },
+            "require": {
+                "league/oauth2-client": "^2.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jefferson49\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jefferson49",
+                    "homepage": "https://github.com/Jefferson49"
+                }
+            ],
+            "description": "Kandim OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "keywords": [
+                "Kanidm",
+                "authentication",
+                "authorization",
+                "client",
+                "oauth",
+                "oauth2"
+            ],
+            "time": "2025-05-20T18:59:38+00:00"
         },
         {
             "name": "jefferson49/webtrees-common",
@@ -393,7 +432,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "jefferson49/oauth2-kanidm": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},
