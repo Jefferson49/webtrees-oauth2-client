@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a15d28b90d50cf7576d4b0a2e0f488c",
+    "content-hash": "8a7ade885ca99b20abeaf6a200b37cac",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
@@ -62,17 +62,16 @@
         },
         {
             "name": "jefferson49/oauth2-kanidm",
-            "version": "dev-main",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jefferson49/oauth2-kanidm.git",
-                "reference": "c1d124a5a235c66961e86e3d488ea9941ed62d72"
+                "reference": "f44ced9b145a6b691006b01a5cd0dbcec9f3ea54"
             },
             "require": {
                 "league/oauth2-client": "^2.0",
                 "php": "^7.3 || ^8.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -97,7 +96,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2025-05-20T18:59:38+00:00"
+            "time": "2025-05-22T04:57:26+00:00"
         },
         {
             "name": "jefferson49/webtrees-common",
@@ -432,9 +431,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "jefferson49/oauth2-kanidm": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},
