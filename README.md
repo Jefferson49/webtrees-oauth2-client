@@ -21,11 +21,13 @@ This README file contains the following main sections:
     + [Github](#github)
     + [Google](#google)
     + [Joomla](#joomla)
+    + [Kanidm](#kanidm)
     + [Keycloak](#keycloak)
     + [Nextcloud](#nextcloud)
     + [PocketID](#pocketid)
     + [Spotify](#spotify)
     + [WordPress](#wordpress)
++   [PKCE (Proof Key for Code Exchange)](#pkce-proof-key-for-code-exchange)
 +   [Trouble Shooting](#trouble-shooting)
 +   [Concept](#concept)
     + [Definitons](#definitions)
@@ -80,6 +82,7 @@ Currently, the following authorization providers are supported:
 + **Github**
 + **Google**
 + **Joomla** (with a specific authorization provider extension installed in Joomla)
++ **Kanidm**
 + **Keycloak**
 + **Nextcloud**
 + **PocketID** (can be configured with the Generic provider)
@@ -259,6 +262,27 @@ Joomla_signInButtonLabel='xxx'
     + **Joomla_urlAuthorize**='JOOMLA_BASE_URL/index.php' (JOOMLA_BASE_URL from your Joomla installation, e.g. 'https://mysite.net/joomla')
     + **Joomla_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
+### Kanidm
++ For a description about the Kanidm configuration, refer to the chapter about OAuth2 configuration in the [Kanidm Administration Manual](https://kanidm.github.io/kanidm/stable/integrations/oauth2.html)
++ Configure your client in Kanidm
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Kanidm_clientId='xxx'
+Kanidm_clientSecret='xxx'
+Kanidm_urlAuthorize='https://KANIDM_SERVER_URL/ui/oauth2'
+Kanidm_urlAccessToken='https://KANIDM_SERVER_URL/oauth2/token'
+Kanidm_urlResourceOwnerDetails='https://KANIDM_SERVER_URL/oauth2/openid/KANIDM_CLIENT_ID/userinfo'
+Kanidm_signInButtonLabel='xxx'
+Kanidm_pkceMethod='S256'
+```
++ Insert the configuration details from your Kanidm installation into the newly included configuration lines of your config.ini.php file:
+    + **Kanidm_clientId**='...' (the "client id" used in Kanidm)
+    + **Kanidm_clientSecret**='...' (value for "Client Secret" shown in Kanidm)
+    + **Kanidm_urlAuthorize**='...' (KANIDM_SERVER_URL: Insert the URL of your Kanidm server)
+    + **Kanidm_urlAccessToken**='...' (KANIDM_SERVER_URL: Insert the URL of your Kanidm server)
+    + **Kanidm_urlResourceOwnerDetails**='...' (KANIDM_SERVER_URL: Insert the URL of your Kanidm server. KANIDM_CLIENT_ID: Insert your Kanidm client id)
+    + **Kanidm_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
+
 ### Keycloak
 + Log into your Keycloak administration backend and select or create a realm
 + Create a new client with "Client" / "Create client"
@@ -286,7 +310,7 @@ Keycloak_signInButtonLabel='xxx'
     + **Keycloak_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Nextcloud
-+ Open the chapter about OAuth2 configuration in the [Nextcloud Administration Manual](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/oauth2.html#add-an-oauth2-application)
++ For a description about the Nextcloud configuration, open the chapter about OAuth2 configuration in the [Nextcloud Administration Manual](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/oauth2.html#add-an-oauth2-application)
 + Configure a new OAuth2 client app in Nextcloud like described in chapter "Add an OAuth2 Application"
 + Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
 ```PHP
@@ -363,6 +387,14 @@ If using Apache and the OAuth 2 authorization fails, check the following setting
 ```PHP
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 ```
+## PKCE (Proof Key for Code Exchange)
+The Generic and Kanidm authorization providers support to use PKCE.  
+
+In order to activate PKCE for the **Generic provider**, the following configuration needs to be added to the config.ini.php file in webtrees: 
+```PHP
+Generic_pkceMethod='S256'
+```
+In Kanidm, PKCE is activated by default. Therefore, the PKCE configuration is included in the [Kanidm chapter](#kanidm).
 
 ## Trouble Shooting
 Although OAuth 2 is a standard protocol and is used on lots of websites, the authorization process is very sensitive to certain server configurations. The list below provides some hints for trouble shooting:
