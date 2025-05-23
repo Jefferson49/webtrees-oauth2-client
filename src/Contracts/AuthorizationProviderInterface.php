@@ -132,5 +132,22 @@ interface AuthorizationProviderInterface
      *
      * @return bool
      */
-    public static function supportsRegistration() : bool;    
+    public static function supportsRegistration() : bool;
+
+    /**
+     * Returns the current value of the pkceCode parameter.
+     *     *
+     * @return string|null
+     */
+    public function getPkceCode() : ?string;
+
+    /**
+     * Set the value of the pkceCode parameter.
+     *
+     * When using PKCE this should be set before requesting an access token.
+     *
+     * @param string $pkceCode
+     * @return void
+     */
+    public function setPkceCode($pkceCode);
 }

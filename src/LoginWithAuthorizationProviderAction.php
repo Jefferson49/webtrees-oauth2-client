@@ -198,6 +198,9 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             // Get the state generated for you and store it to the session.
             Session::put(OAuth2Client::activeModuleName() . 'oauth2state', $provider->getState());
+
+            // Save PKCE code to session (only relevant if PKCE is configured)
+            Session::put(OAuth2Client::activeModuleName() . 'oauth2pkceCode', $provider->getPkceCode());
         
             // Redirect the user to the authorization URL.
             CustomModuleLog::addDebugLog($log_module, 'Redirecting to authorization URL');
@@ -219,6 +222,9 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             ]);
         } else {        
             try {
+                //Load PKCE code from session (only relevant if PKCE is configured)
+                $provider->setPkceCode(Session::get(OAuth2Client::activeModuleName() . 'oauth2pkceCode', ''));
+
                 // Try to get an access token using the authorization code grant.
                 $accessToken = $provider->getAccessToken('authorization_code', [
                     'code' => $code

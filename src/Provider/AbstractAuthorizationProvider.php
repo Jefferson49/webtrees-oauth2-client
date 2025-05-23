@@ -220,5 +220,29 @@ abstract class AbstractAuthorizationProvider
 
         //As a default, it is assumed that enough user data is provided
         return true;
-    }       
+    }
+
+    /**
+     * Returns the current value of the pkceCode parameter.
+     *     *
+     * @return string|null
+     */
+    public function getPkceCode() : ?string {
+
+        return $this->provider->getPkceCode();
+    }
+
+    /**
+     * Set the value of the pkceCode parameter.
+     *
+     * When using PKCE this should be set before requesting an access token.
+     *
+     * @param string $pkceCode
+     * @return void
+     */
+    public function setPkceCode($pkceCode) {
+
+        $this->provider->setPkceCode($pkceCode);
+        return;
+    }      
 }
