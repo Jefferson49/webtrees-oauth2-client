@@ -269,18 +269,14 @@ Joomla_signInButtonLabel='xxx'
 ```PHP
 Kanidm_clientId='xxx'
 Kanidm_clientSecret='xxx'
-Kanidm_urlAuthorize='https://KANIDM_SERVER_URL/ui/oauth2'
-Kanidm_urlAccessToken='https://KANIDM_SERVER_URL/oauth2/token'
-Kanidm_urlResourceOwnerDetails='https://KANIDM_SERVER_URL/oauth2/openid/KANIDM_CLIENT_ID/userinfo'
+Kanidm_kanidmUrl='xxx'
 Kanidm_signInButtonLabel='xxx'
 Kanidm_pkceMethod='S256'
 ```
 + Insert the configuration details from your Kanidm installation into the newly included configuration lines of your config.ini.php file:
     + **Kanidm_clientId**='...' (the "client id" used in Kanidm)
     + **Kanidm_clientSecret**='...' (value for "Client Secret" shown in Kanidm)
-    + **Kanidm_urlAuthorize**='...' (KANIDM_SERVER_URL: Insert the URL of your Kanidm server)
-    + **Kanidm_urlAccessToken**='...' (KANIDM_SERVER_URL: Insert the URL of your Kanidm server)
-    + **Kanidm_urlResourceOwnerDetails**='...' (KANIDM_SERVER_URL: Insert the URL of your Kanidm server. KANIDM_CLIENT_ID: Insert your Kanidm client id)
+    + **Kanidm_kanidmUrl**='...' (the URL of your Kanidm server)
     + **Kanidm_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Keycloak

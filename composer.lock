@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a7ade885ca99b20abeaf6a200b37cac",
+    "content-hash": "a5fc54961084a3815d07e755c9512861",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
@@ -62,11 +62,11 @@
         },
         {
             "name": "jefferson49/oauth2-kanidm",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jefferson49/oauth2-kanidm.git",
-                "reference": "f44ced9b145a6b691006b01a5cd0dbcec9f3ea54"
+                "reference": "796cd1305af05163e77e94f219d2168e8a4adfe6"
             },
             "require": {
                 "league/oauth2-client": "^2.0",
@@ -96,7 +96,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2025-05-22T04:57:26+00:00"
+            "time": "2025-05-23T21:40:05+00:00"
         },
         {
             "name": "jefferson49/webtrees-common",

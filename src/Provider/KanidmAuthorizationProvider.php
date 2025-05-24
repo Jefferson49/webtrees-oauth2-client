@@ -107,9 +107,7 @@ class KanidmAuthorizationProvider extends AbstractAuthorizationProvider implemen
         return [
             'clientId',
             'clientSecret',
-            'urlAuthorize',
-            'urlAccessToken',
-            'urlResourceOwnerDetails',
+            'kanidmUrl',
             'signInButtonLabel',
         ];
     }
