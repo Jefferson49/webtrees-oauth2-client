@@ -54,8 +54,8 @@ use Fisharebest\Webtrees\Services\ModuleService;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLog;
+use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -147,7 +147,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, '');
             $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, '');
 
-            $message = I18N::translate('Disconnected the user %s from provider: %s', $user->userName(), $provider_name);
+            $message = I18N::translate('Disconnected the user %s from provider: %s', $user->userName(), $provider->getSignInButtonLabel());
             FlashMessages::addMessage($message, 'success');
             CustomModuleLog::addDebugLog($log_module, $message);
 
@@ -180,7 +180,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             self::deleteSessionValuesForProviderConnection();
 
-            $message = I18N::translate('Timeout for connecting user %s with authorization provider %s. Please restart connecting with the authorization provider.', $user->userName(), $provider_name,);
+            $message = I18N::translate('Timeout for connecting user %s with authorization provider %s. Please restart connecting with the authorization provider.', $user->userName(), $provider->getSignInButtonLabel(),);
             FlashMessages::addMessage($message, 'danger');
             CustomModuleLog::addDebugLog($log_module, $message);
 
@@ -275,7 +275,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $existing_user = $this->user_service->findByEmail($email) ?? $this->user_service->findByUserName($user_name);
 
         //Check if the authorizatiohn provider ID is already connected with an user
-        $provider_id_is_connected = $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) !== null;
+        $provider_id_is_connected = $this->findUserByAuthorizationProviderId($provider, $authorization_provider_id) !== null;
 
         //Check if user has not signed in before (i.e. existing user, no provider name, no login timestamp)
         $existing_user_not_signed_in_yet = false;   
@@ -300,7 +300,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, $authorization_provider_id);
             $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, $email);
 
-            $message = I18N::translate('Sucessfully connected existing user %s with provider: %s', $user->userName(), $provider_name);
+            $message = I18N::translate('Sucessfully connected existing user %s with provider: %s', $user->userName(), $provider->getSignInButtonLabel());
             FlashMessages::addMessage($message, 'success');
             CustomModuleLog::addDebugLog($log_module, $message);
 
@@ -317,15 +317,15 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             // If provider does not support registration, show messages and redirect to login page
             if (!$provider::supportsRegistration()) {
-                FlashMessages::addMessage(I18N::translate('It is not possible to request a webtrees account with %s.', $provider_name));
-                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
+                FlashMessages::addMessage(I18N::translate('It is not possible to request a webtrees account with %s.', $provider->getSignInButtonLabel()));
+                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider->getSignInButtonLabel()));
                 CustomModuleLog::addDebugLog($log_module, 'Provider does not support webtrees registration.');
                 return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
             }
             // If no email was retrieved from authorization provider, show messages and redirect to login page
             elseif ($email === '' OR $user_name === '') {
-                FlashMessages::addMessage(I18N::translate('Invalid user data received from %s. Email or username missing.', $provider_name), 'danger');
-                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
+                FlashMessages::addMessage(I18N::translate('Invalid user data received from %s. Email or username missing.', $provider->getSignInButtonLabel()), 'danger');
+                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider->getSignInButtonLabel()));
                 CustomModuleLog::addDebugLog($log_module, 'Invalid user account data received from authorizaton provider. Email or username missing.');
                 return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
             }
@@ -336,8 +336,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                     throw new HttpNotFoundException();
                 }
 
-                FlashMessages::addMessage(I18N::translate('Press "continue" to request a new webtrees user acccount with %s.', $provider_name));
-                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
+                FlashMessages::addMessage(I18N::translate('Press "continue" to request a new webtrees user acccount with %s.', $provider->getSignInButtonLabel()));
+                FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider->getSignInButtonLabel()));
             }
 
             CustomModuleLog::addDebugLog($log_module, 'Forward to register with provider page');
@@ -361,7 +361,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //Login
         //Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction
         try {
-            $user = $this->doLogin($email, $provider_name, $authorization_provider_id, $log_module->getLogPrefix());            
+            $user = $this->doLogin($email, $provider, $authorization_provider_id, $log_module->getLogPrefix());            
 
             //Update email address if we have not just newly connected the user and email shall be synchronized with provider
             if (    $user_to_connect === 0
@@ -396,38 +396,38 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
      * Log in, if we can. Throw an exception, if we can't.
      * Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction
      *
-     * @param string $email                      Email address of user
-     * @param string $provider_name              Name of the authorization provider
-     * @param string $authorization_provider_id  User ID from the authorizationprovider
-     * @param string $oauth_log_prefix           Prefix for OAuth2 login lohd
+     * @param string                         $email                      Email address of user
+     * @param AuthorizationProviderInterface $provider                   The authorization provider
+     * @param string                         $authorization_provider_id  User ID from the authorizationprovider
+     * @param string                         $oauth_log_prefix           Prefix for OAuth2 login lohd
      *
      * @return void
      * @throws Exception
      * 
      * @return User                              The logged in user
      */
-    private function doLogin(string $email, string $provider_name, string $authorization_provider_id, string $oauth_log_prefix): User
+    private function doLogin(string $email, AuthorizationProviderInterface $provider, string $authorization_provider_id, string $oauth_log_prefix): User
     {
         if ($_COOKIE === []) {
-            Log::addAuthenticationLog('Login failed (no session cookies): ' . $provider_name . ' ' . $authorization_provider_id);
+            Log::addAuthenticationLog('Login failed (no session cookies): ' . $provider->getName() . ' ' . $authorization_provider_id);
             throw new Exception(MoreI18N::xlate('You cannot sign in because your browser does not accept cookies.'));
         }
 
         //Try to get user by authorization provider id; otherwise try to get user by email
-        $user = $this->findUserByAuthorizationProviderId($provider_name, $authorization_provider_id) ?? $this->user_service->findByEmail($email);
+        $user = $this->findUserByAuthorizationProviderId($provider, $authorization_provider_id) ?? $this->user_service->findByEmail($email);
 
         if ($user === null) {
-            Log::addAuthenticationLog('Login failed (no such user/email): ' . $provider_name . ' ' . $authorization_provider_id);
+            Log::addAuthenticationLog('Login failed (no such user/email): ' . $provider->getName() . ' ' . $authorization_provider_id);
             throw new Exception(MoreI18N::xlate('The username or password is incorrect.'));
         }
 
         if ($user->getPreference(UserInterface::PREF_IS_EMAIL_VERIFIED) !== '1') {
-            Log::addAuthenticationLog('Login failed (not verified by user): ' . $provider_name . ' ' . $authorization_provider_id);
+            Log::addAuthenticationLog('Login failed (not verified by user): ' . $provider->getName() . ' ' . $authorization_provider_id);
             throw new Exception(MoreI18N::xlate('This account has not been verified. Please check your email for a verification message.'));
         }
 
         if ($user->getPreference(UserInterface::PREF_IS_ACCOUNT_APPROVED) !== '1') {
-            Log::addAuthenticationLog('Login failed (not approved by admin): ' . $provider_name . ' ' . $authorization_provider_id);
+            Log::addAuthenticationLog('Login failed (not approved by admin): ' . $provider->getName() . ' ' . $authorization_provider_id);
             throw new Exception(MoreI18N::xlate('This account has not been approved. Please wait for an administrator to approve it.'));
         }
 
@@ -437,18 +437,18 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             //If time stamp is different from 0 (i.e. user already logged in at least once before)
             if ($user->getPreference(UserInterface::PREF_TIMESTAMP_ACTIVE) !== '0') {
-                Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The email address or username already exists: ' . $provider_name . ' ' . $authorization_provider_id);
+                Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The email address or username already exists: ' . $provider->getName() . ' ' . $authorization_provider_id);
                 throw new Exception(I18N::translate('Login denied. The email address or username already exists.') . ' ' .
-                                    I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
+                                    I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider->getSignInButtonLabel()));
             }
         }
         //If user has authorization provider, but provider/ID does not match
-        elseif (    ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== $provider_name) 
+        elseif (    ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== $provider->getName()) 
                 OR  ($user->getPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, '') !== $authorization_provider_id)) {
 
-                Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The email address or username already exists: ' . $provider_name . ' ' . $authorization_provider_id);
+                Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The email address or username already exists: ' . $provider->getName() . ' ' . $authorization_provider_id);
                 throw new Exception(I18N::translate('Login denied. The email address or username already exists.') . ' ' .
-                                    I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider_name));
+                                    I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider->getSignInButtonLabel()));
         }
 
         Auth::login($user);
@@ -456,7 +456,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         Auth::user()->setPreference(UserInterface::PREF_TIMESTAMP_ACTIVE, (string) time());
 
         //Save authorization provider data to user preferences
-        $user->setPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, $provider_name);
+        $user->setPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, $provider->getName());
         $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, $authorization_provider_id);
         $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, $email);
 
@@ -499,18 +499,18 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
     /**
      * Find user by authorization provider ID
      *
-     * @param string $provider_name              Name of the authorization provider
-     * @param string $authorization_provider_id  User ID from the authorizationprovider
+     * @param AuthorizationProviderInterface $provider                   The authorization provider
+     * @param string                         $authorization_provider_id  User ID from the authorizationprovider
      *
      * @return User
      */
-    private function findUserByAuthorizationProviderId(string $provider_name, string $authorization_provider_id): ?User
+    private function findUserByAuthorizationProviderId(AuthorizationProviderInterface $provider, string $authorization_provider_id): ?User
     {
         $users = Functions::getAllUsers();
 
         foreach($users as $user) {
     
-            if (    $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME)  === $provider_name
+            if (    $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME)  === $provider->getName()
                 &&  $user->getPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER) === $authorization_provider_id) {
 
                 return $user;
