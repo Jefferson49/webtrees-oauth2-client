@@ -65,7 +65,7 @@ Please check whether your **webtrees BASE_URL** in the config.ini.php file **sta
 ## Sign On Options
 
 The OAuth 2.0 Client offers two different options to sign on with an authorization provider:
-+ **Register a new webtrees user based on the identity provided by an authorization provider**: Sign out and choose to sign in with an authorization provider. A new webtrees user will be registered. The registration will fail if the email oder the user name, which is transmitted by the authorization provider, already exists within webtrees. After the registration, a webtrees administrator needs to approve the new user and the email before signing in with the authorization provider is possible. The general idea of this option is that the user identify from the authorization provider is used within webtrees. In the control panel, a setting is offered to synchronize the email address from the authorization provider to the webtrees user.
++ **Register a new webtrees user based on the identity provided by an authorization provider**: Sign out and choose to sign in with an authorization provider. A new webtrees user will be registered. The registration will fail if the email or the user name, which is transmitted by the authorization provider, already exists within webtrees. After the registration, a webtrees administrator needs to approve the new user and the email before signing in with the authorization provider is possible. The general idea of this option is that the user identify from the authorization provider is used within webtrees. In the control panel, a setting is offered to synchronize the email address from the authorization provider to the webtrees user.
 + **Connect an existing webtrees user with an authorization provider**: Sign on with an exisiting user and choose to "connect" the existing user with an authorization provider. In this case, the existing user credentials in webtrees will continue to exist and the user will be (additionally) allowed to sign in with the chosen provider. The general idea of this is that the two user accounts exist in parallel and are connected.
 
 ## Handling of User Name and Email
@@ -128,7 +128,7 @@ Generic_signInButtonLabel='xxx'
     + **Generic_urlAuthorize**='...' (value from the OAuth 2.0 Server)
     + **Generic_urlAccessToken**='...' (value from the OAuth 2.0 Server)
     + **Generic_urlResourceOwnerDetails**='...' (value from the OAuth 2.0 Server)
-    + **Generic_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.))
+    + **Generic_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Authentik
 + Use the [Generic client](#generic) to connect with Authentik
