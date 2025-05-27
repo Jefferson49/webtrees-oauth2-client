@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2-Client for webtrees 2\n"
-"POT-Creation-Date: 2025-04-18 07:11+0200\n"
+"POT-Creation-Date: 2025-05-27 07:13+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -53,16 +53,16 @@ msgstr ""
 "Time-out voor verbinding van gebruiker %s met autorisatieprovider %s. Start "
 "de verbinding met de autorisatieprovider opnieuw."
 
-#: src/LoginWithAuthorizationProviderAction.php:214
-#: src/LoginWithAuthorizationProviderAction.php:243
+#: src/LoginWithAuthorizationProviderAction.php:217
+#: src/LoginWithAuthorizationProviderAction.php:249
 msgid "OAuth 2.0 communication error"
 msgstr "OAuth 2.0-communicatiefout"
 
-#: src/LoginWithAuthorizationProviderAction.php:218
+#: src/LoginWithAuthorizationProviderAction.php:221
 msgid "Invalid state in communication with authorization provider."
 msgstr "Ongeldige status in communicatie met autorisatieprovider."
 
-#: src/LoginWithAuthorizationProviderAction.php:247
+#: src/LoginWithAuthorizationProviderAction.php:253
 msgid ""
 "Failed to get the access token or the user details from the authorization "
 "provider"
@@ -70,7 +70,7 @@ msgstr ""
 "Het toegangstoken of de gebruikersgegevens zijn niet verkregen van de "
 "autorisatieprovider"
 
-#: src/LoginWithAuthorizationProviderAction.php:286
+#: src/LoginWithAuthorizationProviderAction.php:292
 msgid ""
 "The identity received by the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
@@ -80,12 +80,12 @@ msgstr ""
 "aan de aangevraagde gebruiker, omdat deze al wordt gebruikt om in te loggen "
 "door een andere webtrees-gebruiker."
 
-#: src/LoginWithAuthorizationProviderAction.php:297
+#: src/LoginWithAuthorizationProviderAction.php:303
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr "Bestaande gebruiker %s succesvol verbonden met provider: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:309
+#: src/LoginWithAuthorizationProviderAction.php:315
 msgid ""
 "Currently, no webtrees user account is related to the user data received "
 "from the authorization provider."
@@ -93,16 +93,16 @@ msgstr ""
 "Momenteel is er geen webtrees-gebruikersaccount gekoppeld aan de "
 "gebruikersgegevens die zijn ontvangen van de autorisatieprovider."
 
-#: src/LoginWithAuthorizationProviderAction.php:314
+#: src/LoginWithAuthorizationProviderAction.php:320
 #, php-format
 msgid "It is not possible to request a webtrees account with %s."
 msgstr "Het is niet mogelijk om een webtrees-account aan te vragen met %s."
 
-#: src/LoginWithAuthorizationProviderAction.php:315
-#: src/LoginWithAuthorizationProviderAction.php:322
-#: src/LoginWithAuthorizationProviderAction.php:334
-#: src/LoginWithAuthorizationProviderAction.php:435
-#: src/LoginWithAuthorizationProviderAction.php:444
+#: src/LoginWithAuthorizationProviderAction.php:321
+#: src/LoginWithAuthorizationProviderAction.php:328
+#: src/LoginWithAuthorizationProviderAction.php:340
+#: src/LoginWithAuthorizationProviderAction.php:442
+#: src/LoginWithAuthorizationProviderAction.php:451
 #, php-format
 msgid ""
 "To connect an existing user with %s, sign in and select: My pages / My "
@@ -111,37 +111,37 @@ msgstr ""
 "Als u een bestaande gebruiker met %s wilt verbinden, meldt u zich aan en "
 "selecteert u: Mijn pagina's / Mijn account / Verbinden met"
 
-#: src/LoginWithAuthorizationProviderAction.php:321
+#: src/LoginWithAuthorizationProviderAction.php:327
 #, php-format
 msgid "Invalid user data received from %s. Email or username missing."
 msgstr ""
 "Ongeldige gebruikersgegevens ontvangen van %s. E-mail of gebruikersnaam "
 "ontbreekt."
 
-#: src/LoginWithAuthorizationProviderAction.php:329
+#: src/LoginWithAuthorizationProviderAction.php:335
 msgid "Requesting a new webtrees user account is currently not allowed."
 msgstr ""
 "Het aanvragen van een nieuw webtrees-gebruikersaccount is momenteel niet "
 "toegestaan."
 
-#: src/LoginWithAuthorizationProviderAction.php:333
+#: src/LoginWithAuthorizationProviderAction.php:339
 #, php-format
 msgid "Press \"continue\" to request a new webtrees user acccount with %s."
 msgstr ""
 "Druk op \"doorgaan\" om een nieuw webtrees-gebruikersaccount aan te vragen "
 "met %s."
 
-#: src/LoginWithAuthorizationProviderAction.php:343
+#: src/LoginWithAuthorizationProviderAction.php:349
 msgid "Request a new user account with an authorization provider"
 msgstr "Een nieuwe gebruikersaccount aanvragen met een autorisatieprovider"
 
-#: src/LoginWithAuthorizationProviderAction.php:365
+#: src/LoginWithAuthorizationProviderAction.php:372
 #, php-format
 msgid "The email address for user %s was updated to: %s"
 msgstr "Het e-mailadres voor gebruiker %s is bijgewerkt naar: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:434
-#: src/LoginWithAuthorizationProviderAction.php:443
+#: src/LoginWithAuthorizationProviderAction.php:441
+#: src/LoginWithAuthorizationProviderAction.php:450
 msgid "Login denied. The email address or username already exists."
 msgstr "Inloggen geweigerd. Het e-mailadres of de gebruikersnaam bestaat al."
 
@@ -246,20 +246,17 @@ msgstr ""
 "serverconfiguratie voor redirects."
 
 #: src/Provider/AbstractAuthorizationProvider.php:178
+#: src/Provider/KanidmAuthorizationProvider.php:89
 msgid "Invalid user data received from the authorization provider"
 msgstr "Ongeldige gebruikersgegevens ontvangen van de autorisatieprovider"
 
 #: src/Provider/AbstractAuthorizationProvider.php:178
+#: src/Provider/KanidmAuthorizationProvider.php:89
 msgid ""
 "Check the setting for urlResourceOwnerDetails in the webtrees configuration."
 msgstr ""
 "Controleer de instelling voor urlResourceOwnerDetails in de webtrees-"
 "configuratie."
-
-#: src/RequestHandlers/RegisterWithProviderAction.php:108
-msgid "Automatic user registration after sign in with authorization provider"
-msgstr ""
-"Automatische gebruikersregistratie na aanmelding met autorisatieprovider"
 
 #: resources/views/alert.phtml:24
 msgid "Custom module"
@@ -352,15 +349,11 @@ msgstr ""
 "De beheerder heeft mogelijk uitgeschakeld om sommige ontvangen "
 "gebruikersgegevens te wijzigen"
 
-#: resources/views/register-page.phtml:125
-msgid "Password (within webtrees)"
-msgstr "Wachtwoord (binnen webtrees)"
-
-#: resources/views/register-page.phtml:142
+#: resources/views/register-page.phtml:138
 msgid "Further registration data - Please complete and continue"
 msgstr "Verdere registratiegegevens - Vul in en ga verder"
 
-#: resources/views/register-with-provider-page.phtml:43
+#: resources/views/register-with-provider-page.phtml:72
 msgid "Request a new account with"
 msgstr "Vraag een nieuw account aan met"
 
@@ -548,3 +541,11 @@ msgstr ""
 "Door deze optie te selecteren wordt extra debug-informatie over de "
 "protocolstroom tussen webtrees en de autorisatieprovider gelogd in de "
 "webtrees-websitelogboeken."
+
+#~ msgid ""
+#~ "Automatic user registration after sign in with authorization provider"
+#~ msgstr ""
+#~ "Automatische gebruikersregistratie na aanmelding met autorisatieprovider"
+
+#~ msgid "Password (within webtrees)"
+#~ msgstr "Wachtwoord (binnen webtrees)"

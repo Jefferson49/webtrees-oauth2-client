@@ -1,16 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-01-28 19:59+0100\n"
-"PO-Revision-Date: 2025-01-28 19:59+0100\n"
-"Last-Translator: Rick Malkin <rick@alineofmalkins.com>\n"
+"Project-Id-Version: OAuth2-Client for webtrees 2\n"
+"POT-Creation-Date: 2025-05-27 07:13+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: en_AU\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -52,16 +51,16 @@ msgstr ""
 "Timeout for connecting user %s with authorisation provider %s. Please "
 "restart connecting with the authorisation provider."
 
-#: src/LoginWithAuthorizationProviderAction.php:214
-#: src/LoginWithAuthorizationProviderAction.php:242
+#: src/LoginWithAuthorizationProviderAction.php:217
+#: src/LoginWithAuthorizationProviderAction.php:249
 msgid "OAuth 2.0 communication error"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:218
+#: src/LoginWithAuthorizationProviderAction.php:221
 msgid "Invalid state in communication with authorization provider."
 msgstr "Invalid state in communication with authorisation provider."
 
-#: src/LoginWithAuthorizationProviderAction.php:246
+#: src/LoginWithAuthorizationProviderAction.php:253
 msgid ""
 "Failed to get the access token or the user details from the authorization "
 "provider"
@@ -69,7 +68,7 @@ msgstr ""
 "Failed to get the access token or the user details from the authorisation "
 "provider"
 
-#: src/LoginWithAuthorizationProviderAction.php:274
+#: src/LoginWithAuthorizationProviderAction.php:292
 msgid ""
 "The identity received by the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
@@ -79,12 +78,12 @@ msgstr ""
 "the requested user, because it is already used to sign in by another "
 "webtrees user."
 
-#: src/LoginWithAuthorizationProviderAction.php:285
+#: src/LoginWithAuthorizationProviderAction.php:303
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:298
+#: src/LoginWithAuthorizationProviderAction.php:315
 msgid ""
 "Currently, no webtrees user account is related to the user data received "
 "from the authorization provider."
@@ -92,74 +91,76 @@ msgstr ""
 "Currently, no webtrees user account is related to the user data received "
 "from the authorisation provider."
 
-#: src/LoginWithAuthorizationProviderAction.php:303
+#: src/LoginWithAuthorizationProviderAction.php:320
 #, php-format
 msgid "It is not possible to request a webtrees account with %s."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:304
-#: src/LoginWithAuthorizationProviderAction.php:311
-#: src/LoginWithAuthorizationProviderAction.php:323
-#: src/LoginWithAuthorizationProviderAction.php:424
+#: src/LoginWithAuthorizationProviderAction.php:321
+#: src/LoginWithAuthorizationProviderAction.php:328
+#: src/LoginWithAuthorizationProviderAction.php:340
+#: src/LoginWithAuthorizationProviderAction.php:442
+#: src/LoginWithAuthorizationProviderAction.php:451
 #, php-format
 msgid ""
 "To connect an existing user with %s, sign in and select: My pages / My "
 "account / Connect with"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:310
+#: src/LoginWithAuthorizationProviderAction.php:327
 #, php-format
 msgid "Invalid user data received from %s. Email or username missing."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:318
+#: src/LoginWithAuthorizationProviderAction.php:335
 msgid "Requesting a new webtrees user account is currently not allowed."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:322
+#: src/LoginWithAuthorizationProviderAction.php:339
 #, php-format
 msgid "Press \"continue\" to request a new webtrees user acccount with %s."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:332
+#: src/LoginWithAuthorizationProviderAction.php:349
 msgid "Request a new user account with an authorization provider"
 msgstr "Request a new user account with an authorisation provider"
 
-#: src/LoginWithAuthorizationProviderAction.php:354
+#: src/LoginWithAuthorizationProviderAction.php:372
 #, php-format
 msgid "The email address for user %s was updated to: %s"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:423
+#: src/LoginWithAuthorizationProviderAction.php:441
+#: src/LoginWithAuthorizationProviderAction.php:450
 msgid "Login denied. The email address or username already exists."
 msgstr ""
 
-#: src/OAuth2Client.php:223
+#: src/OAuth2Client.php:224
 msgid "OAuth2 Client"
 msgstr ""
 
-#: src/OAuth2Client.php:236
+#: src/OAuth2Client.php:237
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr ""
 
-#: src/OAuth2Client.php:419 resources/views/login-with-provider.phtml:41
+#: src/OAuth2Client.php:420
 msgid "Sign in with"
 msgstr ""
 
-#: src/OAuth2Client.php:450
+#: src/OAuth2Client.php:451
 msgid "Disconnect account from"
 msgstr ""
 
-#: src/OAuth2Client.php:456
+#: src/OAuth2Client.php:457
 msgid "Connect account with"
 msgstr ""
 
-#: src/OAuth2Client.php:586
+#: src/OAuth2Client.php:590
 #, php-format
 msgid "The preferences for the module \"%s\" were updated."
 msgstr ""
 
-#: src/OAuth2Client.php:607 resources/views/settings.phtml:52
+#: src/OAuth2Client.php:611
 msgid ""
 "The redirect URL for OAuth 2.0 communication has changed in custom module "
 "versions >= 1.1.0. If certain connections with authorization providers fail, "
@@ -171,14 +172,14 @@ msgstr ""
 "you might need to update the authorisation provider settings with the new "
 "redirect URL."
 
-#: src/OAuth2Client.php:620
+#: src/OAuth2Client.php:624
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
 "new module version %s."
 msgstr ""
 
-#: src/OAuth2Client.php:652
+#: src/OAuth2Client.php:656
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -187,7 +188,7 @@ msgid ""
 "functionality is also integrated in the %s module."
 msgstr ""
 
-#: src/OAuth2Client.php:657
+#: src/OAuth2Client.php:661
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -196,7 +197,7 @@ msgid ""
 "deactivate one of the modules."
 msgstr ""
 
-#: src/OAuth2Client.php:681
+#: src/OAuth2Client.php:685
 #, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the "
@@ -206,36 +207,34 @@ msgid ""
 "parallel view is: %s"
 msgstr ""
 
-#: src/Provider/AbstractAuthorizationProvider.php:134
+#: src/Provider/AbstractAuthorizationProvider.php:146
 msgid ""
 "Error while trying to get an access token from the authorization provider. "
 "Check the setting for urlAccessToken in the webtrees configuration. Check "
-"the server access logs (or .htaccess configuration files) whether any 301 or "
-"302 redirects are applied, which might convert POST into GET requests."
+"the server access logs for errors. Check the server configuration for "
+"redirects."
 msgstr ""
 "Error while trying to get an access token from the authorisation provider. "
 "Check the setting for urlAccessToken in the webtrees configuration. Check "
-"the server access logs (or .htaccess configuration files) whether any 301 or "
-"302 redirects are applied, which might convert POST into GET requests."
+"the server access logs for errors. Check the server configuration for "
+"redirects."
 
-#: src/Provider/AbstractAuthorizationProvider.php:166
+#: src/Provider/AbstractAuthorizationProvider.php:178
+#: src/Provider/KanidmAuthorizationProvider.php:89
 msgid "Invalid user data received from the authorization provider"
 msgstr "Invalid user data received from the authorisation provider"
 
-#: src/Provider/AbstractAuthorizationProvider.php:166
+#: src/Provider/AbstractAuthorizationProvider.php:178
+#: src/Provider/KanidmAuthorizationProvider.php:89
 msgid ""
 "Check the setting for urlResourceOwnerDetails in the webtrees configuration."
 msgstr ""
-
-#: src/RequestHandlers/RegisterWithProviderAction.php:108
-msgid "Automatic user registration after sign in with authorization provider"
-msgstr "Automatic user registration after sign in with authorisation provider"
 
 #: resources/views/alert.phtml:24
 msgid "Custom module"
 msgstr ""
 
-#: resources/views/edit-account-page.phtml:67
+#: resources/views/edit-account-page.phtml:66
 #, php-format
 msgid ""
 "The authorization provider \"%s\" is not available. Please contact the "
@@ -244,17 +243,17 @@ msgstr ""
 "The authorization provider \"%s\" is not available. Please contact the "
 "webtrees administrator."
 
-#: resources/views/edit-account-page.phtml:73
+#: resources/views/edit-account-page.phtml:72
 #, php-format
 msgid "Signed in with %s"
 msgstr ""
 
-#: resources/views/edit-account-page.phtml:75
+#: resources/views/edit-account-page.phtml:74
 #, php-format
 msgid "This user can sign in with %s"
 msgstr ""
 
-#: resources/views/edit-account-page.phtml:78
+#: resources/views/edit-account-page.phtml:77
 msgid ""
 "The administrator might have disabled to change the email address or the "
 "password"
@@ -306,33 +305,29 @@ msgstr ""
 "Currently, the webtrees password cannot be reset for users, who sign in with "
 "an authorisation provider. Please contact the webtrees administrator."
 
-#: resources/views/register-page.phtml:67
+#: resources/views/register-page.phtml:68
 msgid "Request account with"
 msgstr ""
 
-#: resources/views/register-page.phtml:67
+#: resources/views/register-page.phtml:68
 msgid ""
 "The administrator might have disabled to change some of the received user "
 "data"
 msgstr ""
 
-#: resources/views/register-page.phtml:124
-msgid "Password (within webtrees)"
-msgstr ""
-
-#: resources/views/register-page.phtml:141
+#: resources/views/register-page.phtml:138
 msgid "Further registration data - Please complete and continue"
 msgstr ""
 
-#: resources/views/register-with-provider-page.phtml:43
+#: resources/views/register-with-provider-page.phtml:72
 msgid "Request a new account with"
 msgstr ""
 
-#: resources/views/settings.phtml:31
+#: resources/views/settings.phtml:32
 msgid "Control panel"
 msgstr ""
 
-#: resources/views/settings.phtml:39
+#: resources/views/settings.phtml:40
 msgid ""
 "Currently, webtrees does not use the HTTPS protocol. If signing in with "
 "authorization providers, it is urgently recommended to use HTTPS in order to "
@@ -348,27 +343,33 @@ msgstr ""
 "the webtrees \"config.ini.php\" file. Currently, \"base_url\" does not start "
 "with \"https://\"."
 
-#: resources/views/settings.phtml:62
+#: resources/views/settings.phtml:63
 msgid "Settings for Sign In Menus"
 msgstr ""
 
-#: resources/views/settings.phtml:67
-msgid ""
-"Currently, all menus to directly sign in with webtrees are deactivated. "
-"Therefore, only sign in with authorization providers is possible. Please be "
-"sure that you establish a webtrees administrator account with an "
-"authorization provider. Otherwise, administrator sign in is not possible any "
-"more. Hint: You can still access the original webtrees login page by typing "
-"the login route into the browser line, e.g.:"
+#: resources/views/settings.phtml:68
+msgid "Currently, the webtrees sign in with Username/Password is deactivated."
 msgstr ""
-"Currently, all menus to directly sign in with webtrees are deactivated. "
-"Therefore, only sign in with authorisation providers is possible. Please be "
-"sure that you establish a webtrees administrator account with an "
-"authorisation provider. Otherwise, administrator sign in is not possible any "
-"more. Hint: You can still access the original webtrees login page by typing "
-"the login route into the browser line, e.g.:"
 
-#: resources/views/settings.phtml:71
+#: resources/views/settings.phtml:69 resources/views/settings.phtml:74
+msgid ""
+"Therefore, it is only possible to sign in with an authorization provider. "
+"Please be sure to establish a webtrees administrator account with an "
+"authorization provider. Otherwise, administrator sign in might not be "
+"possible any more."
+msgstr ""
+"Therefore, it is only possible to sign in with an authorisation provider. "
+"Please be sure to establish a webtrees administrator account with an "
+"authorisation provider. Otherwise, administrator sign in might not be "
+"possible any more."
+
+#: resources/views/settings.phtml:73
+msgid ""
+"Currently, all menus to directly sign in with a webtrees Username/Password "
+"are deactivated."
+msgstr ""
+
+#: resources/views/settings.phtml:78
 #, php-format
 msgid ""
 "Currently, the webtrees sign in menu is deactivated and the custom module "
@@ -377,11 +378,11 @@ msgid ""
 "with the settings below."
 msgstr ""
 
-#: resources/views/settings.phtml:78
+#: resources/views/settings.phtml:85
 msgid "Show original webtrees sign in as menu item"
 msgstr ""
 
-#: resources/views/settings.phtml:83
+#: resources/views/settings.phtml:90
 msgid ""
 "By selecting/unselecting this option, it is possible to activate/deactivate "
 "the sign in menu entry for webtrees. If deactivated, only sign in menu "
@@ -391,34 +392,44 @@ msgstr ""
 "the sign in menu entry for webtrees. If deactivated, only sign in menu "
 "entries for authorisation providers might be shown."
 
-#: resources/views/settings.phtml:92
+#: resources/views/settings.phtml:99
 msgid "Hide the webtrees sign in menu"
 msgstr ""
 
-#: resources/views/settings.phtml:95
+#: resources/views/settings.phtml:102 resources/views/settings.phtml:116
 msgid "Hide"
 msgstr ""
 
-#: resources/views/settings.phtml:97
+#: resources/views/settings.phtml:104
 msgid ""
 "By selecting this option, it is possible to hide the original webtrees sign "
 "in menu. This might be helpful if the custom module specific top menu for "
 "sign in is used instead."
 msgstr ""
 
-#: resources/views/settings.phtml:104
+#: resources/views/settings.phtml:113
+msgid "Hide webtrees sign in (with Username/Password) on login page"
+msgstr ""
+
+#: resources/views/settings.phtml:118
+msgid ""
+"By selecting this option, it is possible to hide the webtrees sign in (with "
+"Username/Password) on the login page."
+msgstr ""
+
+#: resources/views/settings.phtml:125
 msgid "Settings for Password, Email, and Connection Management"
 msgstr ""
 
-#: resources/views/settings.phtml:110
+#: resources/views/settings.phtml:131
 msgid "Keep email address synchronized with authorization provider"
 msgstr "Keep email address synchronised with authorisation provider"
 
-#: resources/views/settings.phtml:113
+#: resources/views/settings.phtml:134
 msgid "Keep synchronized"
-msgstr ""
+msgstr "Keep synchronised"
 
-#: resources/views/settings.phtml:115
+#: resources/views/settings.phtml:136
 msgid ""
 "This selection prevents a user with the same email address in webtrees and "
 "at the authorization provider from changing the email address in webtrees. "
@@ -434,11 +445,11 @@ msgstr ""
 "email address in the webtrees user management, the email address "
 "synchronisation will no longer continue."
 
-#: resources/views/settings.phtml:124
+#: resources/views/settings.phtml:145
 msgid "Use webtrees password in parallel"
 msgstr ""
 
-#: resources/views/settings.phtml:129
+#: resources/views/settings.phtml:150
 msgid ""
 "This option allows users, who register with an authorization provider, to "
 "additionally sign in with a webtrees password."
@@ -446,12 +457,12 @@ msgstr ""
 "This option allows users, who register with an authorisation provider, to "
 "additionally sign in with a webtrees password."
 
-#: resources/views/settings.phtml:138
+#: resources/views/settings.phtml:159
 msgid "Allow existing webtrees users to connect with an authorization provider"
 msgstr ""
 "Allow existing webtrees users to connect with an authorisation provider"
 
-#: resources/views/settings.phtml:143
+#: resources/views/settings.phtml:164
 msgid ""
 "If selecting this option, an existing webtrees user can connect the webtrees "
 "account with an authorization provider. This will allow users to "
@@ -463,15 +474,15 @@ msgstr ""
 "additionally sign in with an authorisation providers while still using the "
 "webtrees user and password."
 
-#: resources/views/settings.phtml:149
+#: resources/views/settings.phtml:170
 msgid "Debug Settings"
 msgstr ""
 
-#: resources/views/settings.phtml:155
+#: resources/views/settings.phtml:176
 msgid "Debug logs"
 msgstr ""
 
-#: resources/views/settings.phtml:160
+#: resources/views/settings.phtml:181
 msgid ""
 "By selecting this option, additional debug information about the protocol "
 "flow between webtrees and the authorization provider will be logged in the "
@@ -482,1036 +493,6 @@ msgstr ""
 "webtrees website logs."
 
 #~ msgid ""
-#~ "The email address provided from the authorization provider cannot be "
-#~ "changed"
+#~ "Automatic user registration after sign in with authorization provider"
 #~ msgstr ""
-#~ "The email address provided from the authorisation provider cannot be "
-#~ "changed"
-
-#~ msgid ""
-#~ "Mandatory user account data from the authorization provider cannot be "
-#~ "changed"
-#~ msgstr ""
-#~ "Mandatory user account data from the authorisation provider cannot be "
-#~ "changed"
-
-#~ msgid "User account data from authorization provider cannot be changed"
-#~ msgstr "User account data from authorisation provider cannot be changed"
-
-#~ msgid ""
-#~ "If selecting this option, a user who signs in with an authorization "
-#~ "provider will be allowed to use a webtrees password in parallel. This "
-#~ "might allow the user to sign into webtrees if the authorization provider "
-#~ "is not available. However, there is a risk that the user might get "
-#~ "confused about the parallel password management at the provider and in "
-#~ "webtrees."
-#~ msgstr ""
-#~ "If selecting this option, a user who signs in with an authorisation "
-#~ "provider will be allowed to use a webtrees password in parallel. This "
-#~ "might allow the user to sign into webtrees if the authorization provider "
-#~ "is not available. However, there is a risk that the user might get "
-#~ "confused about the parallel password management at the provider and in "
-#~ "webtrees."
-
-#~ msgid "Login denied. Wrong authorization provider."
-#~ msgstr "Login denied. Wrong authorisation provider."
-
-#~ msgid ""
-#~ "Cannot use the sign in data of the authorization provider. No primary key "
-#~ "defined for the user data."
-#~ msgstr ""
-#~ "Cannot use the sign in data of the authorisation provider. No primary key "
-#~ "defined for the user data."
-
-#~ msgid ""
-#~ "Cannot use the sign in data of the authorization provider. More than one "
-#~ "primary key defined for the user data."
-#~ msgstr ""
-#~ "Cannot use the sign in data of the authorisation provider. More than one "
-#~ "primary key defined for the user data."
-
-#~ msgid ""
-#~ "Cannot use the sign in data of the authorization provider. Neither "
-#~ "username nor email is a primary key."
-#~ msgstr ""
-#~ "Cannot use the sign in data of the authorisation provider. Neither "
-#~ "username nor email is a primary key."
-
-#~ msgid ""
-#~ "If you sign in with an authorization provider, your password cannot be "
-#~ "changed within webtrees. If you request a new password from webtrees, you "
-#~ "will receive an email. However, the included link to create a new "
-#~ "passwort will not work."
-#~ msgstr ""
-#~ "If you sign in with an authorisation provider, your password cannot be "
-#~ "changed within WebTrees. If you request a new password from WebTrees, you "
-#~ "will receive an email. However, the included link to create a new "
-#~ "passwort will not work."
-
-#~ msgid "Sign out"
-#~ msgstr "Sign out"
-
-#~ msgid "sign in"
-#~ msgstr "Sign In"
-
-#~ msgid ""
-#~ "In order to use changed settings for a download/upload, the settings need "
-#~ "to be saved first."
-#~ msgstr ""
-#~ "In order to use changed settings for a download/upload, the settings need "
-#~ "to be saved first."
-
-#~| msgid "Folder name"
-#~ msgid "Username"
-#~ msgstr "Username"
-
-#~| msgid "Default file name"
-#~ msgid "Real name"
-#~ msgstr "Real name"
-
-#~| msgid "Default ending"
-#~ msgid "Default individual"
-#~ msgstr "Default individual"
-
-#, php-format
-#~| msgid "Save on the webtrees server"
-#~ msgid "Upgrade to webtrees %s."
-#~ msgstr "Upgrade to WebTrees %s."
-
-#, php-format
-#~ msgid ""
-#~ "The variable type of the filter rules definition (%s) of the GEDCOM "
-#~ "filter (%s) does not have the type \"array\"."
-#~ msgstr ""
-#~ "The variable type of the filter rules definition (%s) of the GEDCOM "
-#~ "filter (%s) does not have the type \"array\"."
-
-#, php-format
-#~ msgid "The selected GEDCOM filter (%s) does not contain any filter rules."
-#~ msgstr "The selected GEDCOM filter (%s) does not contain any filter rules."
-
-#, php-format
-#~ msgid ""
-#~ "The selected GEDCOM filter (%s) contains an invalid definition for "
-#~ "regular expression macros (%s)."
-#~ msgstr ""
-#~ "The selected GEDCOM filter (%s) contains an invalid definition for "
-#~ "regular expression macros (%s)."
-
-#, php-format
-#~ msgid ""
-#~ "The selected GEDCOM filter (%s) contains an invalid definition for the "
-#~ "regular expression macro %s."
-#~ msgstr ""
-#~ "The selected GEDCOM filter (%s) contains an invalid definition for the "
-#~ "regular expression macro %s."
-
-#~ msgid "Invalid definition"
-#~ msgstr "Invalid definition"
-
-#, php-format
-#~ msgid ""
-#~ "The selected GEDCOM filter (%s) contains an invalid filter definition for "
-#~ "tag pattern %s."
-#~ msgstr ""
-#~ "The selected GEDCOM filter (%s) contains an invalid filter definition for "
-#~ "tag pattern %s."
-
-#, php-format
-#~ msgid "The selected GEDCOM filter (%s) contains an invalid tag definition"
-#~ msgstr "The selected GEDCOM filter (%s) contains an invalid tag definition"
-
-#, php-format
-#~ msgid ""
-#~ "The used GEDCOM filter (%s) contains a %s command with a method (%s), "
-#~ "which is not available. Currently, only \"%s\" is allowed to be used as a "
-#~ "method."
-#~ msgstr ""
-#~ "The used GEDCOM filter (%s) contains a %s command with a method (%s), "
-#~ "which is not available. Currently, only \"%s\" is allowed to be used as a "
-#~ "method."
-
-#, php-format
-#~ msgid ""
-#~ "The used GEDCOM filter (%s) contains a %s command with a method (%s), but "
-#~ "the filter class does not contain a \"%s\" method."
-#~ msgstr ""
-#~ "The used GEDCOM filter (%s) contains a %s command with a method (%s), but "
-#~ "the filter class does not contain a \"%s\" method."
-
-#, php-format
-#~ msgid ""
-#~ "The used GEDCOM filter (%s) contains a macro command (%s) for a regular "
-#~ "expression, but the macro is not defined in the filter."
-#~ msgstr ""
-#~ "The used GEDCOM filter (%s) contains a macro command (%s) for a regular "
-#~ "expression, but the macro is not defined in the filter."
-
-#, php-format
-#~ msgid ""
-#~ "The selected GEDCOM filter (%s) contains an invalid regular expression"
-#~ msgstr ""
-#~ "The selected GEDCOM filter (%s) contains an invalid regular expression"
-
-#~ msgid "Error message"
-#~ msgstr "Error message"
-
-#, php-format
-#~ msgid ""
-#~ "The selected GEDCOM filter (%s) contains a black list filter rule (%s) "
-#~ "with a regular expression, which will never be executed, because the "
-#~ "black list filter rule will delete the related GEDCOM line."
-#~ msgstr ""
-#~ "The selected GEDCOM filter (%s) contains a black list filter rule (%s) "
-#~ "with a regular expression, which will never be executed, because the "
-#~ "black list filter rule will delete the related GEDCOM line."
-
-#, php-format
-#~ msgid ""
-#~ "The filter rule \"%s\" is dominated by the earlier filter rule \"%s\" and "
-#~ "will never be executed. Please remove the rule or change the order of the "
-#~ "filter rules."
-#~ msgstr ""
-#~ "The filter rule \"%s\" is dominated by the earlier filter rule \"%s\" and "
-#~ "will never be executed. Please remove the rule or change the order of the "
-#~ "filter rules."
-
-#, php-format
-#~ msgid "The %s method of the used GEDCOM filter (%s) throws a PHP error"
-#~ msgstr "The %s method of the used GEDCOM filter (%s) throws a PHP error"
-
-#~ msgid "GEDCOM Conversion"
-#~ msgstr "GEDCOM Conversion"
-
-#~ msgid "Extended Import/Export"
-#~ msgstr "Extended Import/Export"
-
-#~ msgid ""
-#~ "A custom module for advanced GEDCOM import, export, and filter "
-#~ "operations. The module also supports remote downloads/uploads/filters via "
-#~ "URL requests."
-#~ msgstr ""
-#~ "A custom module for advanced GEDCOM import, export, and filter "
-#~ "operations. The module also supports remote downloads/uploads/filters via "
-#~ "URL requests."
-
-#~ msgid ""
-#~ "The provided secret key is too short. Please provide a minimum length of "
-#~ "8 characters."
-#~ msgstr ""
-#~ "The provided secret key is too short. Please provide a minimum length of "
-#~ "8 characters."
-
-#~ msgid ""
-#~ "The provided secret key contains characters, which are not accepted. "
-#~ "Please provide a different key."
-#~ msgstr ""
-#~ "The provided secret key contains characters, which are not accepted. "
-#~ "Please provide a different key."
-
-#, php-format
-#~ msgid ""
-#~ "The folder settings could not be saved, because the folder “%s” does not "
-#~ "exist."
-#~ msgstr ""
-#~ "The folder settings could not be saved, because the folder “%s” does not "
-#~ "exist."
-
-#, php-format
-#~ msgid ""
-#~ "The preferences for the custom module %s were imported from the earlier "
-#~ "custom module version %s."
-#~ msgstr ""
-#~ "The preferences for the custom module %s were imported from the earlier "
-#~ "custom module version %s."
-
-#, php-format
-#~ msgid ""
-#~ "The preferences for the default GEDCOM filter were reset to \"none\", "
-#~ "because the selected GEDCOM filter %s could not be found"
-#~ msgstr ""
-#~ "The preferences for the default GEDCOM filter were reset to \"none\", "
-#~ "because the selected GEDCOM filter %s could not be found"
-
-#~ msgid "A compilation error was detected in the following GEDCOM filter"
-#~ msgstr "A compilation error was detected in the following GEDCOM filter"
-
-#~ msgid "line"
-#~ msgstr "line"
-
-#~ msgid "error message"
-#~ msgstr "error message"
-
-#~ msgid "No filter"
-#~ msgstr "No filter"
-
-#~ msgid "The GEDCOM filter was not found"
-#~ msgstr "The GEDCOM filter was not found"
-
-#, php-format
-#~ msgid ""
-#~ "The include hierarchy for GEDCOM filters exceeds the maximum level of %s "
-#~ "includes."
-#~ msgstr ""
-#~ "The include hierarchy for GEDCOM filters exceeds the maximum level of %s "
-#~ "includes."
-
-#~ msgid ""
-#~ "The following GEDCOM filter might cause a loop in the include structure, "
-#~ "because it was detected more than once in the include hierarchy"
-#~ msgstr ""
-#~ "The following GEDCOM filter might cause a loop in the include structure, "
-#~ "because it was detected more than once in the include hierarchy"
-
-#~ msgid "Please check the include structure of the selected GEDCOM filters."
-#~ msgstr "Please check the include structure of the selected GEDCOM filters."
-
-#~ msgid "Tree not found"
-#~ msgstr "Tree not found"
-
-#~ msgid "Internal module error: Neither GET nor POST request received."
-#~ msgstr "Internal module error: Neither GET nor POST request received."
-
-#~ msgid ""
-#~ "No key provided. For checking of the access rights, it is mandatory to "
-#~ "provide a key as parameter in the URL."
-#~ msgstr ""
-#~ "No key provided. For checking of the access rights, it is mandatory to "
-#~ "provide a key as parameter in the URL."
-
-#~ msgid ""
-#~ "No secret key defined. Please define secret key in the module settings: "
-#~ "Control Panel / Modules / All Modules / "
-#~ msgstr ""
-#~ "No secret key defined. Please define secret key in the module settings: "
-#~ "Control Panel / Modules / All Modules / "
-
-#~ msgid "Key not accepted. Access denied."
-#~ msgstr "Key not accepted. Access denied."
-
-#~ msgid "Key (encrypted) not accepted. Access denied."
-#~ msgstr "Key (encrypted) not accepted. Access denied."
-
-#~ msgid "Privacy level not accepted"
-#~ msgstr "Privacy level not accepted"
-
-#~ msgid "Export format not accepted"
-#~ msgstr "Export format not accepted"
-
-#~ msgid "Encoding not accepted"
-#~ msgstr "Encoding not accepted"
-
-#~ msgid "Action not accepted"
-#~ msgstr "Action not accepted"
-
-#~ msgid "Line endings not accepted"
-#~ msgstr "Line endings not accepted"
-
-#~ msgid "Time stamp setting not accepted"
-#~ msgstr "Time stamp setting not accepted"
-
-#~ msgid "No file name provided for the requested GEDCOM conversion"
-#~ msgstr "No file name provided for the requested GEDCOM conversion"
-
-#, php-format
-#~ msgid "The file %s could not be created."
-#~ msgstr "The file %s could not be created."
-
-#~ msgid ""
-#~ "Remote URL requests to save GEDCOM files to the server are not allowed."
-#~ msgstr ""
-#~ "Remote URL requests to save GEDCOM files to the server are not allowed."
-
-#~ msgid "Please check the module settings in the control panel."
-#~ msgstr "Please check the module settings in the control panel."
-
-#~ msgid ""
-#~ "Remote URL requests to download GEDCOM files from the server are not "
-#~ "allowed."
-#~ msgstr ""
-#~ "Remote URL requests to download GEDCOM files from the server are not "
-#~ "allowed."
-
-#, php-format
-#~ msgid "Unable to read file \"%s\"."
-#~ msgstr "Unable to read file \"%s\"."
-
-#, php-format
-#~ msgid "No data imported from file \"%s\". The file might be empty."
-#~ msgstr "No data imported from file \"%s\". The file might be empty."
-
-#, php-format
-#~ msgid "The file \"%s\" was sucessfully uploaded for the family tree \"%s\""
-#~ msgstr "The file \"%s\" was sucessfully uploaded for the family tree \"%s\""
-
-#, php-format
-#~ msgid "The GEDCOM file \"%s\" was successfully converted to: %s"
-#~ msgstr "The GEDCOM file \"%s\" was successfully converted to: %s"
-
-#~ msgid ""
-#~ "Remote URL requests to convert GEDCOM files on the server are not allowed."
-#~ msgstr ""
-#~ "Remote URL requests to convert GEDCOM files on the server are not allowed."
-
-#~ msgid ""
-#~ "Remote URL requests to upload GEDCOM files to the server are not allowed."
-#~ msgstr ""
-#~ "Remote URL requests to upload GEDCOM files to the server are not allowed."
-
-#~ msgid "Extended GEDCOM Export"
-#~ msgstr "Extended GEDCOM Export"
-
-#~ msgid "The following GEDCOM structure could not be matched"
-#~ msgstr "The following GEDCOM structure could not be matched"
-
-#~ msgid "Error during a regular expression replacement."
-#~ msgstr "Error during a regular expression replacement."
-
-#~ msgid ""
-#~ "Fatal error: Too many iterations while removing empty and unlinked "
-#~ "records."
-#~ msgstr ""
-#~ "Fatal error: Too many iterations while removing empty and unlinked "
-#~ "records."
-
-#~ msgid "Extended GEDCOM Import"
-#~ msgstr "Extended GEDCOM Import"
-
-#~ msgid "Extended GEDCOM Import/Export"
-#~ msgstr "Extended GEDCOM Import/Export"
-
-#~ msgid "All records"
-#~ msgstr "All records"
-
-#~ msgid "Avoid leading spaces for CONC"
-#~ msgstr "Avoid leading spaces for CONC"
-
-#~ msgid "Birth, marriage, death export"
-#~ msgstr "Birth, marriage, death export"
-
-#~ msgid "Combined GEDCOM filter"
-#~ msgstr "Combined GEDCOM filter"
-
-#~ msgid "Example GEDCOM filter"
-#~ msgstr "Example GEDCOM filter"
-
-#~ msgid "GEDCOM 7 conversion"
-#~ msgstr "GEDCOM 7 conversion"
-
-#~ msgid "Individual names CSV list"
-#~ msgstr "Individual names CSV list"
-
-#~ msgid "No records"
-#~ msgstr "No records"
-
-#~ msgid "Optimization of webtrees export for GEDCOM 7"
-#~ msgstr "Optimisation of WebTrees export for GEDCOM 7"
-
-#~ msgid "Optimization of webtrees export for GEDCOM 5.5.1"
-#~ msgstr "Optimisation of WebTrees export for GEDCOM 5.5.1"
-
-#~ msgid "Reduce dates to years"
-#~ msgstr "Reduce dates to years"
-
-#~ msgid ""
-#~ "Reduce minimal INDI records (with SEX, FAMC, FAMS or less) to empty INDI "
-#~ "records"
-#~ msgstr ""
-#~ "Reduce minimal INDI records (with SEX, FAMC, FAMS or less) to empty INDI "
-#~ "records"
-
-#~ msgid "Remove asterisk characters from names"
-#~ msgstr "Remove asterisk characters from names"
-
-#~ msgid "Remove change data (i.e. CHAN structures)"
-#~ msgstr "Remove change data (i.e. CHAN structures)"
-
-#~ msgid "Remove empty or unlinked records"
-#~ msgstr "Remove empty or unlinked records"
-
-#~ msgid "Remove empty records"
-#~ msgstr "Remove empty records"
-
-#~ msgid "Remove restrictions (i.e. RESN tags)"
-#~ msgstr "Remove restrictions (i.e. RESN tags)"
-
-#~ msgid "Remove ToDo data (i.e. _TODO structures)"
-#~ msgstr "Remove ToDo data (i.e. _TODO structures)"
-
-#~ msgid "Remove webtrees user data (i.e. _WT_USER tags)"
-#~ msgstr "Remove WebTrees user data (i.e. _WT_USER tags)"
-
-#~ msgid "Select a GEDCOM file"
-#~ msgstr "Select a GEDCOM file"
-
-#~ msgid "A file on your computer"
-#~ msgstr "A file on your computer"
-
-#~ msgid "A file on the server"
-#~ msgstr "A file on the server"
-
-#~ msgid "Conversion settings"
-#~ msgstr "Conversion settings"
-
-#~ msgid "Other format (i.e. use extension of filename)"
-#~ msgstr "Other format (i.e. use extension of filename)"
-
-#~ msgid "Filename (converted)"
-#~ msgstr "Filename (converted)"
-
-#~ msgid ""
-#~ "The file extension will be added (or overruled) according to the selected "
-#~ "format. Select \"Other format\" to use the extension, which is provided "
-#~ "within the filename."
-#~ msgstr ""
-#~ "The file extension will be added (or overruled) according to the selected "
-#~ "format. Select \"Other format\" to use the extension, which is provided "
-#~ "within the filename."
-
-#~ msgid "Time stamp"
-#~ msgstr "Time stamp"
-
-#~ msgid "No time stamp"
-#~ msgstr "No time stamp"
-
-#~ msgid "Prefix time stamp"
-#~ msgstr "Prefix time stamp"
-
-#~ msgid "Postfix time stamp"
-#~ msgstr "Postfix time stamp"
-
-#~ msgid "Select GEDCOM filters"
-#~ msgstr "Select GEDCOM filters"
-
-#, php-format
-#~ msgid "Gedcom filter %s"
-#~ msgstr "Gedcom filter %s"
-
-#~ msgid "Convert GEDCOM file"
-#~ msgstr "Convert GEDCOM file"
-
-#~ msgid "Export action"
-#~ msgstr "Export action"
-
-#~ msgid "Action"
-#~ msgstr "Action"
-
-#~ msgid "Both, i.e. download and save in parallel"
-#~ msgstr "Both, i.e. download and save in parallel"
-
-#~ msgid "Export GEDCOM file"
-#~ msgstr "Export GEDCOM file"
-
-#~ msgid ""
-#~ "Any import will delete all the genealogy data of the tree in the database "
-#~ "and replace it with data from a GEDCOM file."
-#~ msgstr ""
-#~ "Any import will delete all the genealogy data of the tree in the database "
-#~ "and replace it with data from a GEDCOM file."
-
-#~ msgid "Settings for GEDCOM Import"
-#~ msgstr "Settings for GEDCOM Import"
-
-#~ msgid ""
-#~ "Are you absolutely sure you want to import the selected file into the "
-#~ "specified tree? Please be aware that importing the file will delete all "
-#~ "existing data in the tree without possibility to recover! Therefore, also "
-#~ "consider to backup the webtrees database before importing new files."
-#~ msgstr ""
-#~ "Are you absolutely sure you want to import the selected file into the "
-#~ "specified tree? Please be aware that importing the file will delete all "
-#~ "existing data in the tree without possibility to recover! Therefore, also "
-#~ "consider to backup the WebTrees database before importing new files."
-
-#~ msgid "Import GEDCOM file"
-#~ msgstr "Import GEDCOM file"
-
-#~ msgid "Datafix using GEDCOM filters"
-#~ msgstr "Datafix using GEDCOM filters"
-
-#~ msgid ""
-#~ "You can select up to 3 GEDCOM filters, which will be applied as a data "
-#~ "fix."
-#~ msgstr ""
-#~ "You can select up to 3 GEDCOM filters, which will be applied as a data "
-#~ "fix."
-
-#~ msgid ""
-#~ "It is strongly recommended to backup your tree or your database first."
-#~ msgstr ""
-#~ "It is strongly recommended to backup your tree or your database first."
-
-#, php-format
-#~ msgid "GEDCOM filter %s"
-#~ msgstr "GEDCOM filter %s"
-
-#~ msgid "Select a GEDCOM filter"
-#~ msgstr "Select a GEDCOM filter"
-
-#~ msgid "Select a tree"
-#~ msgstr "Select a tree"
-
-#~ msgid "GEDCOM Import"
-#~ msgstr "GEDCOM Import"
-
-#~ msgid "GEDCOM Export"
-#~ msgstr "GEDCOM Export"
-
-#~ msgid "Usage of GEDCOM filters"
-#~ msgstr "Usage of GEDCOM filters"
-
-#~ msgid "Select GEDOM import/export/conversion/datafix"
-#~ msgstr "Select GEDOM import/export/conversion/datafix"
-
-#, php-format
-#~ msgid ""
-#~ "If this option is selected, a link to the %s page will be shown as a list "
-#~ "menu item."
-#~ msgstr ""
-#~ "If this option is selected, a link to the %s page will be shown as a list "
-#~ "menu item."
-
-#~ msgid "Settings for Remote Requests via URL"
-#~ msgstr "Settings for Remote Requests via URL"
-
-#~ msgid ""
-#~ "Currently, remote downloading of GEDCOM files is allowed. Please note "
-#~ "that everyone with access to the authorization key, can download/upload/"
-#~ "save GEDCOM files from/to your webtrees installation."
-#~ msgstr ""
-#~ "Currently, remote downloading of GEDCOM files is allowed. Please note "
-#~ "that everyone with access to the authorisation key, can download/upload/"
-#~ "save GEDCOM files from/to your WebTrees installation."
-
-#~ msgid "Allow remote requests via URL to download GEDCOM files"
-#~ msgstr "Allow remote requests via URL to download GEDCOM files"
-
-#~ msgid "Allow"
-#~ msgstr "Allow"
-
-#~ msgid ""
-#~ "By selecting this option, it is possible to activate remote downloads by "
-#~ "calling an URL."
-#~ msgstr ""
-#~ "By selecting this option, it is possible to activate remote downloads by "
-#~ "calling an URL."
-
-#~ msgid "Allow remote requests via URL to save GEDCOM files to the server"
-#~ msgstr "Allow remote requests via URL to save GEDCOM files to the server"
-
-#~ msgid ""
-#~ "By selecting this option, it is possible to activate remote requests to "
-#~ "save GEDCOM files on the server via calling an URL."
-#~ msgstr ""
-#~ "By selecting this option, it is possible to activate remote requests to "
-#~ "save GEDCOM files on the server via calling an URL."
-
-#~ msgid ""
-#~ "Currently, remote uploading of GEDCOM files is allowed. Please note that "
-#~ "everyone with access to the authorization key, can download/upload/save "
-#~ "GEDCOM files from/to your webtrees installation."
-#~ msgstr ""
-#~ "Currently, remote uploading of GEDCOM files is allowed. Please note that "
-#~ "everyone with access to the authorisation key, can download/upload/save "
-#~ "GEDCOM files from/to your WebTrees installation."
-
-#~ msgid "Allow remote requests via URL to upload GEDCOM files"
-#~ msgstr "Allow remote requests via URL to upload GEDCOM files"
-
-#~ msgid ""
-#~ "By selecting this option, it is possible to activate remote uploads via "
-#~ "calling an URL."
-#~ msgstr ""
-#~ "By selecting this option, it is possible to activate remote uploads via "
-#~ "calling an URL."
-
-#~ msgid "Allow remote requests via URL to convert GEDCOM files on the server"
-#~ msgstr "Allow remote requests via URL to convert GEDCOM files on the server"
-
-#~ msgid ""
-#~ "By selecting this option, it is possible to activate remote conversion of "
-#~ "GEDCOM files on the server via calling an URL."
-#~ msgstr ""
-#~ "By selecting this option, it is possible to activate remote conversion of "
-#~ "GEDCOM files on the server via calling an URL."
-
-#~ msgid ""
-#~ "An authorization key is needed if remote requests via URL shall be used."
-#~ msgstr ""
-#~ "An authorisation key is needed if remote requests via URL shall be used."
-
-#~ msgid ""
-#~ "Currently, the authorization key is not encrypted. This option is less "
-#~ "secure and should only be used in local environments with limited users. "
-#~ "Otherwise, please activate encrpytion of the authorization key."
-#~ msgstr ""
-#~ "Currently, the authorisation key is not encrypted. This option is less "
-#~ "secure and should only be used in local environments with limited users. "
-#~ "Otherwise, please activate encrpytion of the authorisation key."
-
-#~ msgid ""
-#~ "One of the options remote download/upload/save/convert is activated and "
-#~ "the authorization key is empty or not available"
-#~ msgstr ""
-#~ "One of the options remote download/upload/save/convert is activated and "
-#~ "the authorisation key is empty or not available"
-
-#~ msgid "Current authorization key"
-#~ msgstr "Current authorisation key"
-
-#~ msgid ""
-#~ "The authorization key cannot be shown, because encryption is activated. "
-#~ "If you forgot the key, you have to create a new key."
-#~ msgstr ""
-#~ "The authorisation key cannot be shown, because encryption is activated. "
-#~ "If you forgot the key, you have to create a new key."
-
-#~ msgid "Authorization key has not been set yet"
-#~ msgstr "Authorisation key has not been set yet"
-
-#~ msgid "New authorization key"
-#~ msgstr "New authorisation key"
-
-#~ msgid "Activate encryption of the authorization key"
-#~ msgstr "Activate encryption of the authorisation key"
-
-#~ msgid "Activate"
-#~ msgstr "Activate"
-
-#~ msgid ""
-#~ "The encryption of the authorization key is more secure, because the "
-#~ "authorization key is not visible to anyone and also encrypted in the "
-#~ "database. However, the authorization key is not readible any more (e.g. "
-#~ "for other administrators) and cannot be recovered if it is forgotten."
-#~ msgstr ""
-#~ "The encryption of the authorisation key is more secure, because the "
-#~ "authorisation key is not visible to anyone and also encrypted in the "
-#~ "database. However, the authorisation key is not readible any more (e.g. "
-#~ "for other administrators) and cannot be recovered if it is forgotten."
-
-#~ msgid "Setting for the Import/Export Folder on the webtrees Server"
-#~ msgstr "Setting for the Import/Export Folder on the WebTrees Server"
-
-#~ msgid ""
-#~ "Currently, the folder to save is not a sub-directory of the webtrees data "
-#~ "folder. It is highly recommended to use the webtrees data folder or a sub-"
-#~ "directory, because webtrees protects unauthorized access to this folder. "
-#~ "If you choose a folder outside of the webtrees data folder, the saved "
-#~ "GEDCOM file might be unprotected against unauthorized access."
-#~ msgstr ""
-#~ "Currently, the folder to save is not a sub-directory of the WebTrees data "
-#~ "folder. It is highly recommended to use the WebTrees data folder or a sub-"
-#~ "directory, because WebTrees protects unauthorised access to this folder. "
-#~ "If you choose a folder outside of the WebTrees data folder, the saved "
-#~ "GEDCOM file might be unprotected against unauthorised access."
-
-#~ msgid ""
-#~ "Relative path to a folder within the webtrees root path, where GEDCOM "
-#~ "import/exports are saved. It is highly recommended to use the webtrees "
-#~ "data folder or a sub-directory, because webtrees protects unauthorized "
-#~ "access to the data folder. The current settings (Control panel / Website "
-#~ "preferences) for the webtrees root and data folder are:"
-#~ msgstr ""
-#~ "Relative path to a folder within the WebTrees root path, where GEDCOM "
-#~ "import/exports are saved. It is highly recommended to use the WebTrees "
-#~ "data folder or a sub-directory, because WebTrees protects unauthorised "
-#~ "access to the data folder. The current settings (Control panel / Website "
-#~ "preferences) for the WebTrees root and data folder are:"
-
-#~ msgid "webtrees root folder"
-#~ msgstr "WebTrees root folder"
-
-#~ msgid "webtrees data folder"
-#~ msgstr "WebTrees data folder"
-
-#~ msgid "webtrees data folder (relative path)"
-#~ msgstr "WebTrees data folder (relative path)"
-
-#~ msgid "webtrees data folder (setting in the control panel)"
-#~ msgstr "WebTrees data folder (setting in the control panel)"
-
-#~ msgid "Default Settings for Gedcom Export"
-#~ msgstr "Default Settings for Gedcom Export"
-
-#~ msgid ""
-#~ "These settings are used as default values for exports, e.g. if certain "
-#~ "parameter values are not provided within the URL. By specifying the "
-#~ "default values, the URLs can be simplified. In the most extreme case, it "
-#~ "is sufficient to provide the tree and the authorization key parameter "
-#~ "only."
-#~ msgstr ""
-#~ "These settings are used as default values for exports, e.g. if certain "
-#~ "parameter values are not provided within the URL. By specifying the "
-#~ "default values, the URLs can be simplified. In the most extreme case, it "
-#~ "is sufficient to provide the tree and the authorisation key parameter "
-#~ "only."
-
-#~ msgid ""
-#~ "Any parameters provided in the URL of a remote download have a higher "
-#~ "priority and will overrule the default settings."
-#~ msgstr ""
-#~ "Any parameters provided in the URL of a remote download have a higher "
-#~ "priority and will overrule the default settings."
-
-#~ msgid "Default privacy level"
-#~ msgstr "Default privacy level"
-
-#~ msgid ""
-#~ "Select the default privacy level. This privacy level will be chosen if no "
-#~ "specific privacy level is provided as URL parameter."
-#~ msgstr ""
-#~ "Select the default privacy level. This privacy level will be chosen if no "
-#~ "specific privacy level is provided as URL parameter."
-
-#~ msgid "Default export format"
-#~ msgstr "Default export format"
-
-#~ msgid "includes media files"
-#~ msgstr "includes media files"
-
-#~ msgid ""
-#~ "Select the default export format. This export format will be chosen if no "
-#~ "specific export format is provided as URL parameter."
-#~ msgstr ""
-#~ "Select the default export format. This export format will be chosen if no "
-#~ "specific export format is provided as URL parameter."
-
-#~ msgid "Default encoding"
-#~ msgstr "Default encoding"
-
-#~ msgid ""
-#~ "Select the default ending. This ending will be chosen if no specific "
-#~ "ending is provided as URL parameter."
-#~ msgstr ""
-#~ "Select the default ending. This ending will be chosen if no specific "
-#~ "ending is provided as URL parameter."
-
-#~ msgid "Default time stamp"
-#~ msgstr "Default time stamp"
-
-#~ msgid ""
-#~ "Select the default time stamp. This time stamp will be chosen if no "
-#~ "specific time stamp is provided as URL parameter. If \"none\" is chosen, "
-#~ "no time stamp will be used."
-#~ msgstr ""
-#~ "Select the default time stamp. This time stamp will be chosen if no "
-#~ "specific time stamp is provided as URL parameter. If \"none\" is chosen, "
-#~ "no time stamp will be used."
-
-#~ msgid "Default Settings for GEDCOM Filters"
-#~ msgstr "Default Settings for GEDCOM Filters"
-
-#, php-format
-#~ msgid "Default GEDCOM filter %s"
-#~ msgstr "Default GEDCOM filter %s"
-
-#, php-format
-#~ msgid ""
-#~ "Select a default filter for GEDCOM filter %s. This filter will be chosen "
-#~ "if no specific filter is provided as URL parameter."
-#~ msgstr ""
-#~ "Select a default filter for GEDCOM filter %s. This filter will be chosen "
-#~ "if no specific filter is provided as URL parameter."
-
-#~ msgid "Currently, no authorization key is available."
-#~ msgstr "Currently, no authorisation key is available."
-
-#~ msgid ""
-#~ "An authorization key is needed for remote requests via URL. Please note "
-#~ "that remote requests are only allowed if the corresponding settings for "
-#~ "remote download/save/upload/convert are activated."
-#~ msgstr ""
-#~ "An authorisation key is needed for remote requests via URL. Please note "
-#~ "that remote requests are only allowed if the corresponding settings for "
-#~ "remote download/save/upload/convert are activated."
-
-#~ msgid "Remove minimal INDI records with SEX, FAMC, FAMS or less"
-#~ msgstr "Remove minimal INDI records with SEX, FAMC, FAMS or less"
-
-#~ msgid ""
-#~ "Reduce minimal individuals (e.g. created by privacy settings) to empty "
-#~ "records"
-#~ msgstr ""
-#~ "Reduce minimal individuals (e.g. created by privacy settings) to empty "
-#~ "records"
-
-#, php-format
-#~ msgid "GEDCOM filter not found:  %s"
-#~ msgstr "GEDCOM filter not found:  %s"
-
-#~ msgid "Apply GEDCOM filters"
-#~ msgstr "Apply GEDCOM filters"
-
-#, php-format
-#~ msgid ""
-#~ "The selected GEDCOM filter (%s) contains an invalid filter definition "
-#~ "(%s)."
-#~ msgstr ""
-#~ "The selected GEDCOM filter (%s) contains an invalid filter definition "
-#~ "(%s)."
-
-#, php-format
-#~ msgid "Could not find the requested tree \"%s\"."
-#~ msgstr "Could not find the requested tree \"%s\"."
-
-#~ msgid "Default action"
-#~ msgstr "Default action"
-
-#~ msgid ""
-#~ "Select the default action. This action will be chosen if no specific "
-#~ "action is provided as URL parameter. If \"both\" is chosen, the file is "
-#~ "downloaded and saved in parallel."
-#~ msgstr ""
-#~ "Select the default action. This action will be chosen if no specific "
-#~ "action is provided as URL parameter. If \"both\" is chosen, the file is "
-#~ "downloaded and saved in parallel."
-
-#~ msgid "(includes media files)"
-#~ msgstr "(includes media files)"
-
-#~ msgid "Optimize webtrees export"
-#~ msgstr "Optimise WebTrees export"
-
-#~ msgid "GEDCOM Filter Data Fix"
-#~ msgstr "GEDCOM Filter Data Fix"
-
-#~ msgid ""
-#~ "Select the default tree. This tree will be chosen if no specific tree is "
-#~ "provided as URL parameter."
-#~ msgstr ""
-#~ "Select the default tree. This tree will be chosen if no specific tree is "
-#~ "provided as URL parameter."
-
-#~ msgid ""
-#~ "Specifiy the default file name. This file name will be chosen if no "
-#~ "specific file name is provided as URL parameter."
-#~ msgstr ""
-#~ "Specify the default file name. This file name will be chosen if no "
-#~ "specific file name is provided as URL parameter."
-
-#, php-format
-#~ msgid "Default export filter %s"
-#~ msgstr "Default export filter %s"
-
-#~ msgid "Upload"
-#~ msgstr "Upload"
-
-#~ msgid "Convert"
-#~ msgstr "Convert"
-
-#~ msgid "One of the parameters \"file, tree\" is missing in the called URL."
-#~ msgstr "One of the parameters \"file, tree\" is missing in the called URL."
-
-#~ msgid "Remote requests to upload GEDCOM files via URL are not allowed."
-#~ msgstr "Remote requests to upload GEDCOM files via URL are not allowed."
-
-#~ msgid "Allow remote download of GEDCOM files via URL"
-#~ msgstr "Allow remote download of GEDCOM files via URL"
-
-#~ msgid "Allow remote upload of GEDCOM files via URL"
-#~ msgstr "Allow remote upload of GEDCOM files via URL"
-
-#~ msgid ""
-#~ "Allow remote conversion of GEDCOM files on the webtrees server via URL"
-#~ msgstr ""
-#~ "Allow remote conversion of GEDCOM files on the WebTrees server via URL"
-
-#~ msgid "Remote URL requests to download GEDCOM files are not allowed."
-#~ msgstr "Remote URL requests to download GEDCOM files are not allowed."
-
-#~ msgid ""
-#~ "A custom module to download GEDCOM files on URL requests with the tree "
-#~ "name, GEDCOM file name, and authorization provided as parameters within "
-#~ "the URL."
-#~ msgstr ""
-#~ "A custom module to download GEDCOM files on URL requests with the tree "
-#~ "name, GEDCOM file name, and authorisation provided as parameters within "
-#~ "the URL."
-
-#~ msgid ""
-#~ "By selecting this option, it is possible to activate remote downloads via "
-#~ "calling an URL. Please note: Even if the option is un-selected, GEDCOM "
-#~ "files can still be be saved on the server via URL request."
-#~ msgstr ""
-#~ "By selecting this option, it is possible to activate remote downloads via "
-#~ "calling an URL. Please note: Even if the option is un-selected, GEDCOM "
-#~ "files can still be be saved on the server via URL request."
-
-#~ msgid ""
-#~ "Download is not allowed. Please change the module settings to allow "
-#~ "downloads."
-#~ msgstr ""
-#~ "Download is not allowed. Please change the module settings to allow "
-#~ "downloads."
-
-#, php-format
-#~ msgid ""
-#~ "The %s method of the export filter (%s) returns an invalid filter "
-#~ "definition."
-#~ msgstr ""
-#~ "The %s method of the export filter (%s) returns an invalid filter "
-#~ "definition."
-
-#, php-format
-#~ msgid "The selected export filter (%s) is empty."
-#~ msgstr "The selected export filter (%s) is empty."
-
-#~ msgid ""
-#~ "Select the default GEDCOM version. This GEDCOM version will be chosen if "
-#~ "no specific GEDCOM version is provided as URL parameter."
-#~ msgstr ""
-#~ "Select the default GEDCOM version. This GEDCOM version will be chosen if "
-#~ "no specific GEDCOM version is provided as URL parameter."
-
-#~ msgid "Default GEDCOM-L flag"
-#~ msgstr "Default GEDCOM-L flag"
-
-#~ msgid "Do not use GEDCOM-L"
-#~ msgstr "Do not use GEDCOM-L"
-
-#~ msgid ""
-#~ "Select the default for GEDCOM-L usage. This GEDCOM-L setting will be "
-#~ "chosen for GEDCOM 7.0 exports if no specific GEDCOM-L setting is provided "
-#~ "as URL parameter."
-#~ msgstr ""
-#~ "Select the default for GEDCOM-L usage. This GEDCOM-L setting will be "
-#~ "chosen for GEDCOM 7.0 exports if no specific GEDCOM-L setting is provided "
-#~ "as URL parameter."
-
-#, php-format
-#~ msgid ""
-#~ "The selected export filter (%s) does not contain a filter definition (%s) "
-#~ "or contains an empty export filter."
-#~ msgstr ""
-#~ "The selected export filter (%s) does not contain a filter definition (%s) "
-#~ "or contains an empty export filter."
-
-#, php-format
-#~ msgid ""
-#~ "The selected export filter (%s) contains an invalid filter definition for "
-#~ "the variable: %s"
-#~ msgstr ""
-#~ "The selected export filter (%s) contains an invalid filter definition for "
-#~ "the variable: %s"
-
-#~ msgid "Test Download"
-#~ msgstr "Test Download"
-
-#~ msgid "Folder within the webtrees root path to save GEDCOM files"
-#~ msgstr "Folder within the WebTrees root path to save GEDCOM files"
-
-#~ msgid "Error during update of the module preferences"
-#~ msgstr "Error during update of the module preferences"
-
-#~ msgid "New secret key"
-#~ msgstr "New secret key"
-
-#~ msgid "Godparents"
-#~ msgstr "Godparents"
-
-#~ msgid "Witnesses"
-#~ msgstr "Witnesses"
-
-#, php-format
-#~ msgid "The folder “%s” does not exist."
-#~ msgstr "The folder “%s” does not exist."
+#~ "Automatic user registration after sign in with authorisation provider"
