@@ -462,7 +462,7 @@ You should have received a copy of the GNU General Public License along with thi
     + Copyright (c) 2025 [webtrees development team](http://webtrees.net)
 + League
     + [oauth2-client](https://github.com/thephpleague/oauth2-client)
-        + Copyright (c) 2013-2023 Alex Bilbie
+        + Copyright (c) 2013-2025 Alex Bilbie
     + [oauth2-github](https://github.com/thephpleague/oauth2-github)
         + Copyright (c) 2015 Steven Maguire
     + [oauth2-google](https://github.com/thephpleague/oauth2-google)
@@ -470,10 +470,15 @@ You should have received a copy of the GNU General Public License along with thi
 + stevenmaguire
     + [oauth2-dropbox](https://github.com/stevenmaguire/oauth2-dropbox)
         + Copyright (c) 2015-2021 Steven Maguire
+    + [oauth2-keycloak](https://github.com/stevenmaguire/oauth2-keycloak)
+        + Copyright (c) 2015-2018 Steven Maguire
++ bahuma20
+    + [oauth2-nextcloud](https://github.com/bahuma20/oauth2-nextcloud)
+        + Copyright (c) 2020-2023 Max Bachhuber
 + Vesta Common (webtrees custom module)
     + [Cissee\WebtreesExt\More18N](https://github.com/vesta-webtrees-2-custom-modules/vesta_common/blob/master/patchedWebtrees/MoreI18N.php)
         + Copyright (c) 2019 – 2025 Richard Cissée
-+ OAuth2Client (webtrees custom module)
++ OAuth 2.0 Client for webtrees (webtrees custom module)
     + Copyright (c) 2025 [Jefferson49](https://github.com/Jefferson49)
 
 ## Github Repository
