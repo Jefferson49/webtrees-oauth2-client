@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5fc54961084a3815d07e755c9512861",
+    "content-hash": "93449915e1d0c8efde842d5e32a53150",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
@@ -13,6 +13,12 @@
                 "type": "git",
                 "url": "https://github.com/bahuma20/oauth2-nextcloud.git",
                 "reference": "a1813cc288d569642cad612b99880fa738a38574"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bahuma20/oauth2-nextcloud/zipball/a1813cc288d569642cad612b99880fa738a38574",
+                "reference": "a1813cc288d569642cad612b99880fa738a38574",
+                "shasum": ""
             },
             "require": {
                 "league/oauth2-client": "^2.0",
@@ -29,19 +35,7 @@
                     "Bahuma\\OAuth2\\Client\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Bahuma\\OAuth2\\Client\\Test\\": "test/src/"
-                }
-            },
-            "scripts": {
-                "check": [
-                    "phpcs src tests --standard=PSR12 -sp"
-                ],
-                "cs-fix": [
-                    "phpcbf src tests --standard=PSR12 -p"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -58,6 +52,10 @@
                 }
             ],
             "description": "Nextcloud OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "support": {
+                "issues": "https://github.com/bahuma20/oauth2-nextcloud/issues",
+                "source": "https://github.com/bahuma20/oauth2-nextcloud/tree/2.0.0"
+            },
             "time": "2023-05-11T12:23:05+00:00"
         },
         {
@@ -374,6 +372,12 @@
                 "url": "https://github.com/stevenmaguire/oauth2-keycloak.git",
                 "reference": "1b690b7377dfe7a23e1590373f37e12cf40a6d75"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stevenmaguire/oauth2-keycloak/zipball/1b690b7377dfe7a23e1590373f37e12cf40a6d75",
+                "reference": "1b690b7377dfe7a23e1590373f37e12cf40a6d75",
+                "shasum": ""
+            },
             "require": {
                 "firebase/php-jwt": "^6.0",
                 "league/oauth2-client": "^2.0",
@@ -395,17 +399,7 @@
                     "Stevenmaguire\\OAuth2\\Client\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Stevenmaguire\\OAuth2\\Client\\Test\\": "test/src/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "@putenv XDEBUG_MODE=coverage",
-                    "phpunit --colors=always"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -425,7 +419,11 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2021-05-13T08:24:09+00:00"
+            "support": {
+                "issues": "https://github.com/stevenmaguire/oauth2-keycloak/issues",
+                "source": "https://github.com/stevenmaguire/oauth2-keycloak/tree/5.1.0"
+            },
+            "time": "2023-10-24T06:10:44+00:00"
         }
     ],
     "packages-dev": [],
