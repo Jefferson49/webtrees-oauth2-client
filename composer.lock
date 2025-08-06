@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93449915e1d0c8efde842d5e32a53150",
+    "content-hash": "cc0bb8371ddf754a67085c59a2e58e18",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
@@ -60,11 +60,11 @@
         },
         {
             "name": "jefferson49/oauth2-kanidm",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jefferson49/oauth2-kanidm.git",
-                "reference": "796cd1305af05163e77e94f219d2168e8a4adfe6"
+                "reference": "e83e1d00f75037bb557a4d2c537ee9eba0a5be3b"
             },
             "require": {
                 "league/oauth2-client": "^2.0",
@@ -94,15 +94,15 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2025-05-23T21:40:05+00:00"
+            "time": "2025-08-03T19:05:43+00:00"
         },
         {
             "name": "jefferson49/webtrees-common",
-            "version": "1.2.8",
+            "version": "1.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jefferson49/webtrees-common.git",
-                "reference": "9636657520adf126fafa2e95eb4b788d02853f0f"
+                "reference": "825f2216862fc9017ee826e95b32c00d4f2f7a31"
             },
             "require": {
                 "php": ">=7.4"
@@ -114,10 +114,10 @@
             "description": "Library to share common code between webtrees custom modules",
             "keywords": [
                 "custom-module",
-                "webtree-module",
-                "webtrees"
+                "webtrees",
+                "webtrees-module"
             ],
-            "time": "2025-01-28T05:33:01+00:00"
+            "time": "2025-08-06T05:13:25+00:00"
         },
         {
             "name": "league/oauth2-client",
