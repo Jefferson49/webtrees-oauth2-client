@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2-Client for webtrees 2\n"
-"POT-Creation-Date: 2025-05-27 07:13+0200\n"
+"POT-Creation-Date: 2025-08-09 11:28+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -145,33 +145,33 @@ msgstr "Het e-mailadres voor gebruiker %s is bijgewerkt naar: %s"
 msgid "Login denied. The email address or username already exists."
 msgstr "Inloggen geweigerd. Het e-mailadres of de gebruikersnaam bestaat al."
 
-#: src/OAuth2Client.php:224
+#: src/OAuth2Client.php:217
 msgid "OAuth2 Client"
 msgstr "OAuth2-client"
 
-#: src/OAuth2Client.php:237
+#: src/OAuth2Client.php:230
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr ""
-"Een aangepaste module om een OAuth2-client voor webtrees te implementeren."
+"Een uitbreidingsmodule om een OAuth2-client voor webtrees te implementeren."
 
-#: src/OAuth2Client.php:420
+#: src/OAuth2Client.php:388
 msgid "Sign in with"
 msgstr "Aanmelden met"
 
-#: src/OAuth2Client.php:451
+#: src/OAuth2Client.php:419
 msgid "Disconnect account from"
 msgstr "Verbreek verbinding van account met"
 
-#: src/OAuth2Client.php:457
+#: src/OAuth2Client.php:425
 msgid "Connect account with"
 msgstr "Verbind account met"
 
-#: src/OAuth2Client.php:590
+#: src/OAuth2Client.php:558
 #, php-format
 msgid "The preferences for the module \"%s\" were updated."
 msgstr "De voorkeuren voor de module \"%s\" zijn bijgewerkt."
 
-#: src/OAuth2Client.php:611
+#: src/OAuth2Client.php:579
 msgid ""
 "The redirect URL for OAuth 2.0 communication has changed in custom module "
 "versions >= 1.1.0. If certain connections with authorization providers fail, "
@@ -179,20 +179,20 @@ msgid ""
 "redirect URL."
 msgstr ""
 "De omleidings-URL voor OAuth 2.0-communicatie is gewijzigd in "
-"aangepastemoduleversies >= 1.1.0. Als bepaalde verbindingen met "
+"uitbreidingsmoduleversies >= 1.1.0. Als bepaalde verbindingen met "
 "autorisatieproviders mislukken, moet u mogelijk de instellingen van de "
 "autorisatieprovider bijwerken met de nieuwe omleidings-URL."
 
-#: src/OAuth2Client.php:624
+#: src/OAuth2Client.php:592
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
 "new module version %s."
 msgstr ""
-"De voorkeuren voor de aangepaste module \"%s\" zijn bijgewerkt naar de "
+"De voorkeuren voor de uitbreidingsmodule \"%s\" zijn bijgewerkt naar de "
 "nieuwe moduleversie %s."
 
-#: src/OAuth2Client.php:656
+#: src/OAuth2Client.php:624
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -200,12 +200,12 @@ msgid ""
 "recommended to deactivate the \"%s\" module, because the identical "
 "functionality is also integrated in the %s module."
 msgstr ""
-"De aangepaste module \"%s\" is parallel aan de aangepaste module %s "
+"De uitbreidingsmodule \"%s\" is parallel aan de uitbreidingsmodule %s "
 "geactiveerd. Dit kan leiden tot onbedoeld gedrag. Als u de module %s "
-"gebruikt, is het sterk aan te raden om de module \"%s\" te deactiveren, "
+"gebruikt, wordt het sterk aangeraden om de module \"%s\" te deactiveren, "
 "omdat de identieke functionaliteit ook in de module %s is geïntegreerd."
 
-#: src/OAuth2Client.php:661
+#: src/OAuth2Client.php:629
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -213,12 +213,12 @@ msgid ""
 "registered the same custom view \"%s\". It is strongly recommended to "
 "deactivate one of the modules."
 msgstr ""
-"De aangepaste module \"%s\" is parallel aan de aangepaste module %s "
+"De uitbreidingsmodule \"%s\" is parallel aan de uitbreidingsmodule %s "
 "geactiveerd. Dit kan leiden tot onbedoeld gedrag, omdat beide modules "
 "dezelfde aangepaste weergave \"%s\" hebben geregistreerd. Het wordt sterk "
 "aangeraden om een van de modules te deactiveren."
 
-#: src/OAuth2Client.php:685
+#: src/OAuth2Client.php:653
 #, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the "
@@ -227,7 +227,7 @@ msgid ""
 "strongly recommended to deactivate one of the modules. The path of the "
 "parallel view is: %s"
 msgstr ""
-"De aangepaste moduleweergave \"%s\" is niet geregistreerd als vervanging "
+"De uitbreidingsmoduleweergave \"%s\" is niet geregistreerd als vervanging "
 "voor de standaard webtrees-weergave. Er kan een andere module geïnstalleerd "
 "zijn die dezelfde aangepaste weergave heeft geregistreerd. Dit kan leiden "
 "tot onbedoeld gedrag. Het wordt sterk aangeraden om een van de modules te "
@@ -260,7 +260,7 @@ msgstr ""
 
 #: resources/views/alert.phtml:24
 msgid "Custom module"
-msgstr "Aangepaste module"
+msgstr "Uitbreidingsmodule"
 
 #: resources/views/edit-account-page.phtml:66
 #, php-format
@@ -416,7 +416,7 @@ msgid ""
 "with the settings below."
 msgstr ""
 "Momenteel is het aanmeldmenu van webtrees gedeactiveerd en is het "
-"aanmeldmenu van de aangepaste module verborgen voor de volgende stambomen: "
+"aanmeldmenu van de uitbreidingsmodule verborgen voor de volgende stambomen: "
 "%s. Sommige gebruikers kunnen zich niet aanmelden. Overweeg om een van de "
 "aanmeldmenu's te activeren met de onderstaande instellingen."
 
@@ -450,8 +450,9 @@ msgid ""
 "sign in is used instead."
 msgstr ""
 "Door deze optie te selecteren, is het mogelijk om het originele webtrees-"
-"aanmeldmenu te verbergen. Dit kan handig zijn als in plaats daarvan het "
-"aangepaste modulespecifieke bovenste menu voor aanmelden wordt gebruikt."
+"aanmeldmenu te verbergen. Dit kan handig zijn als in plaats daarvan voor "
+"aanmelden het specifieke bovenste menu van de uitbreidingsmodule wordt "
+"gebruikt."
 
 #: resources/views/settings.phtml:113
 msgid "Hide webtrees sign in (with Username/Password) on login page"
@@ -541,11 +542,3 @@ msgstr ""
 "Door deze optie te selecteren wordt extra debug-informatie over de "
 "protocolstroom tussen webtrees en de autorisatieprovider gelogd in de "
 "webtrees-websitelogboeken."
-
-#~ msgid ""
-#~ "Automatic user registration after sign in with authorization provider"
-#~ msgstr ""
-#~ "Automatische gebruikersregistratie na aanmelding met autorisatieprovider"
-
-#~ msgid "Password (within webtrees)"
-#~ msgstr "Wachtwoord (binnen webtrees)"
