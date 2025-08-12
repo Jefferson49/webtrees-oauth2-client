@@ -23,5 +23,8 @@
         "firebase/php-jwt": "*",
         "guzzlehttp/guzzle": "*",
         "paragonie/random_compat": "*"
-    }    
+    },
+    "config": {
+        "prepend-autoloader": false
+    }
 }
