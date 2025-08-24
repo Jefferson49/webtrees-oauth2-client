@@ -34,6 +34,7 @@ namespace Jefferson49\Webtrees\Module\OAuth2Client\Provider;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\User;
 use Jefferson49\OAuth2\Client\Provider\Kanidm;
+use Jefferson49\OAuth2\Client\Provider\KanidmResourceOwner;
 use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -90,6 +91,7 @@ class KanidmAuthorizationProvider extends AbstractAuthorizationProvider implemen
         }
         
         //Apply specific user data provided by Kanidm
+        /** @var KanidmResourceOwner $resource_owner To avoid IDE warnings */
         $user->setUserName($resource_owner->getPreferredUsername() ?? '');
         $user->setRealName($resource_owner->getName() ?? '');
         $user->setEmail($resource_owner->getEmail() ?? '');
