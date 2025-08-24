@@ -16,6 +16,7 @@ This README file contains the following main sections:
 +   [Configuration of Authorization Providers](#configuration-of-authorization-providers)
     + [General Configuration](#general-configuration)
     + [Generic](#generic)
+    + [Authelia](#authelia)
     + [Authentik](#authentik)
     + [Dropbox](#dropbox)
     + [Github](#github)
@@ -77,6 +78,7 @@ The OAuth 2.0 Client for webtrees uses the OAuth 2.0 implementation of the [The 
 
 Currently, the following authorization providers are supported:
 + **Generic** (can be configured for several authorization providers)
++ **Authelia**
 + **Authentik** (can be configured with the Generic provider)
 + **Dropbox**
 + **Github**
@@ -129,6 +131,22 @@ Generic_signInButtonLabel='xxx'
     + **Generic_urlAccessToken**='...' (value from the OAuth 2.0 Server)
     + **Generic_urlResourceOwnerDetails**='...' (value from the OAuth 2.0 Server)
     + **Generic_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
+
+### Authelia
++ For a description about the Authelia configuration, refer to the chapter about Oauth2 (OpenID Connect 1.0) configuration in the [Authelia Administration Manual](https://www.authelia.com/configuration/identity-providers/openid-connect/provider/)
++ Configure your client in Authelia
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Authelia_clientId='xxx'
+Authelia_clientSecret='xxx'
+Authelia_autheliaUrl='xxx'
+Authelia_signInButtonLabel='xxx'
+```
++ Insert the configuration details from your Authelia installation into the newly included configuration lines of your config.ini.php file:
+    + **Authelia_clientId**='...' (the "client id" used in Authelia)
+    + **Authelia_clientSecret**='...' (value for "Client Secret" shown in Authelia)
+    + **Authelia_autheliaUrl**='...' (the URL of your Authelia server)
+    + **Authelia_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Authentik
 + Use the [Generic client](#generic) to connect with Authentik

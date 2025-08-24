@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e2ea08defee9448559154f99c4ebeab",
+    "content-hash": "39699795a7ff4b25ccbd2fba110c4b14",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
@@ -59,6 +59,44 @@
             "time": "2023-05-11T12:23:05+00:00"
         },
         {
+            "name": "jefferson49/oauth2-authelia",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jefferson49/oauth2-authelia.git",
+                "reference": "b79728a4e49f50e395aa6d55cc0f8bc233c8e38b"
+            },
+            "require": {
+                "league/oauth2-client": "^2.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jefferson49\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jefferson49",
+                    "homepage": "https://github.com/Jefferson49"
+                }
+            ],
+            "description": "Authelia OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "keywords": [
+                "Authelia",
+                "authentication",
+                "authorization",
+                "client",
+                "oauth",
+                "oauth2"
+            ],
+            "time": "2025-08-24T12:11:26+00:00"
+        },
+        {
             "name": "jefferson49/oauth2-kanidm",
             "version": "1.1.1",
             "source": {
@@ -98,11 +136,11 @@
         },
         {
             "name": "jefferson49/webtrees-common",
-            "version": "1.2.16",
+            "version": "1.2.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jefferson49/webtrees-common.git",
-                "reference": "b6d7a9aa01d9ca1c052d8884fd7af1407c0f1244"
+                "reference": "a2495fffc00c4f25968e0357b7095250692f64e1"
             },
             "require": {
                 "php": ">=7.4"
@@ -117,7 +155,7 @@
                 "webtrees",
                 "webtrees-module"
             ],
-            "time": "2025-08-12T16:57:09+00:00"
+            "time": "2025-08-23T04:54:39+00:00"
         },
         {
             "name": "league/oauth2-client",

@@ -7,10 +7,15 @@
         {
             "url": "https://github.com/jefferson49/oauth2-kanidm.git",
             "type": "git"
-        }        
+        },
+        {
+            "url": "https://github.com/jefferson49/oauth2-authelia.git",
+            "type": "git"
+        }
     ],
     "require": {
         "bahuma/oauth2-nextcloud": "=2.0.0",
+        "jefferson49/oauth2-authelia": ">=1.0.0",
         "jefferson49/oauth2-kanidm": ">=1.1.1",
         "jefferson49/webtrees-common": ">=1.2.14",
         "league/oauth2-client": "=2.8.1",
