@@ -415,6 +415,19 @@ Although OAuth 2 is a standard protocol and is used on lots of websites, the aut
 + Study any webtrees flash messages of the OAuth2 client with error messages, which might contain valuable hints for trouble shooting
 + **Activate debug logs** in the module settings
 + Check the debug logs of the OAuth2 client in the webtrees website logs (control panel)
++ Check if your authorization provider requires to provide scopes. If yes, check the required scopes for the provider and add a scope configuration like:
+    ```
+    Generic_scopes = "openid email profile"
+   ```
++ If using scopes, check the scope separator for your authorization provider. For example, this might be " " or ",". See usage of " " above. In case of "," change to:
+   ```
+   Generic_scopes = "openid,email,profile"
+   ```
++ Check if your authorization provider includes an "id" and an "email" within the transmitted user data. 
+    ```
+    {"id":"12345","email":"my@email.net"}
+    ```
++ If one of these required parameters are missing in the user data, the authorization in webtrees will fail. Try to add the required parameters in the configuration of your authorization provider. If not possible, post an [issue on GitHub](https://github.com/Jefferson49/webtrees-oauth2-client/issues).
 + Check your website access logs for requested URLs, HTTP request methods, HTTP status/error codes
 + Check the logs for any 301/302 redirects. Within 301 or 302 redirects, the server might change HTTP POST methods into GET methods
 + Check if your website uses the HTTPS protocol. A lot of authorization providers require to use the HTTPS protocol for OAuth 2 autorization. HTTPS is strongly recommended for security reasons anyway.
