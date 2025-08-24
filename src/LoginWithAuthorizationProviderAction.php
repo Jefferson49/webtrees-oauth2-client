@@ -274,13 +274,23 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //Check if username/email already exists
         $existing_user = $this->user_service->findByEmail($email) ?? $this->user_service->findByUserName($user_name);
 
+        //Check if is existing user, who is not connected with a provider
+        if ($existing_user !== null) {
+            $existing_user_without_provider = $existing_user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') === '';
+        }
+        else {
+            $existing_user_without_provider = false;
+        }
+
         //Check if the authorizatiohn provider ID is already connected with an user
         $provider_id_is_connected = $this->findUserByAuthorizationProviderId($provider, $authorization_provider_id) !== null;
 
         //Check if user has not signed in before (i.e. existing user, no provider name, no login timestamp)
-        $existing_user_not_signed_in_yet = false;   
-        if ($existing_user !== null && ($existing_user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') === '') && ($existing_user->getPreference(UserInterface::PREF_TIMESTAMP_ACTIVE) === '0')) {
+        if ($existing_user_without_provider && ($existing_user->getPreference(UserInterface::PREF_TIMESTAMP_ACTIVE) === '0')) {
             $existing_user_not_signed_in_yet = true;
+        }
+        else {
+            $existing_user_not_signed_in_yet = false;
         }
 
         //If we shall connect an existing user to a provider   
@@ -289,7 +299,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             //We do not connect an existing user who has not signed in yet, because it might have been registered based on an authorization provider (and not signed in yet)
             //We do not connect users with an authorization provider user ID, which is already connected to another user
             if ($existing_user_not_signed_in_yet OR $provider_id_is_connected) {
-                $message = I18N::translate('The identity received by the authorization provider cannot be connected to the requested user, because it is already used to sign in by another webtrees user.');
+                $message = I18N::translate('The identity received from the authorization provider cannot be connected to the requested user, because it is already used to sign in by another webtrees user.');
                 FlashMessages::addMessage($message, 'danger');
                 CustomModuleLog::addDebugLog($log_module, $message);
                 return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
@@ -306,6 +316,13 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             //Reset session values
             self::deleteSessionValuesForProviderConnection();
+        }
+        //Reject if existing user, who has signed in before and is not connected to the provider
+        elseif ($existing_user !== null && !$existing_user_not_signed_in_yet && $existing_user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== $provider_name) {
+            $message = I18N::translate('The identity received from the authorization provider is already used to sign in by another webtrees user.');
+            FlashMessages::addMessage($message, 'danger');
+            CustomModuleLog::addDebugLog($log_module, $message);
+            return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null, 'url' => $url]));
         }
         //If user does not exist already and user is not connected already, register based on the authorization provider user data
         elseif ($existing_user === null && !$provider_id_is_connected) {
@@ -356,7 +373,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 'user_name'      => $user_name,
                 'comments'       => '',
             ]);
-        }            
+        }
 
         //Login
         //Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction

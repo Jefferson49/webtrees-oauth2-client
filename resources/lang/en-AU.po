@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2-Client for webtrees 2\n"
-"POT-Creation-Date: 2025-05-27 07:14+0200\n"
+"POT-Creation-Date: 2025-08-24 16:06+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -68,22 +68,30 @@ msgstr ""
 "Failed to get the access token or the user details from the authorisation "
 "provider"
 
-#: src/LoginWithAuthorizationProviderAction.php:292
+#: src/LoginWithAuthorizationProviderAction.php:302
 msgid ""
-"The identity received by the authorization provider cannot be connected to "
+"The identity received from the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
 "webtrees user."
 msgstr ""
-"The identity received by the authorisation provider cannot be connected to "
+"The identity received from the authorisation provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
 "webtrees user."
 
-#: src/LoginWithAuthorizationProviderAction.php:303
+#: src/LoginWithAuthorizationProviderAction.php:313
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:315
+#: src/LoginWithAuthorizationProviderAction.php:322
+msgid ""
+"The identity received from the authorization provider is already used to "
+"sign in by another webtrees user."
+msgstr ""
+"The identity received from the authorisation provider is already used to "
+"sign in by another webtrees user."
+
+#: src/LoginWithAuthorizationProviderAction.php:332
 msgid ""
 "Currently, no webtrees user account is related to the user data received "
 "from the authorization provider."
@@ -91,76 +99,76 @@ msgstr ""
 "Currently, no webtrees user account is related to the user data received "
 "from the authorisation provider."
 
-#: src/LoginWithAuthorizationProviderAction.php:320
+#: src/LoginWithAuthorizationProviderAction.php:337
 #, php-format
 msgid "It is not possible to request a webtrees account with %s."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:321
-#: src/LoginWithAuthorizationProviderAction.php:328
-#: src/LoginWithAuthorizationProviderAction.php:340
-#: src/LoginWithAuthorizationProviderAction.php:442
-#: src/LoginWithAuthorizationProviderAction.php:451
+#: src/LoginWithAuthorizationProviderAction.php:338
+#: src/LoginWithAuthorizationProviderAction.php:345
+#: src/LoginWithAuthorizationProviderAction.php:357
+#: src/LoginWithAuthorizationProviderAction.php:459
+#: src/LoginWithAuthorizationProviderAction.php:468
 #, php-format
 msgid ""
 "To connect an existing user with %s, sign in and select: My pages / My "
 "account / Connect with"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:327
+#: src/LoginWithAuthorizationProviderAction.php:344
 #, php-format
 msgid "Invalid user data received from %s. Email or username missing."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:335
+#: src/LoginWithAuthorizationProviderAction.php:352
 msgid "Requesting a new webtrees user account is currently not allowed."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:339
+#: src/LoginWithAuthorizationProviderAction.php:356
 #, php-format
 msgid "Press \"continue\" to request a new webtrees user acccount with %s."
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:349
+#: src/LoginWithAuthorizationProviderAction.php:366
 msgid "Request a new user account with an authorization provider"
 msgstr "Request a new user account with an authorisation provider"
 
-#: src/LoginWithAuthorizationProviderAction.php:372
+#: src/LoginWithAuthorizationProviderAction.php:389
 #, php-format
 msgid "The email address for user %s was updated to: %s"
 msgstr ""
 
-#: src/LoginWithAuthorizationProviderAction.php:441
-#: src/LoginWithAuthorizationProviderAction.php:450
+#: src/LoginWithAuthorizationProviderAction.php:458
+#: src/LoginWithAuthorizationProviderAction.php:467
 msgid "Login denied. The email address or username already exists."
 msgstr ""
 
-#: src/OAuth2Client.php:224
+#: src/OAuth2Client.php:217
 msgid "OAuth2 Client"
 msgstr ""
 
-#: src/OAuth2Client.php:237
+#: src/OAuth2Client.php:230
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr ""
 
-#: src/OAuth2Client.php:420
+#: src/OAuth2Client.php:388
 msgid "Sign in with"
 msgstr ""
 
-#: src/OAuth2Client.php:451
+#: src/OAuth2Client.php:419
 msgid "Disconnect account from"
 msgstr ""
 
-#: src/OAuth2Client.php:457
+#: src/OAuth2Client.php:425
 msgid "Connect account with"
 msgstr ""
 
-#: src/OAuth2Client.php:590
+#: src/OAuth2Client.php:558
 #, php-format
 msgid "The preferences for the module \"%s\" were updated."
 msgstr ""
 
-#: src/OAuth2Client.php:611
+#: src/OAuth2Client.php:579
 msgid ""
 "The redirect URL for OAuth 2.0 communication has changed in custom module "
 "versions >= 1.1.0. If certain connections with authorization providers fail, "
@@ -172,14 +180,14 @@ msgstr ""
 "you might need to update the authorisation provider settings with the new "
 "redirect URL."
 
-#: src/OAuth2Client.php:624
+#: src/OAuth2Client.php:592
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
 "new module version %s."
 msgstr ""
 
-#: src/OAuth2Client.php:656
+#: src/OAuth2Client.php:624
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -188,7 +196,7 @@ msgid ""
 "functionality is also integrated in the %s module."
 msgstr ""
 
-#: src/OAuth2Client.php:661
+#: src/OAuth2Client.php:629
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -197,7 +205,7 @@ msgid ""
 "deactivate one of the modules."
 msgstr ""
 
-#: src/OAuth2Client.php:685
+#: src/OAuth2Client.php:653
 #, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the "
@@ -220,12 +228,14 @@ msgstr ""
 "redirects."
 
 #: src/Provider/AbstractAuthorizationProvider.php:178
-#: src/Provider/KanidmAuthorizationProvider.php:89
+#: src/Provider/AutheliaAuthorizationProvider.php:90
+#: src/Provider/KanidmAuthorizationProvider.php:90
 msgid "Invalid user data received from the authorization provider"
 msgstr "Invalid user data received from the authorisation provider"
 
 #: src/Provider/AbstractAuthorizationProvider.php:178
-#: src/Provider/KanidmAuthorizationProvider.php:89
+#: src/Provider/AutheliaAuthorizationProvider.php:90
+#: src/Provider/KanidmAuthorizationProvider.php:90
 msgid ""
 "Check the setting for urlResourceOwnerDetails in the webtrees configuration."
 msgstr ""
