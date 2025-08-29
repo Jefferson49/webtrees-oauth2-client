@@ -49,6 +49,9 @@ use function parse_ini_file;
  */
 class AuthorizationProviderFactory
 {
+    //All configured options from the webtrees config.ini.php file
+    private static $webtrees_config = [];
+
     /**
      * Create an OAuth2 authorization provider
      * 
@@ -61,7 +64,7 @@ class AuthorizationProviderFactory
     {
         $name_space = str_replace('\\\\', '\\',__NAMESPACE__ );
         $name_space = str_replace('Factories', 'Provider\\', $name_space);
-        $options = self::readProviderOptionsFromConfigFile($name);
+        $options = self::getProviderOptions($name);
 
         //If no options found
         if (sizeof($options) === 0) {
@@ -110,14 +113,14 @@ class AuthorizationProviderFactory
     }
 
 	/**
-     * Read the options of the provider from the webtrees config.ini.php file
+     * Get the options of a provider
      * 
      * @param string $name  Authorization provider name
      * 
      * @return array        An array with the options. Empty if options could not be read completely.
      */ 
 
-    public static function readProviderOptionsFromConfigFile(string $name): array {
+    public static function getProviderOptions(string $name): array {
 
         $options = [];
         $name_space = str_replace('\\\\', '\\',__NAMESPACE__ );
@@ -132,18 +135,14 @@ class AuthorizationProviderFactory
             }
         }
 
-        // Read the configuration settings
-        if (file_exists(Webtrees::CONFIG_FILE)) {
-            $config = parse_ini_file(Webtrees::CONFIG_FILE);
-            foreach ($config as $key => $value) {
-                if (strpos($key, $name . '_') === 0) {
-                    $key = str_replace($name . '_', '', $key);
-                    $options[$key] = $value;
-                }
+
+        // Get the configuration settings from the webtrees configutration
+        $config = self::getWebtreesConfig();
+        foreach ($config as $key => $value) {
+            if (strpos($key, $name . '_') === 0) {
+                $key = str_replace($name . '_', '', $key);
+                $options[$key] = $value;
             }
-        }
-        else {
-            return [];
         }
 
         //Return if no options found, i.e. the authorization provider is not configured
@@ -160,6 +159,25 @@ class AuthorizationProviderFactory
         }
 
         return $options;
+    }
+
+
+	/**
+     * Get all options from the webtrees config.ini.php file
+     * 
+     * @param string $name  Authorization provider name
+     * 
+     * @return array        An array with the options. Empty if options could not be read.
+     */ 
+
+    public static function getWebtreesConfig(): array {
+
+        // If not already available, read the configuration settings from the webtrees config file
+        if (self::$webtrees_config === [] && file_exists(Webtrees::CONFIG_FILE)) {
+            self::$webtrees_config  = parse_ini_file(Webtrees::CONFIG_FILE);
+        }
+
+        return self::$webtrees_config;
     }
 
 	/**
@@ -205,7 +223,7 @@ class AuthorizationProviderFactory
 
         //Remove any providers from list, for which no sufficient config is available, or which do not allow webtrees registration
         foreach($provider_names as $class_name => $provider_name) {
-            if(self::readProviderOptionsFromConfigFile($provider_name) === []) {
+            if(self::getProviderOptions($provider_name) === []) {
                 unset($provider_names[$class_name]);
             }
             if($registration && !self::providerSupportsRegistration($provider_name)) {
