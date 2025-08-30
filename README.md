@@ -434,6 +434,7 @@ Although OAuth 2 is a standard protocol and is used on lots of websites, the aut
 + Check if your website uses the HTTPS protocol. A lot of authorization providers require to use the HTTPS protocol for OAuth 2 autorization. HTTPS is strongly recommended for security reasons anyway.
 + Check the server configuration for any redirects from sub-domains, e.g. https://www.my_site.net to https://my_site.net
 + If using the WordPress authorization provider, check the [PHP/Apache configuration](#phpapache-configuration)
++ In rare cases, it might be helpful to use a [pretty URL](https://webtrees.net/faq/urls/) for the redirect URL. In this case, activate "Use pretty redirect URL" in the module settings.
 
 ## Definitions 
 [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749) defines several roles, which are used in OAuth. In the context of the OAuth 2.0 Client and webtrees single sign on, the OAuth [roles](https://datatracker.ietf.org/doc/html/rfc6749#section-1.1) and definitions are used as follows:
