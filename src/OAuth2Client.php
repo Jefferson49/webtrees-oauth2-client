@@ -125,6 +125,7 @@ class OAuth2Client extends AbstractModule implements
     public const PREF_SYNC_PROVIDER_EMAIL = 'sync_provider_email';
     public const PREF_CONNECT_WITH_PROVIDERS = 'connect_with_providers';
     public const PREF_HIDE_WEBTREES_SIGN_IN = 'hide_webtrees_sign_in';
+    public const PREF_PRETTY_REDIRECT_URL = 'pretty_redirect_url';
 
     //User preferences
     public const USER_PREF_PROVIDER_NAME = 'provider_name';
@@ -508,12 +509,23 @@ class OAuth2Client extends AbstractModule implements
 
         $this->layout = 'layouts/administration';
 
+        $base_url              = Validator::attributes($request)->string('base_url');
+        $pretty_urls           = AuthorizationProviderFactory::getConfigValue('rewrite_urls') === '1';
+        $pretty_redirect_url   = boolval($this->getPreference(self::PREF_PRETTY_REDIRECT_URL, '0'));
+        $redirect_url          = OAuth2Client::getRedirectUrl(true, $pretty_urls && $pretty_redirect_url);
+        $modified_redirect_url = OAuth2Client::getRedirectUrl(true, $pretty_urls && $pretty_redirect_url) !== OAuth2Client::getRedirectUrl(false, $pretty_urls && $pretty_redirect_url);
+
         return $this->viewResponse(
             self::viewsNamespace() . '::settings',
             [
                 'title'                                  => $this->title(),
-                'base_url'                               => Validator::attributes($request)->string('base_url'),
+                'base_url'                               => $base_url,
                 'trees_with_hidden_menu'                 => $this->getTreeNamesWithHiddenCustomMenu(),
+                'uses_https'                             => strpos(Strtoupper($base_url), 'HTTPS://') === false ? false : true,
+                'pretty_urls'                            => $pretty_urls,
+                'pretty_redirect_url'                    => $pretty_redirect_url,
+                'redirect_url'                           => $redirect_url,
+                'modified_redirect_url'                  => $modified_redirect_url,
                 self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU   => boolval($this->getPreference(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, '1')),
                 self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU => boolval($this->getPreference(self::PREF_DONT_SHOW_WEBTREES_LOGIN_MENU, '0')),
                 self::PREF_HIDE_WEBTREES_SIGN_IN         => boolval($this->getPreference(self::PREF_HIDE_WEBTREES_SIGN_IN, '0')),
@@ -542,6 +554,7 @@ class OAuth2Client extends AbstractModule implements
         $sync_provider_email           = Validator::parsedBody($request)->boolean(self::PREF_SYNC_PROVIDER_EMAIL, false);
         $use_webtrees_password         = Validator::parsedBody($request)->boolean(self::PREF_USE_WEBTREES_PASSWORD, false);
         $connect_with_providers        = Validator::parsedBody($request)->boolean(self::PREF_CONNECT_WITH_PROVIDERS, false);
+        $pretty_redirect_url           = Validator::parsedBody($request)->boolean(self::PREF_PRETTY_REDIRECT_URL, false);
 
         //Save the received settings to the user preferences
         if ($save === '1') {
@@ -552,6 +565,7 @@ class OAuth2Client extends AbstractModule implements
 			$this->setPreference(self::PREF_USE_WEBTREES_PASSWORD, $use_webtrees_password ? '1' : '0');
 			$this->setPreference(self::PREF_SYNC_PROVIDER_EMAIL, $sync_provider_email ? '1' : '0');
 			$this->setPreference(self::PREF_CONNECT_WITH_PROVIDERS, $connect_with_providers ? '1' : '0');
+			$this->setPreference(self::PREF_PRETTY_REDIRECT_URL, $pretty_redirect_url ? '1' : '0');
         }
 
         //Finally, show a success message
@@ -663,22 +677,26 @@ class OAuth2Client extends AbstractModule implements
     /**
      * Get the redirection URL for OAuth2 clients
      * 
-     * @param string base_url           The webtrees base URL (from config.ini.php)
-     * @param bool   replace_encodings  Whether to replace precent encodings
+     * @param bool $replace_encodings  Whether to replace precent encodings
+     * @param bool $pretty_url         Whether to provide a pretty URL
+     * 
      * 
      * @return string
      */
-    public static function getRedirectUrl(bool $replace_encodings = true) : string {
+    public static function getRedirectUrl(bool $replace_encodings = true, bool $pretty_url = false) : string {
 
-        // Create an ugly URL for the route to the module as redirect URL
-        // Note: Pretty URLs cannot be used, because they do not work with URL parameters
         $request     = Functions::getFromContainer(ServerRequestInterface::class);
         $base_url    = Validator::attributes($request)->string('base_url');
-        $path        = parse_url($base_url, PHP_URL_PATH) ?? '';
-        $parameters  = ['route' => $path];
-        $url         = $base_url . '/index.php';
 
-        $redirectUrl = Html::url($url, $parameters) . self::REDIRECT_ROUTE;
+        if ($pretty_url) {
+            $redirectUrl = $base_url . self::REDIRECT_ROUTE;
+        }
+        else {
+            $path        = parse_url($base_url, PHP_URL_PATH) ?? '';
+            $parameters  = ['route' => $path];
+            $url         = $base_url . '/index.php';
+            $redirectUrl = Html::url($url, $parameters) . self::REDIRECT_ROUTE;
+        }
 
         //Replace %2F in URL, because some providers do not accept it, e.g. Dropbox
         if ($replace_encodings) {

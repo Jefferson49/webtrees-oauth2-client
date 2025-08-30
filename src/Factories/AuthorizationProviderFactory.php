@@ -135,7 +135,6 @@ class AuthorizationProviderFactory
             }
         }
 
-
         // Get the configuration settings from the webtrees configutration
         $config = self::getWebtreesConfig();
         foreach ($config as $key => $value) {
@@ -161,7 +160,6 @@ class AuthorizationProviderFactory
         return $options;
     }
 
-
 	/**
      * Get all options from the webtrees config.ini.php file
      * 
@@ -178,6 +176,23 @@ class AuthorizationProviderFactory
         }
 
         return self::$webtrees_config;
+    }
+
+	/**
+     * Get the value for a certain key in the webtrees configuration (from config.ini.php file)
+     * 
+     * @param string $key
+     * 
+     * @return string
+     */ 
+
+    public static function getConfigValue(string $key): string {
+
+        if (isset(self::getWebtreesConfig()[$key])) {
+            return self::getWebtreesConfig()[$key];
+        } else {
+            return '';
+        }
     }
 
 	/**

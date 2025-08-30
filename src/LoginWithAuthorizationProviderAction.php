@@ -126,7 +126,12 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $retreived_provider_name_from_session = true;
         }
 
-        $provider = (new AuthorizationProviderFactory())::make($provider_name, OAuth2Client::getRedirectUrl());
+        //Get information about pretty URLs
+        $pretty_url = AuthorizationProviderFactory::getConfigValue('rewrite_urls') === '1';
+		$pretty_redirect_url = boolval($oauth2_client->getPreference(OAuth2Client::PREF_PRETTY_REDIRECT_URL, '0'));
+
+        //Create the requested provider
+        $provider = (new AuthorizationProviderFactory())::make($provider_name, OAuth2Client::getRedirectUrl(true, $pretty_url && $pretty_redirect_url));
 
         //Check if requested provider is available
         if ($provider === null) {

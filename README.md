@@ -133,6 +133,7 @@ Generic_signInButtonLabel='xxx'
     + **Generic_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Authelia
++ If using "pretty" URLs in webtrees (i.e. rewrite_urls="1" in the webtrees config.ini.php file), open the module settings in the control panel and activate "**Use pretty redirect URL**".
 + For a description about the Authelia configuration, refer to the chapter about Oauth2 (OpenID Connect 1.0) configuration in the [Authelia Administration Manual](https://www.authelia.com/configuration/identity-providers/openid-connect/provider/)
 + Configure your client in Authelia
 + Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):

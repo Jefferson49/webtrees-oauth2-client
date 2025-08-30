@@ -14,6 +14,10 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  * @var string $title
  * @var string $base_url
  * @var array  $trees_with_hidden_menu
+ * @var bool   $pretty_urls
+ * @var bool   $pretty_redirect_url
+ * @var string $redirect_url
+ * @var bool   $modified_redirect_url
  * @var bool   $show_webtrees_login_in_menu
  * @var bool   $dont_show_webtrees_login_menu
  * @var bool   $hide_webtrees_sign_in
@@ -23,41 +27,52 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  * @var bool   $connect_with_providers
  */
 
-$uses_https   = strpos(Strtoupper($base_url), 'HTTPS://') === false ? false : true;
-$redirect_url = OAuth2Client::getRedirectUrl();
-$modified_redirect_url = (OAuth2Client::getRedirectUrl(true) !== OAuth2Client::getRedirectUrl(false));
-
 ?>
 
 <?= view('components/breadcrumbs', ['links' => [route(ControlPanel::class) => I18N::translate('Control panel'), e($title)]]) ?>
 
-<h1><?=e($title) ?></h1>
-
-<div class="row mb-3"><?= view('icons/spacer') ?></div>
-
-<?php if (!$uses_https) : ?>
-    <div class="alert alert-danger">
-        <p><?= I18N::translate('Currently, webtrees does not use the HTTPS protocol. If signing in with authorization providers, it is urgently recommended to use HTTPS in order to encrypt the communication with the authorization provider. If your server supports the protocol, HTTPS can be activated by changing "base_url" in the webtrees "config.ini.php" file. Currently, "base_url" does not start with "https://".') ?></p>
-    </div>
-<?php endif ?>
-
-<div class="h4">Redirect URL</div>
-<div class="row mb-3">
-    <label class="col-sm-3 col-form-label wt-page-options-label" for="redirect_url">Redirect URL</label>
-    <div class="col-sm-9 wt-page-options-value">
-        <input type="text" class="form-control" id="redirect_url-name" name="redirect_url" value="<?= e($redirect_url) ?>" dir="auto" required="required" disabled >
-    </div>		
-	<div class="row mb-3"><?= view('icons/spacer') ?></div>
-	<?php if ($modified_redirect_url) : ?>
-		<div class="alert alert-warning">
-			<p><?= I18N::translate('The redirect URL for OAuth 2.0 communication has changed in custom module versions >= 1.1.0. If certain connections with authorization providers fail, you might need to update the authorization provider settings with the new redirect URL.') ?></p>
-		</div>
-	<?php endif ?>
-</div>
-
 <form method="post" id="settings-form">
 	<?= csrf_field() ?>
 	<input type="hidden" name="save" id="save" value="1">
+
+	<h1><?=e($title) ?></h1>
+
+	<div class="row mb-3"><?= view('icons/spacer') ?></div>
+
+	<?php if (!$uses_https) : ?>
+		<div class="alert alert-danger">
+			<p><?= I18N::translate('Currently, webtrees does not use the HTTPS protocol. If signing in with authorization providers, it is urgently recommended to use HTTPS in order to encrypt the communication with the authorization provider. If your server supports the protocol, HTTPS can be activated by changing "base_url" in the webtrees "config.ini.php" file. Currently, "base_url" does not start with "https://".') ?></p>
+		</div>
+	<?php endif ?>
+
+	<div class="h4"><?= I18N::translate('Redirect URL') ?></div>
+	<div class="row mb-3">
+		<label class="col-sm-3 col-form-label wt-page-options-label" for="redirect_url"><?= I18N::translate('Redirect URL') ?></label>
+		<div class="col-sm-9 wt-page-options-value">
+			<input type="text" class="form-control" id="redirect_url-name" name="redirect_url" value="<?= e($redirect_url) ?>" dir="auto" required="required" disabled >
+		</div>		
+		<div class="row mb-3"><?= view('icons/spacer') ?></div>
+		<?php if ($modified_redirect_url) : ?>
+			<div class="alert alert-warning">
+				<p><?= I18N::translate('The redirect URL for OAuth 2.0 communication has changed in custom module versions >= 1.1.0. If certain connections with authorization providers fail, you might need to update the authorization provider settings with the new redirect URL.') ?></p>
+			</div>
+		<?php endif ?>
+	</div>
+	<?php if ($pretty_urls) : ?>
+		<fieldset class="mb-3">
+			<div class="row">
+				<legend class="col-form-label col-sm-3">
+					<?= I18N::translate('Use pretty redirect URL') ?>
+				</legend>
+				<div class="col-sm-9">
+					<?= view('components/checkbox', ['label' => MoreI18N::xlate('Activate'), 'name' => OAuth2Client::PREF_PRETTY_REDIRECT_URL, 'checked' => $pretty_redirect_url]) ?>
+					<div class="form-text">
+						<?= I18N::translate('In rare cases, it might be helpful to use a pretty redirect URL. Only activate this option if necessary, e.g. for Authelia as authorization provider.'); ?>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	<?php endif ?>
   
 	<div class="h4">
 		<?= I18N::translate('Settings for Sign In Menus') ?>	
