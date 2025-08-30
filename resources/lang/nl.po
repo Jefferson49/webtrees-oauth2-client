@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2-Client for webtrees 2\n"
-"POT-Creation-Date: 2025-08-09 11:28+0200\n"
+"POT-Creation-Date: 2025-08-30 09:21+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -9,12 +9,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/Factories/AuthorizationProviderFactory.php:157
+#: src/Factories/AuthorizationProviderFactory.php:155
 #, php-format
 msgid ""
 "The configuration for the authorization provider \"%s\" does not include "
@@ -25,17 +25,17 @@ msgstr ""
 "de optie \"%s\". Controleer de configuratie in het volgende bestand: data/"
 "config.ini.php"
 
-#: src/LoginWithAuthorizationProviderAction.php:133
+#: src/LoginWithAuthorizationProviderAction.php:138
 msgid "The requested authorization provider could not be found"
 msgstr "De aangevraagde autorisatieprovider kon niet worden gevonden"
 
-#: src/LoginWithAuthorizationProviderAction.php:150
+#: src/LoginWithAuthorizationProviderAction.php:155
 #, php-format
 msgid "Disconnected the user %s from provider: %s"
 msgstr ""
 "De koppeling tussen gebruiker %s en autorisatieleverancier %s is verbroken"
 
-#: src/LoginWithAuthorizationProviderAction.php:172
+#: src/LoginWithAuthorizationProviderAction.php:177
 msgid ""
 "Failed security check: A user, who is currently not signed in, requested to "
 "connect an authorization provider with the current user."
@@ -44,7 +44,7 @@ msgstr ""
 "heeft gevraagd om een autorisatieprovider te verbinden met de huidige "
 "gebruiker."
 
-#: src/LoginWithAuthorizationProviderAction.php:183
+#: src/LoginWithAuthorizationProviderAction.php:188
 #, php-format
 msgid ""
 "Timeout for connecting user %s with authorization provider %s. Please "
@@ -53,16 +53,16 @@ msgstr ""
 "Time-out voor verbinding van gebruiker %s met autorisatieprovider %s. Start "
 "de verbinding met de autorisatieprovider opnieuw."
 
-#: src/LoginWithAuthorizationProviderAction.php:217
-#: src/LoginWithAuthorizationProviderAction.php:249
+#: src/LoginWithAuthorizationProviderAction.php:222
+#: src/LoginWithAuthorizationProviderAction.php:254
 msgid "OAuth 2.0 communication error"
 msgstr "OAuth 2.0-communicatiefout"
 
-#: src/LoginWithAuthorizationProviderAction.php:221
+#: src/LoginWithAuthorizationProviderAction.php:226
 msgid "Invalid state in communication with authorization provider."
 msgstr "Ongeldige status in communicatie met autorisatieprovider."
 
-#: src/LoginWithAuthorizationProviderAction.php:253
+#: src/LoginWithAuthorizationProviderAction.php:258
 msgid ""
 "Failed to get the access token or the user details from the authorization "
 "provider"
@@ -70,22 +70,30 @@ msgstr ""
 "Het toegangstoken of de gebruikersgegevens zijn niet verkregen van de "
 "autorisatieprovider"
 
-#: src/LoginWithAuthorizationProviderAction.php:292
+#: src/LoginWithAuthorizationProviderAction.php:307
 msgid ""
-"The identity received by the authorization provider cannot be connected to "
+"The identity received from the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
 "webtrees user."
 msgstr ""
-"De identiteit die de autorisatieprovider ontvangt, kan niet worden gekoppeld "
-"aan de aangevraagde gebruiker, omdat deze al wordt gebruikt om in te loggen "
-"door een andere webtrees-gebruiker."
+"De identiteit die van de autorisatieprovider is ontvangen, kan niet worden "
+"gekoppeld aan de gevraagde gebruiker, omdat deze al door een andere webtrees-"
+"gebruiker wordt gebruikt om aan te melden."
 
-#: src/LoginWithAuthorizationProviderAction.php:303
+#: src/LoginWithAuthorizationProviderAction.php:318
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr "Bestaande gebruiker %s succesvol verbonden met provider: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:315
+#: src/LoginWithAuthorizationProviderAction.php:327
+msgid ""
+"The identity received from the authorization provider is already used to "
+"sign in by another webtrees user."
+msgstr ""
+"De identiteit die van de autorisatieprovider is ontvangen, wordt al door een "
+"andere webtrees-gebruiker gebruikt om aan te melden."
+
+#: src/LoginWithAuthorizationProviderAction.php:337
 msgid ""
 "Currently, no webtrees user account is related to the user data received "
 "from the authorization provider."
@@ -93,16 +101,16 @@ msgstr ""
 "Momenteel is er geen webtrees-gebruikersaccount gekoppeld aan de "
 "gebruikersgegevens die zijn ontvangen van de autorisatieprovider."
 
-#: src/LoginWithAuthorizationProviderAction.php:320
+#: src/LoginWithAuthorizationProviderAction.php:342
 #, php-format
 msgid "It is not possible to request a webtrees account with %s."
 msgstr "Het is niet mogelijk om een webtrees-account aan te vragen met %s."
 
-#: src/LoginWithAuthorizationProviderAction.php:321
-#: src/LoginWithAuthorizationProviderAction.php:328
-#: src/LoginWithAuthorizationProviderAction.php:340
-#: src/LoginWithAuthorizationProviderAction.php:442
-#: src/LoginWithAuthorizationProviderAction.php:451
+#: src/LoginWithAuthorizationProviderAction.php:343
+#: src/LoginWithAuthorizationProviderAction.php:350
+#: src/LoginWithAuthorizationProviderAction.php:362
+#: src/LoginWithAuthorizationProviderAction.php:464
+#: src/LoginWithAuthorizationProviderAction.php:473
 #, php-format
 msgid ""
 "To connect an existing user with %s, sign in and select: My pages / My "
@@ -111,67 +119,67 @@ msgstr ""
 "Als u een bestaande gebruiker met %s wilt verbinden, meldt u zich aan en "
 "selecteert u: Mijn pagina's / Mijn account / Verbinden met"
 
-#: src/LoginWithAuthorizationProviderAction.php:327
+#: src/LoginWithAuthorizationProviderAction.php:349
 #, php-format
 msgid "Invalid user data received from %s. Email or username missing."
 msgstr ""
 "Ongeldige gebruikersgegevens ontvangen van %s. E-mail of gebruikersnaam "
 "ontbreekt."
 
-#: src/LoginWithAuthorizationProviderAction.php:335
+#: src/LoginWithAuthorizationProviderAction.php:357
 msgid "Requesting a new webtrees user account is currently not allowed."
 msgstr ""
 "Het aanvragen van een nieuw webtrees-gebruikersaccount is momenteel niet "
 "toegestaan."
 
-#: src/LoginWithAuthorizationProviderAction.php:339
+#: src/LoginWithAuthorizationProviderAction.php:361
 #, php-format
 msgid "Press \"continue\" to request a new webtrees user acccount with %s."
 msgstr ""
 "Druk op \"doorgaan\" om een nieuw webtrees-gebruikersaccount aan te vragen "
 "met %s."
 
-#: src/LoginWithAuthorizationProviderAction.php:349
+#: src/LoginWithAuthorizationProviderAction.php:371
 msgid "Request a new user account with an authorization provider"
 msgstr "Een nieuwe gebruikersaccount aanvragen met een autorisatieprovider"
 
-#: src/LoginWithAuthorizationProviderAction.php:372
+#: src/LoginWithAuthorizationProviderAction.php:394
 #, php-format
 msgid "The email address for user %s was updated to: %s"
 msgstr "Het e-mailadres voor gebruiker %s is bijgewerkt naar: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:441
-#: src/LoginWithAuthorizationProviderAction.php:450
+#: src/LoginWithAuthorizationProviderAction.php:463
+#: src/LoginWithAuthorizationProviderAction.php:472
 msgid "Login denied. The email address or username already exists."
 msgstr "Inloggen geweigerd. Het e-mailadres of de gebruikersnaam bestaat al."
 
-#: src/OAuth2Client.php:217
+#: src/OAuth2Client.php:218
 msgid "OAuth2 Client"
 msgstr "OAuth2-client"
 
-#: src/OAuth2Client.php:230
+#: src/OAuth2Client.php:231
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr ""
 "Een uitbreidingsmodule om een OAuth2-client voor webtrees te implementeren."
 
-#: src/OAuth2Client.php:388
+#: src/OAuth2Client.php:389
 msgid "Sign in with"
 msgstr "Aanmelden met"
 
-#: src/OAuth2Client.php:419
+#: src/OAuth2Client.php:420
 msgid "Disconnect account from"
 msgstr "Verbreek verbinding van account met"
 
-#: src/OAuth2Client.php:425
+#: src/OAuth2Client.php:426
 msgid "Connect account with"
 msgstr "Verbind account met"
 
-#: src/OAuth2Client.php:558
+#: src/OAuth2Client.php:572
 #, php-format
 msgid "The preferences for the module \"%s\" were updated."
 msgstr "De voorkeuren voor de module \"%s\" zijn bijgewerkt."
 
-#: src/OAuth2Client.php:579
+#: src/OAuth2Client.php:593
 msgid ""
 "The redirect URL for OAuth 2.0 communication has changed in custom module "
 "versions >= 1.1.0. If certain connections with authorization providers fail, "
@@ -183,7 +191,7 @@ msgstr ""
 "autorisatieproviders mislukken, moet u mogelijk de instellingen van de "
 "autorisatieprovider bijwerken met de nieuwe omleidings-URL."
 
-#: src/OAuth2Client.php:592
+#: src/OAuth2Client.php:606
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
@@ -192,7 +200,7 @@ msgstr ""
 "De voorkeuren voor de uitbreidingsmodule \"%s\" zijn bijgewerkt naar de "
 "nieuwe moduleversie %s."
 
-#: src/OAuth2Client.php:624
+#: src/OAuth2Client.php:638
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -205,7 +213,7 @@ msgstr ""
 "gebruikt, wordt het sterk aangeraden om de module \"%s\" te deactiveren, "
 "omdat de identieke functionaliteit ook in de module %s is geïntegreerd."
 
-#: src/OAuth2Client.php:629
+#: src/OAuth2Client.php:643
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -218,7 +226,7 @@ msgstr ""
 "dezelfde aangepaste weergave \"%s\" hebben geregistreerd. Het wordt sterk "
 "aangeraden om een van de modules te deactiveren."
 
-#: src/OAuth2Client.php:653
+#: src/OAuth2Client.php:667
 #, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the "
@@ -246,12 +254,14 @@ msgstr ""
 "serverconfiguratie voor redirects."
 
 #: src/Provider/AbstractAuthorizationProvider.php:178
-#: src/Provider/KanidmAuthorizationProvider.php:89
+#: src/Provider/AutheliaAuthorizationProvider.php:90
+#: src/Provider/KanidmAuthorizationProvider.php:90
 msgid "Invalid user data received from the authorization provider"
 msgstr "Ongeldige gebruikersgegevens ontvangen van de autorisatieprovider"
 
 #: src/Provider/AbstractAuthorizationProvider.php:178
-#: src/Provider/KanidmAuthorizationProvider.php:89
+#: src/Provider/AutheliaAuthorizationProvider.php:90
+#: src/Provider/KanidmAuthorizationProvider.php:90
 msgid ""
 "Check the setting for urlResourceOwnerDetails in the webtrees configuration."
 msgstr ""
@@ -361,7 +371,7 @@ msgstr "Vraag een nieuw account aan met"
 msgid "Control panel"
 msgstr "Controlepaneel"
 
-#: resources/views/settings.phtml:40
+#: resources/views/settings.phtml:44
 msgid ""
 "Currently, webtrees does not use the HTTPS protocol. If signing in with "
 "authorization providers, it is urgently recommended to use HTTPS in order to "
@@ -377,17 +387,35 @@ msgstr ""
 "veranderen in het webtrees \"config.ini.php\" bestand. Momenteel begint "
 "\"base_url\" niet met \"https://\"."
 
-#: resources/views/settings.phtml:63
+#: resources/views/settings.phtml:48 resources/views/settings.phtml:50
+msgid "Redirect URL"
+msgstr "Omleidings-URL"
+
+#: resources/views/settings.phtml:65
+msgid "Use pretty redirect URL"
+msgstr "Gebruik mooie omleidings-URL"
+
+#: resources/views/settings.phtml:70
+msgid ""
+"In rare cases, it might be helpful to use a pretty redirect URL. Only "
+"activate this option if necessary, e.g. for Authelia as authorization "
+"provider."
+msgstr ""
+"In zeldzame gevallen kan het nuttig zijn om een mooie omleidings-URL te "
+"gebruiken. Activeer deze optie alleen indien nodig, bijvoorbeeld voor "
+"Authelia als autorisatieprovider."
+
+#: resources/views/settings.phtml:78
 msgid "Settings for Sign In Menus"
 msgstr "Instellingen voor aanmeldmenu's"
 
-#: resources/views/settings.phtml:68
+#: resources/views/settings.phtml:83
 msgid "Currently, the webtrees sign in with Username/Password is deactivated."
 msgstr ""
 "Momenteel is het aanmelden met gebruikersnaam/wachtwoord in webtrees "
 "uitgeschakeld."
 
-#: resources/views/settings.phtml:69 resources/views/settings.phtml:74
+#: resources/views/settings.phtml:84 resources/views/settings.phtml:89
 msgid ""
 "Therefore, it is only possible to sign in with an authorization provider. "
 "Please be sure to establish a webtrees administrator account with an "
@@ -399,7 +427,7 @@ msgstr ""
 "autorisatieprovider. Anders is het mogelijk dat aanmelden als beheerder niet "
 "meer mogelijk is."
 
-#: resources/views/settings.phtml:73
+#: resources/views/settings.phtml:88
 msgid ""
 "Currently, all menus to directly sign in with a webtrees Username/Password "
 "are deactivated."
@@ -407,7 +435,7 @@ msgstr ""
 "Momenteel zijn alle menu's om direct in te loggen met een webtrees-"
 "gebruikersnaam/wachtwoord gedeactiveerd."
 
-#: resources/views/settings.phtml:78
+#: resources/views/settings.phtml:93
 #, php-format
 msgid ""
 "Currently, the webtrees sign in menu is deactivated and the custom module "
@@ -420,11 +448,11 @@ msgstr ""
 "%s. Sommige gebruikers kunnen zich niet aanmelden. Overweeg om een van de "
 "aanmeldmenu's te activeren met de onderstaande instellingen."
 
-#: resources/views/settings.phtml:85
+#: resources/views/settings.phtml:100
 msgid "Show original webtrees sign in as menu item"
 msgstr "Toon menu-item voor het originele webtrees-aanmeldmenu"
 
-#: resources/views/settings.phtml:90
+#: resources/views/settings.phtml:105
 msgid ""
 "By selecting/unselecting this option, it is possible to activate/deactivate "
 "the sign in menu entry for webtrees. If deactivated, only sign in menu "
@@ -435,15 +463,15 @@ msgstr ""
 "uitgeschakeld, worden mogelijk alleen aanmeldmenu's voor "
 "autorisatieproviders weergegeven."
 
-#: resources/views/settings.phtml:99
+#: resources/views/settings.phtml:114
 msgid "Hide the webtrees sign in menu"
 msgstr "Verberg het aanmeldmenu van webtrees"
 
-#: resources/views/settings.phtml:102 resources/views/settings.phtml:116
+#: resources/views/settings.phtml:117 resources/views/settings.phtml:131
 msgid "Hide"
 msgstr "Verberg"
 
-#: resources/views/settings.phtml:104
+#: resources/views/settings.phtml:119
 msgid ""
 "By selecting this option, it is possible to hide the original webtrees sign "
 "in menu. This might be helpful if the custom module specific top menu for "
@@ -454,12 +482,12 @@ msgstr ""
 "aanmelden het specifieke bovenste menu van de uitbreidingsmodule wordt "
 "gebruikt."
 
-#: resources/views/settings.phtml:113
+#: resources/views/settings.phtml:128
 msgid "Hide webtrees sign in (with Username/Password) on login page"
 msgstr ""
 "Verberg webtrees-aanmelden (met gebruikersnaam/wachtwoord) op aanmeldpagina"
 
-#: resources/views/settings.phtml:118
+#: resources/views/settings.phtml:133
 msgid ""
 "By selecting this option, it is possible to hide the webtrees sign in (with "
 "Username/Password) on the login page."
@@ -467,19 +495,19 @@ msgstr ""
 "Door deze optie te selecteren, is het mogelijk om het aanmelden bij webtrees "
 "(met gebruikersnaam/wachtwoord) op de aanmeldpagina te verbergen."
 
-#: resources/views/settings.phtml:125
+#: resources/views/settings.phtml:140
 msgid "Settings for Password, Email, and Connection Management"
 msgstr "Instellingen voor wachtwoord-, e-mail- en verbindingsbeheer"
 
-#: resources/views/settings.phtml:131
+#: resources/views/settings.phtml:146
 msgid "Keep email address synchronized with authorization provider"
 msgstr "Houd e-mailadres gesynchroniseerd met autorisatieprovider"
 
-#: resources/views/settings.phtml:134
+#: resources/views/settings.phtml:149
 msgid "Keep synchronized"
 msgstr "Gesynchroniseerd houden"
 
-#: resources/views/settings.phtml:136
+#: resources/views/settings.phtml:151
 msgid ""
 "This selection prevents a user with the same email address in webtrees and "
 "at the authorization provider from changing the email address in webtrees. "
@@ -495,11 +523,11 @@ msgstr ""
 "beheerder het e-mailadres in het gebruikersbeheer van webtrees wijzigt, "
 "wordt de synchronisatie van het e-mailadres niet langer voortgezet."
 
-#: resources/views/settings.phtml:145
+#: resources/views/settings.phtml:160
 msgid "Use webtrees password in parallel"
 msgstr "Gebruik webtrees-wachtwoord parallel"
 
-#: resources/views/settings.phtml:150
+#: resources/views/settings.phtml:165
 msgid ""
 "This option allows users, who register with an authorization provider, to "
 "additionally sign in with a webtrees password."
@@ -507,13 +535,13 @@ msgstr ""
 "Met deze optie kunnen gebruikers, die zich registreren met een "
 "autorisatieprovider, zich ook aanmelden met een webtrees-wachtwoord."
 
-#: resources/views/settings.phtml:159
+#: resources/views/settings.phtml:174
 msgid "Allow existing webtrees users to connect with an authorization provider"
 msgstr ""
 "Bestaande webtrees-gebruikers toestaan om verbinding te maken met een "
 "autorisatieprovider"
 
-#: resources/views/settings.phtml:164
+#: resources/views/settings.phtml:179
 msgid ""
 "If selecting this option, an existing webtrees user can connect the webtrees "
 "account with an authorization provider. This will allow users to "
@@ -525,15 +553,15 @@ msgstr ""
 "gebruikers zich extra aanmelden met een autorisatieprovider terwijl ze nog "
 "steeds de webtrees-gebruiker en het wachtwoord gebruiken."
 
-#: resources/views/settings.phtml:170
+#: resources/views/settings.phtml:185
 msgid "Debug Settings"
 msgstr "Debug-instellingen"
 
-#: resources/views/settings.phtml:176
+#: resources/views/settings.phtml:191
 msgid "Debug logs"
 msgstr "Debug-logboeken"
 
-#: resources/views/settings.phtml:181
+#: resources/views/settings.phtml:196
 msgid ""
 "By selecting this option, additional debug information about the protocol "
 "flow between webtrees and the authorization provider will be logged in the "
