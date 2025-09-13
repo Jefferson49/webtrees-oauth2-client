@@ -52,6 +52,7 @@ use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Jefferson49\Webtrees\Helpers\Functions;
+use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLog;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
@@ -109,7 +110,9 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
         $tree            = Functions::getTreeByName($tree_name);
         $oauth2_client   = $this->module_service->findByName(OAuth2Client::activeModuleName());
-        $log_module      = Functions::moduleLogInterface($oauth2_client);
+
+        /** @var CustomModuleLogInterface $log_module To avoid IDE warnings */
+        $log_module      = $oauth2_client;
 
         //Save/load the provider name to/from the session
         if ($provider_name !== '') {
