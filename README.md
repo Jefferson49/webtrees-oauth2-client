@@ -132,6 +132,11 @@ Generic_signInButtonLabel='xxx'
     + **Generic_urlResourceOwnerDetails**='...' (value from the OAuth 2.0 Server)
     + **Generic_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
++ If your authorization provider uses another user ID credential instead of "id", you can add the following configuration (in this example with "sub" used as user ID)
+```PHP
+Generic_responseResourceOwnerId='sub'
+```
+
 ### Authelia
 + If using "pretty" URLs in webtrees (i.e. rewrite_urls="1" in the webtrees config.ini.php file), open the module settings in the control panel and activate "**Use pretty redirect URL**".
 + For a description about the Authelia configuration, refer to the chapter about Oauth2 (OpenID Connect 1.0) configuration in the [Authelia Administration Manual](https://www.authelia.com/configuration/identity-providers/openid-connect/provider/)
@@ -429,6 +434,10 @@ Although OAuth 2 is a standard protocol and is used on lots of websites, the aut
     {"id":"12345","email":"my@email.net"}
     ```
 + If one of these required parameters are missing in the user data, the authorization in webtrees will fail. Try to add the required parameters in the configuration of your authorization provider. If not possible, post an [issue on GitHub](https://github.com/Jefferson49/webtrees-oauth2-client/issues).
++ If your authorization provider uses another user ID credential instead of "id", you can add the following configuration (in this example with the Generic provider and "sub" used as user ID)
+    ```
+    Generic_responseResourceOwnerId='sub'
+   ```
 + Check your website access logs for requested URLs, HTTP request methods, HTTP status/error codes
 + Check the logs for any 301/302 redirects. Within 301 or 302 redirects, the server might change HTTP POST methods into GET methods
 + Check if your website uses the HTTPS protocol. A lot of authorization providers require to use the HTTPS protocol for OAuth 2 autorization. HTTPS is strongly recommended for security reasons anyway.
