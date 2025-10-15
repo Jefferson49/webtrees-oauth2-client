@@ -439,9 +439,11 @@ Although OAuth 2 is a standard protocol and is used on lots of websites, the aut
     Generic_responseResourceOwnerId='sub'
    ```
 + Check your website access logs for requested URLs, HTTP request methods, HTTP status/error codes
-+ Check the logs for any 301/302 redirects. Within 301 or 302 redirects, the server might change HTTP POST methods into GET methods
++ Check the logs for any 301/302 redirects. Within 301 or 302 redirects, the server might change HTTP POST methods into GET methods, which will not work.
++ Check the server configuration for any redirects from sub-domains, e.g. https://www.my_site.net to https://my_site.net. The Oauth2 configuration needs to use the direct URL; it will fail with redirected URLs.
++ Check your server for redirects and header handling. A lot of servers remove authorization headers during redirecting, which will result in a failure of the OAuth2 communication.
++ Check your server settings for rewrite rules. Some server settings and rewrite rules might remove authorization headers, which will result in a failure of the OAuth2 communication.
 + Check if your website uses the HTTPS protocol. A lot of authorization providers require to use the HTTPS protocol for OAuth 2 autorization. HTTPS is strongly recommended for security reasons anyway.
-+ Check the server configuration for any redirects from sub-domains, e.g. https://www.my_site.net to https://my_site.net
 + If using the WordPress authorization provider, check the [PHP/Apache configuration](#phpapache-configuration)
 + In rare cases, it might be helpful to use a [pretty URL](https://webtrees.net/faq/urls/) for the redirect URL. In this case, activate "Use pretty redirect URL" in the module settings.
 
