@@ -346,7 +346,45 @@ Nextcloud_signInButtonLabel='xxx'
     + **Nextcloud_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### PocketID
-It was reported by a user that PocketID was successfully connected with the [Generic](#generic) authorization provider. However, the details of the configuration of PocketID and the Generic provider are not known to the module author.
+
+#### Client Setup
+
+In PocketID -> `Settings` -> `OIDC Clients` -> `New Client`:
++ **Name:** any label (e.g. `webtrees`)
++ **Callback URL:**
+  Use the redirect URL shown in the webtrees module settings, for example `https:webrees.example.com/index.php?route=/OAuth2Client`
++ **Logout callback URLs**: _optional_
+
+After saving, copy the **Client ID**, **Client Secret**, and the corresponding endpoint URLs (examples below):
++ `https://auth.example.com/authorize`
++ `https://auth.example.com/api/oidc/token`
++ `https://auth.example.com/api/oidc/userinfo`
+
+#### webtrees configuration
+
+Add the following lines to your `config.ini.php`:
+
+```ini
+Generic_clientId="YOUR_CLIENT_ID"
+Generic_clientSecret="YOUR_CLIENT_SECRET"
+
+Generic_urlAuthorize="https://auth.example.com/authorize"
+Generic_urlAccessToken="https://auth.example.com/api/oidc/token"
+Generic_urlResourceOwnerDetails="https://auth.example.com/api/oidc/userinfo"
+
+; Required OIDC scopes
+Generic_scopes="openid email profile"
+
+; PocketID uses 'sub' as the stable OIDC user identifier
+Generic_responseResourceOwnerId="sub"
+
+; Required label for login button in the webtrees UI
+Generic_signInButtonLabel="Sign in with PocketID"
+```
+
+After saving the file, you can:
+- Link an existing webtrees account with PocketID, or
+- Allow new users to sign in using PocketID if automatic account creation is enabled.
 
 ### Spotify
 + Open the [Spotify](https://open.spotify.com/login) page and log into your Dropbox account
