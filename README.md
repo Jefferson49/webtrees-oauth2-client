@@ -137,6 +137,11 @@ Generic_signInButtonLabel='xxx'
 Generic_responseResourceOwnerId='sub'
 ```
 
++ If your authorization provider uses another user name credential instead of "username", you can add the following configuration (in this example with "preferred_username" used as user name, which is common for OIDC providers like Dex)
+```PHP
+Generic_responseResourceOwnerUsername='preferred_username'
+```
+
 ### Authelia
 + If using "pretty" URLs in webtrees (i.e. rewrite_urls="1" in the webtrees config.ini.php file), open the module settings in the control panel and activate "**Use pretty redirect URL**".
 + For a description about the Authelia configuration, refer to the chapter about Oauth2 (OpenID Connect 1.0) configuration in the [Authelia Administration Manual](https://www.authelia.com/configuration/identity-providers/openid-connect/provider/)
@@ -475,6 +480,10 @@ Although OAuth 2 is a standard protocol and is used on lots of websites, the aut
 + If your authorization provider uses another user ID credential instead of "id", you can add the following configuration (in this example with the Generic provider and "sub" used as user ID)
     ```
     Generic_responseResourceOwnerId='sub'
+   ```
++ If your authorization provider uses another user name credential instead of "username" (e.g. "preferred_username" for OIDC providers like Dex), you can add the following configuration
+    ```
+    Generic_responseResourceOwnerUsername='preferred_username'
    ```
 + Check your website access logs for requested URLs, HTTP request methods, HTTP status/error codes
 + Check the logs for any 301/302 redirects. Within 301 or 302 redirects, the server might change HTTP POST methods into GET methods, which will not work.

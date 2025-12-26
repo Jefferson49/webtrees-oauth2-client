@@ -50,9 +50,12 @@ abstract class AbstractAuthorizationProvider
 {
     //The authorization provider
     protected AbstractProvider $provider;
-    
+
     //A label for the sign in button
     protected string $sign_in_button_label;
+
+    //Alternative field name for username in the resource owner response
+    protected string $response_resource_owner_username = 'username';
 
 
     /**
@@ -69,14 +72,26 @@ abstract class AbstractAuthorizationProvider
 
     /**
      * Set the sing in button label for the authorization client
-     * 
+     *
      * @param string $label
-     * 
+     *
      * @return void
      */
     public function setSignInButtonLabel(string $label) : void {
 
         $this->sign_in_button_label = $label;
+    }
+
+    /**
+     * Set the response field name used to extract the username
+     *
+     * @param string $field_name
+     *
+     * @return void
+     */
+    public function setResponseResourceOwnerUsername(string $field_name) : void {
+
+        $this->response_resource_owner_username = $field_name;
     }
 
     /**
@@ -181,8 +196,8 @@ abstract class AbstractAuthorizationProvider
         //Email: Default has to be empty, because empty email needs to be detected as error
         $email = $user_data['email'] ?? '';
 
-        //User name: Default has to be empty, because empty username needs to be detected as error
-        $user_name = $user_data['username'] ?? '';
+        //User name: Use configured field name with fallback to 'username'
+        $user_name = $user_data[$this->response_resource_owner_username] ?? $user_data['username'] ?? '';
 
         //Real name
         if(isset($user_data['name']) && is_string($user_data['name'])) {
