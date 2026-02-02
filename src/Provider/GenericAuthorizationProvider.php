@@ -60,7 +60,11 @@ class GenericAuthorizationProvider extends AbstractAuthorizationProvider impleme
 
         if (isset($options['signInButtonLabel'])) {
             $this->setSignInButtonLabel($options['signInButtonLabel']);
-        }   
+        }
+
+        if (isset($options['responseResourceOwnerUsername'])) {
+            $this->setResponseResourceOwnerUsername($options['responseResourceOwnerUsername']);
+        }
     }
 
     /**
