@@ -43,6 +43,7 @@ use Fisharebest\Webtrees\Http\RequestHandlers\UpgradeWizardPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Log;
 use Fisharebest\Webtrees\Services\CaptchaService;
+use Fisharebest\Webtrees\Services\TreeService;
 use Fisharebest\Webtrees\Services\UpgradeService;
 use Fisharebest\Webtrees\Services\UserService;
 use Fisharebest\Webtrees\Session;
@@ -70,24 +71,28 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 {
     use ViewResponseTrait;
 
-	//Module service to search and find modules
-	private ModuleService $module_service;
-
-    private UpgradeService $upgrade_service;
-
-    private UserService $user_service;
     private CaptchaService $captcha_service;
+	private ModuleService  $module_service;
+    private UpgradeService $upgrade_service;
+    private UserService    $user_service;
+    private TreeService    $tree_service;
 
     /**
      * @param UpgradeService $upgrade_service
      * @param UserService    $user_service
      */
-    public function __construct(UpgradeService $upgrade_service, UserService $user_service, ModuleService $module_service, CaptchaService $captcha_service)
+    public function __construct(
+        CaptchaService $captcha_service,
+        ModuleService $module_service,
+        UpgradeService $upgrade_service,
+        UserService $user_service,
+        TreeService $tree_service)
     {
+        $this->captcha_service = $captcha_service;
+        $this->module_service  = $module_service;
         $this->upgrade_service = $upgrade_service;
         $this->user_service    = $user_service;
-        $this->module_service  = $module_service;
-        $this->captcha_service = $captcha_service;        
+        $this->tree_service    = $tree_service;
     }
 
     /**
@@ -108,7 +113,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $url             = Validator::queryParams($request)->isLocalUrl()->string('url', route(HomePage::class));
         $connect_action  = Validator::queryParams($request)->string('connect_action', OAuth2Client::CONNECT_ACTION_NONE);
 
-        $tree            = Functions::getTreeByName($tree_name);
+        $tree            = $this->tree_service->all()->get($tree_name);
         $oauth2_client   = $this->module_service->findByName(OAuth2Client::activeModuleName());
 
         /** @var CustomModuleLogInterface $log_module To avoid IDE warnings */
@@ -125,7 +130,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $provider_name = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME);
             $url           = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, route(HomePage::class));
             $tree_name     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, '');
-            $tree          = Functions::getTreeByName($tree_name);
+            $tree          = $this->tree_service->all()->get($tree_name);
             $retreived_provider_name_from_session = true;
         }
 
