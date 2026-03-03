@@ -112,40 +112,41 @@ class OAuth2Client extends AbstractModule implements
 	public const PREF_MODULE_VERSION = 'module_version';
 
 	//Alert tpyes
-	public const ALERT_DANGER = 'alert_danger';
+	public const ALERT_DANGER  = 'alert_danger';
 	public const ALERT_SUCCESS = 'alert_success';
 
     //Preferences
     public const PREF_SHOW_WEBTREES_LOGIN_IN_MENU   = 'show_webtrees_login_in_menu';
-    public const PREF_SHOW_REGISTER_IN_MENU   = 'show_register_in_menu';
-    public const PREF_SHOW_MY_ACCOUNT_IN_MENU   = 'show_my_account_in_menu';
+    public const PREF_SHOW_REGISTER_IN_MENU         = 'show_register_in_menu';
+    public const PREF_SHOW_MY_ACCOUNT_IN_MENU       = 'show_my_account_in_menu';
     public const PREF_DONT_SHOW_WEBTREES_LOGIN_MENU = 'dont_show_webtrees_login_menu';
-    public const PREF_DEBUGGING_ACTIVATED = 'debugging_activated';
-    public const PREF_USE_WEBTREES_PASSWORD = 'use_webtrees_password';
-    public const PREF_SYNC_PROVIDER_EMAIL = 'sync_provider_email';
-    public const PREF_CONNECT_WITH_PROVIDERS = 'connect_with_providers';
-    public const PREF_HIDE_WEBTREES_SIGN_IN = 'hide_webtrees_sign_in';
-    public const PREF_PRETTY_REDIRECT_URL = 'pretty_redirect_url';
+    public const PREF_DEBUGGING_ACTIVATED           = 'debugging_activated';
+    public const PREF_USE_WEBTREES_PASSWORD         = 'use_webtrees_password';
+    public const PREF_SYNC_PROVIDER_EMAIL           = 'sync_provider_email';
+    public const PREF_CONNECT_WITH_PROVIDERS        = 'connect_with_providers';
+    public const PREF_HIDE_WEBTREES_SIGN_IN         = 'hide_webtrees_sign_in';
+    public const PREF_PRETTY_REDIRECT_URL           = 'pretty_redirect_url';
 
     //User preferences
-    public const USER_PREF_PROVIDER_NAME = 'provider_name';
-    public const USER_PREF_ID_AT_PROVIDER = 'id_at_provider';
+    public const USER_PREF_PROVIDER_NAME     = 'provider_name';
+    public const USER_PREF_ID_AT_PROVIDER    = 'id_at_provider';
     public const USER_PREF_EMAIL_AT_PROVIDER = 'email_at_provider';
 
     //Session values
-    public const SESSION_PROVIDER_NAME = 'provider_name';
-    public const SESSION_TREE = 'tree';
-    public const SESSION_URL = 'url';
-    public const SESSION_PROVIDER_TO_CONNECT = 'provider_to_connect';
-    public const SESSION_USER_TO_CONNECT = 'user_to_connect';
-    public const SESSION_CONNECT_TIMESTAMP = 'connect_timestamp';
-    public const SESSION_CONNECT_TIMEOUT = 300;
+    public const SESSION_PROVIDER_NAME       = 'session_provider_name';
+    public const SESSION_TREE                = 'session_tree';
+    public const SESSION_URL                 = 'session_url';
+    public const SESSION_PROVIDER_TO_CONNECT = 'session_provider_to_connect';
+    public const SESSION_USER_TO_CONNECT     = 'session_user_to_connect';
+    public const SESSION_CONNECT_TIMESTAMP   = 'session_connect_timestamp';
+    public const SESSION_CONNECT_ACTION      = 'session_connect_action';
+    public const SESSION_CONNECT_TIMEOUT     = 300;
 
     //Connect actions
-    public const CONNECT_ACTION_NONE = 'connect_action_none';
-    public const CONNECT_ACTION_CONNECT = 'connect_action_connect';
-    public const CONNECT_ACTION_DISCONNECT = 'connect_action_disconnect';
-    public const CONNECT_ACTION_REGISTER = 'connect_action_register';
+    public const CONNECT_ACTION_NONE         = 'connect_action_none';
+    public const CONNECT_ACTION_CONNECT      = 'connect_action_connect';
+    public const CONNECT_ACTION_DISCONNECT   = 'connect_action_disconnect';
+    public const CONNECT_ACTION_REGISTER     = 'connect_action_register';
 
 
    /**

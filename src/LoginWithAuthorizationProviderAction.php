@@ -124,13 +124,15 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME, $provider_name);
             Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, $url);
             Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, $tree instanceof Tree ? $tree->name() : '');
+            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_CONNECT_ACTION, $connect_action);
             $retreived_provider_name_from_session = false;
         }
         else {
-            $provider_name = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME);
-            $url           = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, route(HomePage::class));
-            $tree_name     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, '');
-            $tree          = $this->tree_service->all()->get($tree_name);
+            $provider_name  = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME);
+            $url            = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, route(HomePage::class));
+            $tree_name      = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, '');
+            $connect_action = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_CONNECT_ACTION, '');
+            $tree           = $this->tree_service->all()->get($tree_name);
             $retreived_provider_name_from_session = true;
         }
 
@@ -289,7 +291,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
         //Check if is existing user, who is not connected with a provider
         if ($existing_user !== null) {
-            $existing_user_without_provider = $existing_user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') === '';
+            $provider_of_existing_user = $existing_user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '');
+            $existing_user_without_provider = $provider_of_existing_user === '';
         }
         else {
             $existing_user_without_provider = false;
@@ -330,8 +333,13 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             //Reset session values
             self::deleteSessionValuesForProviderConnection();
         }
-        //Reject if existing user, who has signed in before and is not connected to the provider
-        elseif ($existing_user !== null && !$existing_user_not_signed_in_yet && $existing_user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== $provider_name) {
+        // Reject if existing user, who has signed in before and is not connected to the provider
+        // Also reject if an existing user is requested to register, but is already connected with the provider 
+        elseif (    $existing_user !== null 
+                && ((   !$existing_user_not_signed_in_yet && $provider_of_existing_user !== $provider_name) 
+                     OR ($connect_action === OAuth2Client::CONNECT_ACTION_REGISTER && $provider_of_existing_user === $provider_name)
+                    )
+            ) {
             $message = I18N::translate('The identity received from the authorization provider is already used to sign in by another webtrees user.');
             FlashMessages::addMessage($message, 'danger');
             CustomModuleLog::addDebugLog($log_module, $message);
