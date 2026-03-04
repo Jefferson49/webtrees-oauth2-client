@@ -96,7 +96,7 @@ class OAuth2Client extends AbstractModule implements
     private Collection $custom_view_list;
 
 	//Custom module version
-	public const CUSTOM_VERSION = '1.1.9';
+	public const CUSTOM_VERSION = '1.1.10';
 
     //Routes
 	public const REDIRECT_ROUTE = '/OAuth2Client';
@@ -624,7 +624,7 @@ class OAuth2Client extends AbstractModule implements
 
             [[$namespace], $view_name] = explode(View::NAMESPACE_SEPARATOR, (string) $custom_view, 2);
 
-            foreach($custom_modules->forget($this->activeModuleName()) as $custom_module) {
+            foreach($custom_modules->forget(self::activeModuleName()) as $custom_module) {
 
                 $view = new View('test');
 
