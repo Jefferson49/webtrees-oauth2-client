@@ -49,3 +49,10 @@
 .wt-theme-_jc-theme-justlight_ .menu-oauth2-client .nav-link:before,
 .wt-theme-_jc-theme-justlight_ .menu-oauth2-client-item:before,
 .wt-theme-_webtrees-primer-theme_ .menu-oauth2-client-item:before {content:""}
+
+.wt-theme-_k-theme_ .k-nav .menu-oauth2-client > a::before
+{
+  font: var(--fa-font-solid, normal 900 1em/1 "Font Awesome 6 Free");
+  font-size: 30px;
+  content: "\f007";
+}
