@@ -55,6 +55,10 @@ It is **highly recommended to use** the **HTTPS** protocol for your webtrees ins
 
 Please check whether your **webtrees BASE_URL** in the config.ini.php file **starts with "https"**, e.g. https://my_site.net/webtrees.
 
+## Requirements
++ [webtrees](https://webtrees.net/download): Version 2.1 or greater
++ [PHP](https://www.php.net/): Version 7.4 or greater
+
 ## Installation
 + Install and use [Custom Module Manager](https://github.com/Jefferson49/CustomModuleManager) for an easy and convenient installation of webtrees custom modules.
 + Open the Custom Module Manager view in webtrees, scroll to "OAuth2-Client", and click on the "Install Module" button.
@@ -132,15 +136,28 @@ Generic_signInButtonLabel='xxx'
     + **Generic_urlResourceOwnerDetails**='...' (value from the OAuth 2.0 Server)
     + **Generic_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
++ If the authorization provider offers an URI to sign out, you can add an additional configuration line:
+    ```PHP
+    Generic_postSignoutURI='...' (specific URI, which might be offered by the authorization provider)
+    ```
+    Example URI for **postSignoutURI** with post logout redirect URI to webtrees after sign out:  
+    ```
+    https://[AUTH_PROVIDER_URL]/logout?client_id=[CLIENT_ID]&post_logout_redirect_uri=https://[MY_DOMAIN]/webtrees'
+    ```
+
+    If **postSignoutURI** is configured, a specific sign out menu item will be shown in the OAuth2 Client menu:  
+
+    <img src="resources/img/sign_out_of_provider.jpg" width="300">  
+
 + If your authorization provider uses another user ID credential instead of "id", you can add the following configuration (in this example with "sub" used as user ID)
-```PHP
-Generic_responseResourceOwnerId='sub'
-```
+    ```PHP
+    Generic_responseResourceOwnerId='sub'
+    ```
 
 + If your authorization provider uses another user name credential instead of "username", you can add the following configuration (in this example with "preferred_username" used as user name, which is common for OIDC providers like Dex)
-```PHP
-Generic_responseResourceOwnerUsername='preferred_username'
-```
+    ```PHP
+    Generic_responseResourceOwnerUsername='preferred_username'
+    ```
 
 ### Authelia
 + If using "pretty" URLs in webtrees (i.e. rewrite_urls="1" in the webtrees config.ini.php file), open the module settings in the control panel and activate "**Use pretty redirect URL**".

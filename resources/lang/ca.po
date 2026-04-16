@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2-Client for webtrees 2\n"
-"POT-Creation-Date: 2025-08-12 19:29+0200\n"
+"POT-Creation-Date: 2026-04-16 18:39+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -9,12 +9,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/Factories/AuthorizationProviderFactory.php:157
+#: src/Factories/AuthorizationProviderFactory.php:166
 #, php-format
 msgid ""
 "The configuration for the authorization provider \"%s\" does not include "
@@ -25,16 +25,16 @@ msgstr ""
 "l'opció \"%s\". Si us plau, comproveu la configuració en el següent fitxer: "
 "data/config.ini.php"
 
-#: src/LoginWithAuthorizationProviderAction.php:133
+#: src/LoginWithAuthorizationProviderAction.php:148
 msgid "The requested authorization provider could not be found"
 msgstr "No s'ha pogut trobar el proveïdor d'autorització sol·licitat"
 
-#: src/LoginWithAuthorizationProviderAction.php:150
+#: src/LoginWithAuthorizationProviderAction.php:165
 #, php-format
 msgid "Disconnected the user %s from provider: %s"
 msgstr "S'ha desconnectat l'usuari %s del proveïdor: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:172
+#: src/LoginWithAuthorizationProviderAction.php:187
 msgid ""
 "Failed security check: A user, who is currently not signed in, requested to "
 "connect an authorization provider with the current user."
@@ -43,7 +43,7 @@ msgstr ""
 "iniciada, ha sol·licitat connectar un proveïdor d'autorització amb l'usuari "
 "actual."
 
-#: src/LoginWithAuthorizationProviderAction.php:183
+#: src/LoginWithAuthorizationProviderAction.php:198
 #, php-format
 msgid ""
 "Timeout for connecting user %s with authorization provider %s. Please "
@@ -52,16 +52,16 @@ msgstr ""
 "Temps d'espera per connectar l'usuari %s amb el proveïdor d'autorització %s. "
 "Reinicieu la connexió amb el proveïdor d'autorització."
 
-#: src/LoginWithAuthorizationProviderAction.php:217
-#: src/LoginWithAuthorizationProviderAction.php:249
+#: src/LoginWithAuthorizationProviderAction.php:232
+#: src/LoginWithAuthorizationProviderAction.php:264
 msgid "OAuth 2.0 communication error"
 msgstr "Error de comunicació OAuth 2.0"
 
-#: src/LoginWithAuthorizationProviderAction.php:221
+#: src/LoginWithAuthorizationProviderAction.php:236
 msgid "Invalid state in communication with authorization provider."
 msgstr "Estat no vàlid en comunicació amb el proveïdor d'autorització."
 
-#: src/LoginWithAuthorizationProviderAction.php:253
+#: src/LoginWithAuthorizationProviderAction.php:268
 msgid ""
 "Failed to get the access token or the user details from the authorization "
 "provider"
@@ -69,22 +69,30 @@ msgstr ""
 "No s'ha pogut obtenir el testimoni d'accés o les dades de l'usuari del "
 "proveïdor d'autorització"
 
-#: src/LoginWithAuthorizationProviderAction.php:292
+#: src/LoginWithAuthorizationProviderAction.php:318
 msgid ""
-"The identity received by the authorization provider cannot be connected to "
+"The identity received from the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
 "webtrees user."
 msgstr ""
-"La identitat rebuda pel proveïdor d'autorització no es pot connectar amb "
-"l'usuari sol·licitat, perquè ja l'utilitza per iniciar la sessió un altre "
-"usuari de webtrees."
+"La identitat rebuda del proveïdor d'autoritzacions no es pot connectar a "
+"l'usuari sol·licitat, perquè un altre usuari d'arbres web ja l'utilitza per "
+"iniciar la sessió."
 
-#: src/LoginWithAuthorizationProviderAction.php:303
+#: src/LoginWithAuthorizationProviderAction.php:329
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr "S'ha connectat correctament l'usuari existent %s amb el proveïdor: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:315
+#: src/LoginWithAuthorizationProviderAction.php:343
+msgid ""
+"The identity received from the authorization provider is already used to "
+"sign in by another webtrees user."
+msgstr ""
+"La identitat rebuda del proveïdor d'autoritzacions ja s'utilitza per iniciar "
+"la sessió per un altre usuari d'arbres web."
+
+#: src/LoginWithAuthorizationProviderAction.php:353
 msgid ""
 "Currently, no webtrees user account is related to the user data received "
 "from the authorization provider."
@@ -92,16 +100,16 @@ msgstr ""
 "Actualment, cap compte d'usuari de webtrees està relacionat amb les dades "
 "d'usuari rebudes del proveïdor d'autorització."
 
-#: src/LoginWithAuthorizationProviderAction.php:320
+#: src/LoginWithAuthorizationProviderAction.php:358
 #, php-format
 msgid "It is not possible to request a webtrees account with %s."
 msgstr "No és possible sol·licitar un compte de webtrees amb %s."
 
-#: src/LoginWithAuthorizationProviderAction.php:321
-#: src/LoginWithAuthorizationProviderAction.php:328
-#: src/LoginWithAuthorizationProviderAction.php:340
-#: src/LoginWithAuthorizationProviderAction.php:442
-#: src/LoginWithAuthorizationProviderAction.php:451
+#: src/LoginWithAuthorizationProviderAction.php:359
+#: src/LoginWithAuthorizationProviderAction.php:366
+#: src/LoginWithAuthorizationProviderAction.php:378
+#: src/LoginWithAuthorizationProviderAction.php:480
+#: src/LoginWithAuthorizationProviderAction.php:489
 #, php-format
 msgid ""
 "To connect an existing user with %s, sign in and select: My pages / My "
@@ -110,68 +118,72 @@ msgstr ""
 "Per connectar un usuari existent amb %s, inicieu la sessió i seleccioneu: "
 "Les meves pàgines / El meu compte / Connecta amb"
 
-#: src/LoginWithAuthorizationProviderAction.php:327
+#: src/LoginWithAuthorizationProviderAction.php:365
 #, php-format
 msgid "Invalid user data received from %s. Email or username missing."
 msgstr ""
 "S'han rebut dades d'usuari no vàlides de %s. Falta el correu electrònic o el "
 "nom d'usuari."
 
-#: src/LoginWithAuthorizationProviderAction.php:335
+#: src/LoginWithAuthorizationProviderAction.php:373
 msgid "Requesting a new webtrees user account is currently not allowed."
 msgstr ""
 "Actualment no es permet sol·licitar un nou compte d'usuari de webtrees."
 
-#: src/LoginWithAuthorizationProviderAction.php:339
+#: src/LoginWithAuthorizationProviderAction.php:377
 #, php-format
 msgid "Press \"continue\" to request a new webtrees user acccount with %s."
 msgstr ""
 "Premeu \"continua\" per sol·licitar un nou compte d'usuari de l'arbre web "
 "amb %s."
 
-#: src/LoginWithAuthorizationProviderAction.php:349
+#: src/LoginWithAuthorizationProviderAction.php:387
 msgid "Request a new user account with an authorization provider"
 msgstr "Sol·liciteu un compte d'usuari nou amb un proveïdor d'autorització"
 
-#: src/LoginWithAuthorizationProviderAction.php:372
+#: src/LoginWithAuthorizationProviderAction.php:410
 #, php-format
 msgid "The email address for user %s was updated to: %s"
 msgstr "L'adreça de correu electrònic de l'usuari %s s'ha actualitzat a: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:441
-#: src/LoginWithAuthorizationProviderAction.php:450
+#: src/LoginWithAuthorizationProviderAction.php:479
+#: src/LoginWithAuthorizationProviderAction.php:488
 msgid "Login denied. The email address or username already exists."
 msgstr ""
 "Inici de sessió denegat. L'adreça de correu electrònic o el nom d'usuari ja "
 "existeix."
 
-#: src/OAuth2Client.php:217
+#: src/OAuth2Client.php:234
 msgid "OAuth2 Client"
 msgstr "Client OAuth2"
 
-#: src/OAuth2Client.php:230
+#: src/OAuth2Client.php:247
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr ""
 "Un mòdul personalitzat per implementar un client OAuth2 per als arbres web."
 
-#: src/OAuth2Client.php:388
+#: src/OAuth2Client.php:405
 msgid "Sign in with"
 msgstr "Inicia sessió amb"
 
-#: src/OAuth2Client.php:419
+#: src/OAuth2Client.php:429
+msgid "Sign out of"
+msgstr "Tancar la sessió del"
+
+#: src/OAuth2Client.php:454
 msgid "Disconnect account from"
 msgstr "Desconnecteu el compte de"
 
-#: src/OAuth2Client.php:425
+#: src/OAuth2Client.php:460
 msgid "Connect account with"
 msgstr "Connecta el compte amb"
 
-#: src/OAuth2Client.php:558
+#: src/OAuth2Client.php:606
 #, php-format
 msgid "The preferences for the module \"%s\" were updated."
 msgstr "S'han actualitzat les preferències del mòdul \"%s\"."
 
-#: src/OAuth2Client.php:579
+#: src/OAuth2Client.php:627
 msgid ""
 "The redirect URL for OAuth 2.0 communication has changed in custom module "
 "versions >= 1.1.0. If certain connections with authorization providers fail, "
@@ -183,7 +195,7 @@ msgstr ""
 "proveïdors d'autorització fallen, és possible que hàgiu d'actualitzar la "
 "configuració del proveïdor d'autorització amb el nou URL de redirecció."
 
-#: src/OAuth2Client.php:592
+#: src/OAuth2Client.php:640
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
@@ -192,7 +204,7 @@ msgstr ""
 "Les preferències del mòdul personalitzat \"%s\" s'han actualitzat "
 "correctament a la nova versió del mòdul %s."
 
-#: src/OAuth2Client.php:624
+#: src/OAuth2Client.php:672
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -205,7 +217,7 @@ msgstr ""
 "%s, és molt recomanable desactivar el mòdul \"%s\", perquè la funcionalitat "
 "idèntica també està integrada al mòdul %s."
 
-#: src/OAuth2Client.php:629
+#: src/OAuth2Client.php:677
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -218,7 +230,7 @@ msgstr ""
 "registrat la mateixa vista personalitzada \"%s\". És molt recomanable "
 "desactivar un dels mòduls."
 
-#: src/OAuth2Client.php:653
+#: src/OAuth2Client.php:701
 #, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the "
@@ -233,7 +245,7 @@ msgstr ""
 "provocar un comportament no desitjat. És molt recomanable desactivar un dels "
 "mòduls. El camí de la vista paral·lela és: %s"
 
-#: src/Provider/AbstractAuthorizationProvider.php:146
+#: src/Provider/AbstractAuthorizationProvider.php:161
 msgid ""
 "Error while trying to get an access token from the authorization provider. "
 "Check the setting for urlAccessToken in the webtrees configuration. Check "
@@ -245,13 +257,15 @@ msgstr ""
 "Comproveu si hi ha errors als registres d'accés del servidor. Comproveu si "
 "hi ha redireccions a la configuració del servidor."
 
-#: src/Provider/AbstractAuthorizationProvider.php:178
-#: src/Provider/KanidmAuthorizationProvider.php:89
+#: src/Provider/AbstractAuthorizationProvider.php:193
+#: src/Provider/AutheliaAuthorizationProvider.php:90
+#: src/Provider/KanidmAuthorizationProvider.php:90
 msgid "Invalid user data received from the authorization provider"
 msgstr "Les dades d'usuari rebudes del proveïdor d'autorització no són vàlides"
 
-#: src/Provider/AbstractAuthorizationProvider.php:178
-#: src/Provider/KanidmAuthorizationProvider.php:89
+#: src/Provider/AbstractAuthorizationProvider.php:193
+#: src/Provider/AutheliaAuthorizationProvider.php:90
+#: src/Provider/KanidmAuthorizationProvider.php:90
 msgid ""
 "Check the setting for urlResourceOwnerDetails in the webtrees configuration."
 msgstr ""
@@ -361,7 +375,7 @@ msgstr "Sol·liciteu un compte nou amb"
 msgid "Control panel"
 msgstr "Panell de control"
 
-#: resources/views/settings.phtml:40
+#: resources/views/settings.phtml:44
 msgid ""
 "Currently, webtrees does not use the HTTPS protocol. If signing in with "
 "authorization providers, it is urgently recommended to use HTTPS in order to "
@@ -377,17 +391,35 @@ msgstr ""
 "\"config.ini.php\" dels arbres web. Actualment, \"base_url\" no comença per "
 "\"https://\"."
 
-#: resources/views/settings.phtml:63
+#: resources/views/settings.phtml:48 resources/views/settings.phtml:50
+msgid "Redirect URL"
+msgstr "URL de redirecció"
+
+#: resources/views/settings.phtml:65
+msgid "Use pretty redirect URL"
+msgstr "tilitzeu un URL de redirecció bastant"
+
+#: resources/views/settings.phtml:70
+msgid ""
+"In rare cases, it might be helpful to use a pretty redirect URL. Only "
+"activate this option if necessary, e.g. for Authelia as authorization "
+"provider."
+msgstr ""
+"En casos rars, pot ser útil utilitzar un URL de redirecció bastant. Activeu "
+"aquesta opció només si cal, per exemple, per a Authelia com a proveïdor "
+"d'autoritzacions."
+
+#: resources/views/settings.phtml:78
 msgid "Settings for Sign In Menus"
 msgstr "Configuració dels menús d'inici de sessió"
 
-#: resources/views/settings.phtml:68
+#: resources/views/settings.phtml:83
 msgid "Currently, the webtrees sign in with Username/Password is deactivated."
 msgstr ""
 "Actualment, l'inici de sessió a WebTrees amb nom d'usuari/contrasenya està "
 "desactivat."
 
-#: resources/views/settings.phtml:69 resources/views/settings.phtml:74
+#: resources/views/settings.phtml:84 resources/views/settings.phtml:89
 msgid ""
 "Therefore, it is only possible to sign in with an authorization provider. "
 "Please be sure to establish a webtrees administrator account with an "
@@ -399,7 +431,7 @@ msgstr ""
 "WebTrees amb un proveïdor d'autoritzacions. En cas contrari, és possible que "
 "l'inici de sessió de l'administrador ja no sigui possible."
 
-#: resources/views/settings.phtml:73
+#: resources/views/settings.phtml:88
 msgid ""
 "Currently, all menus to directly sign in with a webtrees Username/Password "
 "are deactivated."
@@ -407,7 +439,7 @@ msgstr ""
 "Actualment, tots els menús per iniciar sessió directament amb un nom "
 "d'usuari/contrasenya de WebTrees estan desactivats."
 
-#: resources/views/settings.phtml:78
+#: resources/views/settings.phtml:93
 #, php-format
 msgid ""
 "Currently, the webtrees sign in menu is deactivated and the custom module "
@@ -420,12 +452,12 @@ msgstr ""
 "següents: %s. Alguns dels usuaris no podran iniciar la sessió. Penseu en "
 "activar un dels menús d'inici de sessió amb la configuració següent."
 
-#: resources/views/settings.phtml:85
+#: resources/views/settings.phtml:100
 msgid "Show original webtrees sign in as menu item"
 msgstr ""
 "Mostra els arbres web originals per iniciar la sessió com a element de menú"
 
-#: resources/views/settings.phtml:90
+#: resources/views/settings.phtml:105
 msgid ""
 "By selecting/unselecting this option, it is possible to activate/deactivate "
 "the sign in menu entry for webtrees. If deactivated, only sign in menu "
@@ -436,15 +468,15 @@ msgstr ""
 "només es poden mostrar les entrades del menú d'inici de sessió per als "
 "proveïdors d'autorització."
 
-#: resources/views/settings.phtml:99
+#: resources/views/settings.phtml:114
 msgid "Hide the webtrees sign in menu"
 msgstr "Amaga el menú d'inici de sessió dels arbres web"
 
-#: resources/views/settings.phtml:102 resources/views/settings.phtml:116
+#: resources/views/settings.phtml:117 resources/views/settings.phtml:131
 msgid "Hide"
 msgstr "Amaga"
 
-#: resources/views/settings.phtml:104
+#: resources/views/settings.phtml:119
 msgid ""
 "By selecting this option, it is possible to hide the original webtrees sign "
 "in menu. This might be helpful if the custom module specific top menu for "
@@ -454,13 +486,13 @@ msgstr ""
 "dels arbres web originals. Això pot ser útil si s'utilitza el menú superior "
 "específic del mòdul personalitzat per iniciar la sessió."
 
-#: resources/views/settings.phtml:113
+#: resources/views/settings.phtml:128
 msgid "Hide webtrees sign in (with Username/Password) on login page"
 msgstr ""
 "Amaga l'inici de sessió de webtrees (amb nom d'usuari/contrasenya) a la "
 "pàgina d'inici de sessió"
 
-#: resources/views/settings.phtml:118
+#: resources/views/settings.phtml:133
 msgid ""
 "By selecting this option, it is possible to hide the webtrees sign in (with "
 "Username/Password) on the login page."
@@ -468,22 +500,22 @@ msgstr ""
 "Si seleccioneu aquesta opció, és possible ocultar l'inici de sessió de "
 "webtrees (amb nom d'usuari/contrasenya) a la pàgina d'inici de sessió."
 
-#: resources/views/settings.phtml:125
+#: resources/views/settings.phtml:140
 msgid "Settings for Password, Email, and Connection Management"
 msgstr ""
 "Configuració per a la gestió de contrasenyes, correu electrònic i connexió"
 
-#: resources/views/settings.phtml:131
+#: resources/views/settings.phtml:146
 msgid "Keep email address synchronized with authorization provider"
 msgstr ""
 "Mantenir l'adreça de correu electrònic sincronitzada amb el proveïdor "
 "d'autorització"
 
-#: resources/views/settings.phtml:134
+#: resources/views/settings.phtml:149
 msgid "Keep synchronized"
 msgstr "Mantenir sincronitzat"
 
-#: resources/views/settings.phtml:136
+#: resources/views/settings.phtml:151
 msgid ""
 "This selection prevents a user with the same email address in webtrees and "
 "at the authorization provider from changing the email address in webtrees. "
@@ -501,11 +533,11 @@ msgstr ""
 "de l'arbre web, la sincronització de l'adreça electrònica deixarà de "
 "continuar."
 
-#: resources/views/settings.phtml:145
+#: resources/views/settings.phtml:160
 msgid "Use webtrees password in parallel"
 msgstr "Utilitzeu la contrasenya dels arbres web en paral·lel"
 
-#: resources/views/settings.phtml:150
+#: resources/views/settings.phtml:165
 msgid ""
 "This option allows users, who register with an authorization provider, to "
 "additionally sign in with a webtrees password."
@@ -514,13 +546,13 @@ msgstr ""
 "d'autorització, iniciar sessió addicionalment amb una contrasenya d'arbres "
 "web."
 
-#: resources/views/settings.phtml:159
+#: resources/views/settings.phtml:174
 msgid "Allow existing webtrees users to connect with an authorization provider"
 msgstr ""
 "Permet que els usuaris d'arbres web existents es connectin amb un proveïdor "
 "d'autorització"
 
-#: resources/views/settings.phtml:164
+#: resources/views/settings.phtml:179
 msgid ""
 "If selecting this option, an existing webtrees user can connect the webtrees "
 "account with an authorization provider. This will allow users to "
@@ -532,15 +564,15 @@ msgstr ""
 "usuaris iniciar la sessió addicionalment amb un proveïdor d'autorització "
 "mentre encara utilitzen l'usuari i la contrasenya dels arbres web."
 
-#: resources/views/settings.phtml:170
+#: resources/views/settings.phtml:185
 msgid "Debug Settings"
 msgstr "Configuració de depuració"
 
-#: resources/views/settings.phtml:176
+#: resources/views/settings.phtml:191
 msgid "Debug logs"
 msgstr "Registres de depuració"
 
-#: resources/views/settings.phtml:181
+#: resources/views/settings.phtml:196
 msgid ""
 "By selecting this option, additional debug information about the protocol "
 "flow between webtrees and the authorization provider will be logged in the "

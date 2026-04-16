@@ -70,6 +70,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\LoginWithAuthorizationProviderAction;
+use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\OAuth2Logout;
 use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\RegisterWithProviderAction;
 use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface;
@@ -99,8 +100,9 @@ class OAuth2Client extends AbstractModule implements
 	public const CUSTOM_VERSION = '1.1.10';
 
     //Routes
-	public const REDIRECT_ROUTE = '/OAuth2Client';
-	public const REGISTER_PROVIDER_ROUTE = '/register-with-provider-action{/tree}';
+	public const ROUTE_REDIRECT            = '/OAuth2Client';
+    public const ROUTE_REGISTER_PROVIDER   = '/register-with-provider-action{/tree}';
+	public const ROUTE_OAUTH2_LOGOUT       = '/oauth2-logout';
 
 	//Github
 	public const GITHUB_REPO = 'Jefferson49/webtrees-oauth2-client';
@@ -164,12 +166,19 @@ class OAuth2Client extends AbstractModule implements
      * @return void
      */
     public function boot(): void
-    {              
+    {
+        //Register this class in the webtrees container
+        //This allows to access the module instance from other places, e.g. views/scripts (->assetUrl)
+        Registry::container()->set(self::class, $this);
+
         //Check update of module version
         $this->checkModuleVersionUpdate();
 
         //Initialize custom view list
         $this->custom_view_list = new Collection;
+
+        //Replace Logout class by custom logout class in order to redirect to authorization provider logout if needed
+        //Registry::container()->set(Logout::class, new OAuth2Logout());
 
 		// Register a namespace for the views.
 		View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
@@ -194,17 +203,23 @@ class OAuth2Client extends AbstractModule implements
         View::registerCustomView('::password-reset-page', self::viewsNamespace() . '::password-reset-page');
         $this->custom_view_list->add(self::viewsNamespace() . '::password-reset-page');
 
-        //Register a route for the communication with the authorization provider
+        //Get the router
         $router = Registry::routeFactory()->routeMap();                 
+
+        //Register a route for the communication with the authorization provider
         $router
-        ->get(LoginWithAuthorizationProviderAction::class, self::REDIRECT_ROUTE)
+        ->get(LoginWithAuthorizationProviderAction::class, self::ROUTE_REDIRECT)
         ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a route for the RegisterWithProviderAction request handler
-        $router = Registry::routeFactory()->routeMap();                 
         $router
-        ->get(RegisterWithProviderAction::class, self::REGISTER_PROVIDER_ROUTE)
+        ->get(RegisterWithProviderAction::class, self::ROUTE_REGISTER_PROVIDER)
         ->allows(RequestMethodInterface::METHOD_POST);        
+
+        //Register a route for the OAuth2 Logout
+        $router
+        ->get(OAuth2Logout::class, self::ROUTE_OAUTH2_LOGOUT)
+        ->allows(RequestMethodInterface::METHOD_POST);
     }
 	
     /**
@@ -402,14 +417,32 @@ class OAuth2Client extends AbstractModule implements
         else {
 
             $user = Auth::user();
+            $provider_name = $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '');
+            $provider_options = AuthorizationProviderFactory::getProviderOptions($provider_name);
+            $post_signout_url = $provider_options['postSignoutURI'] ?? null;
             $menu_label = $user->realName();
-    
+
+            //If user is connected with an authorization provider and has a sign out URL, add OAuth2 sign out as submenu item
+            if ($provider_name !== '' && $post_signout_url !== null) {
+
+                // Add sign out from provider
+                $submenus[] = new Menu(I18N::translate('Sign out of') . ' ' . $provider_name,
+                    route(OAuth2Logout::class, [
+                        'provider_name' => $provider_name,
+                    ]),
+                    'menu-oauth2-client-item',
+                    ['rel' => 'nofollow']
+                );
+            }
             //Add sign out as submenu item
-            $parameters = [
-                'data-wt-post-url'   => route(Logout::class),
-                'data-wt-reload-url' => route(HomePage::class)
-            ];
-            $submenus[] = new Menu(MoreI18N::xlate('Sign out'), '#', 'menu-oauth2-client-item', $parameters);
+            else {
+                $parameters = [
+                    'data-wt-post-url'   => route(Logout::class),
+                    'data-wt-reload-url' => route(HomePage::class)
+                ];
+                $submenus[] = new Menu(MoreI18N::xlate('Sign out'), '#', 'menu-oauth2-client-item', $parameters);
+
+            }
 
             //Add webtrees my account menu as submenu item, if preference is activated
             if (boolval($this->getPreference(self::PREF_SHOW_MY_ACCOUNT_IN_MENU, '1'))) {
@@ -417,7 +450,7 @@ class OAuth2Client extends AbstractModule implements
             }
 
             //If user is connected with an authorization provider, offer disconnect
-            if ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== '') {
+            if ($provider_name !== '') {
                 $sub_menu_label = I18N::translate('Disconnect account from');
                 $connect_action =  OAuth2Client::CONNECT_ACTION_DISCONNECT;
                 $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(new Collection([$user]));
@@ -690,13 +723,13 @@ class OAuth2Client extends AbstractModule implements
         $base_url    = Validator::attributes($request)->string('base_url');
 
         if ($pretty_url) {
-            $redirectUrl = $base_url . self::REDIRECT_ROUTE;
+            $redirectUrl = $base_url . self::ROUTE_REDIRECT;
         }
         else {
             $path        = parse_url($base_url, PHP_URL_PATH) ?? '';
             $parameters  = ['route' => $path];
             $url         = $base_url . '/index.php';
-            $redirectUrl = Html::url($url, $parameters) . self::REDIRECT_ROUTE;
+            $redirectUrl = Html::url($url, $parameters) . self::ROUTE_REDIRECT;
         }
 
         //Replace %2F in URL, because some providers do not accept it, e.g. Dropbox

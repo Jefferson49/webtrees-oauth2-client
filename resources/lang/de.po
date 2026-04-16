@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OAuth2Client\n"
-"POT-Creation-Date: 2025-08-29 22:12+0200\n"
-"PO-Revision-Date: 2025-08-29 22:14+0200\n"
+"POT-Creation-Date: 2026-04-16 06:56+0200\n"
+"PO-Revision-Date: 2026-04-16 06:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -10,12 +10,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/Factories/AuthorizationProviderFactory.php:155
+#: src/Factories/AuthorizationProviderFactory.php:166
 #, php-format
 msgid ""
 "The configuration for the authorization provider \"%s\" does not include "
@@ -26,17 +26,17 @@ msgstr ""
 "Angaben für die Option \"%s\". Bitte prüfen Sie die Konfiguration in der "
 "folgenden Datei: data/config.ini.php"
 
-#: src/LoginWithAuthorizationProviderAction.php:138
+#: src/LoginWithAuthorizationProviderAction.php:148
 msgid "The requested authorization provider could not be found"
 msgstr "Der angeforderte Autorisierungsanbieter konnte nicht gefunden werden"
 
-#: src/LoginWithAuthorizationProviderAction.php:155
+#: src/LoginWithAuthorizationProviderAction.php:165
 #, php-format
 msgid "Disconnected the user %s from provider: %s"
 msgstr ""
 "Die Verknüpfung von Benutzer %s mit Autorisierungsanbieter %s wurde gelöst"
 
-#: src/LoginWithAuthorizationProviderAction.php:177
+#: src/LoginWithAuthorizationProviderAction.php:187
 msgid ""
 "Failed security check: A user, who is currently not signed in, requested to "
 "connect an authorization provider with the current user."
@@ -45,7 +45,7 @@ msgstr ""
 "angemeldet ist, hat angefordert, einen Autorisierungsanbieter mit dem "
 "aktuellen Benutzer zu verbinden."
 
-#: src/LoginWithAuthorizationProviderAction.php:188
+#: src/LoginWithAuthorizationProviderAction.php:198
 #, php-format
 msgid ""
 "Timeout for connecting user %s with authorization provider %s. Please "
@@ -55,17 +55,17 @@ msgstr ""
 "Autorisierungsanbieter %s. Bitte starten Sie die Verknüpfung mit dem "
 "Autorisierungsanbieter neu."
 
-#: src/LoginWithAuthorizationProviderAction.php:222
-#: src/LoginWithAuthorizationProviderAction.php:254
+#: src/LoginWithAuthorizationProviderAction.php:232
+#: src/LoginWithAuthorizationProviderAction.php:264
 msgid "OAuth 2.0 communication error"
 msgstr "OAuth 2.0 Kommunikationsfehler"
 
-#: src/LoginWithAuthorizationProviderAction.php:226
+#: src/LoginWithAuthorizationProviderAction.php:236
 msgid "Invalid state in communication with authorization provider."
 msgstr ""
 "Ungültiger Zustand in der Kommunikation mit dem Autorisierungsanbieter."
 
-#: src/LoginWithAuthorizationProviderAction.php:258
+#: src/LoginWithAuthorizationProviderAction.php:268
 msgid ""
 "Failed to get the access token or the user details from the authorization "
 "provider"
@@ -73,7 +73,7 @@ msgstr ""
 "Fehler beim Empfang des Zugriffs-Tokens oder der Benutzer-Daten vom "
 "Autorisierungsanbieter"
 
-#: src/LoginWithAuthorizationProviderAction.php:307
+#: src/LoginWithAuthorizationProviderAction.php:318
 msgid ""
 "The identity received from the authorization provider cannot be connected to "
 "the requested user, because it is already used to sign in by another "
@@ -83,14 +83,14 @@ msgstr ""
 "angeforderten Benutzer verknüpft werden, da sie bereits von einem anderen "
 "webtrees-Benutzer für die Anmeldung verwendet wird."
 
-#: src/LoginWithAuthorizationProviderAction.php:318
+#: src/LoginWithAuthorizationProviderAction.php:329
 #, php-format
 msgid "Sucessfully connected existing user %s with provider: %s"
 msgstr ""
 "Erfolgreiche Verknüpfung des existierenden Benutzers %s mit "
 "Autorisierungsanbieter: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:327
+#: src/LoginWithAuthorizationProviderAction.php:343
 msgid ""
 "The identity received from the authorization provider is already used to "
 "sign in by another webtrees user."
@@ -98,7 +98,7 @@ msgstr ""
 "Die vom Autorisierungsanbieter erhaltene Identität wird bereits von einem "
 "anderen webtrees-Benutzer verwendet."
 
-#: src/LoginWithAuthorizationProviderAction.php:337
+#: src/LoginWithAuthorizationProviderAction.php:353
 msgid ""
 "Currently, no webtrees user account is related to the user data received "
 "from the authorization provider."
@@ -106,16 +106,16 @@ msgstr ""
 "Aktuell ist kein webtrees-Benutzer mit den vom Autorisierungsanbieter "
 "bereitgestellten Benutzerdaten verknüpft."
 
-#: src/LoginWithAuthorizationProviderAction.php:342
+#: src/LoginWithAuthorizationProviderAction.php:358
 #, php-format
 msgid "It is not possible to request a webtrees account with %s."
 msgstr "Es ist nicht möglich, ein webtrees-Konto mit %s anzufordern."
 
-#: src/LoginWithAuthorizationProviderAction.php:343
-#: src/LoginWithAuthorizationProviderAction.php:350
-#: src/LoginWithAuthorizationProviderAction.php:362
-#: src/LoginWithAuthorizationProviderAction.php:464
-#: src/LoginWithAuthorizationProviderAction.php:473
+#: src/LoginWithAuthorizationProviderAction.php:359
+#: src/LoginWithAuthorizationProviderAction.php:366
+#: src/LoginWithAuthorizationProviderAction.php:378
+#: src/LoginWithAuthorizationProviderAction.php:480
+#: src/LoginWithAuthorizationProviderAction.php:489
 #, php-format
 msgid ""
 "To connect an existing user with %s, sign in and select: My pages / My "
@@ -124,69 +124,73 @@ msgstr ""
 "Um einen bestehenden Benutzer mit %s zu verbinden, melden Sie sich an und "
 "wählen: Meine Seiten / Mein Konto / Verknüpfen mit"
 
-#: src/LoginWithAuthorizationProviderAction.php:349
+#: src/LoginWithAuthorizationProviderAction.php:365
 #, php-format
 msgid "Invalid user data received from %s. Email or username missing."
 msgstr ""
 "Ungültige Benutzerdaten von %s empfangen. E-Mail oder Benutzername fehlt."
 
-#: src/LoginWithAuthorizationProviderAction.php:357
+#: src/LoginWithAuthorizationProviderAction.php:373
 msgid "Requesting a new webtrees user account is currently not allowed."
 msgstr ""
 "Das Anfordern eines neuen webtrees-Benutzerkontos ist derzeit nicht erlaubt."
 
-#: src/LoginWithAuthorizationProviderAction.php:361
+#: src/LoginWithAuthorizationProviderAction.php:377
 #, php-format
 msgid "Press \"continue\" to request a new webtrees user acccount with %s."
 msgstr ""
 "Klicken Sie auf „Weiter“, um ein neues webtrees-Benutzerkonto mit %s "
 "anzufordern."
 
-#: src/LoginWithAuthorizationProviderAction.php:371
+#: src/LoginWithAuthorizationProviderAction.php:387
 msgid "Request a new user account with an authorization provider"
 msgstr ""
 "Beantragen Sie ein neues Benutzerkonto mit einem Autorisierungsanbieter"
 
-#: src/LoginWithAuthorizationProviderAction.php:394
+#: src/LoginWithAuthorizationProviderAction.php:410
 #, php-format
 msgid "The email address for user %s was updated to: %s"
 msgstr "Die Email-Adresse für Benutzer %s wurde aktualisiert zu: %s"
 
-#: src/LoginWithAuthorizationProviderAction.php:463
-#: src/LoginWithAuthorizationProviderAction.php:472
+#: src/LoginWithAuthorizationProviderAction.php:479
+#: src/LoginWithAuthorizationProviderAction.php:488
 msgid "Login denied. The email address or username already exists."
 msgstr ""
 "Anmeldung verweigert. Die E-Mail-Adresse oder der Benutzername ist bereits "
 "vorhanden."
 
-#: src/OAuth2Client.php:218
+#: src/OAuth2Client.php:234
 msgid "OAuth2 Client"
 msgstr "OAuth2 Client"
 
-#: src/OAuth2Client.php:231
+#: src/OAuth2Client.php:247
 msgid "A custom module to implement a OAuth2 client for webtrees."
 msgstr ""
 "Ein benutzerspezifisches Modul, welches einen OAuth2 Client für webtrees zur "
 "Verfügung stellt."
 
-#: src/OAuth2Client.php:389
+#: src/OAuth2Client.php:405
 msgid "Sign in with"
 msgstr "Anmelden mit"
 
-#: src/OAuth2Client.php:420
+#: src/OAuth2Client.php:429
+msgid "Sign out of"
+msgstr "Abmelden von"
+
+#: src/OAuth2Client.php:454
 msgid "Disconnect account from"
 msgstr "Konto-Verknüpfung lösen von"
 
-#: src/OAuth2Client.php:426
+#: src/OAuth2Client.php:460
 msgid "Connect account with"
 msgstr "Konto-Verknüpfung mit"
 
-#: src/OAuth2Client.php:572
+#: src/OAuth2Client.php:606
 #, php-format
 msgid "The preferences for the module \"%s\" were updated."
 msgstr "Die Einstellungen für das Modul \"%s\" wurden aktualisiert."
 
-#: src/OAuth2Client.php:593
+#: src/OAuth2Client.php:627
 msgid ""
 "The redirect URL for OAuth 2.0 communication has changed in custom module "
 "versions >= 1.1.0. If certain connections with authorization providers fail, "
@@ -198,7 +202,7 @@ msgstr ""
 "fehlschlagen, müssen Sie möglicherweise die Einstellungen des "
 "Autorisierungsanbieters mit der neuen redirect-URL aktualisieren."
 
-#: src/OAuth2Client.php:606
+#: src/OAuth2Client.php:640
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
@@ -207,7 +211,7 @@ msgstr ""
 "Die Einstellungen für das benutzerdefinierte Modul \"%s\" wurden für die "
 "neue Modul-Version %s aktualisiert."
 
-#: src/OAuth2Client.php:638
+#: src/OAuth2Client.php:672
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -221,7 +225,7 @@ msgstr ""
 "deaktivieren, weil die identische Funktion ebenfalls im Modul %s integriert "
 "ist."
 
-#: src/OAuth2Client.php:643
+#: src/OAuth2Client.php:677
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -234,7 +238,7 @@ msgstr ""
 "beide Module die gleiche Custom View \"%s\" registriert haben. Es wird "
 "dringend empfohlen eines der beiden Module zu deaktivieren."
 
-#: src/OAuth2Client.php:667
+#: src/OAuth2Client.php:701
 #, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the "
@@ -249,7 +253,7 @@ msgstr ""
 "führen. Es wird dringend empfohlen, eines der Module zu deaktivieren. Der "
 "Pfad für den Custom View ist: %s"
 
-#: src/Provider/AbstractAuthorizationProvider.php:146
+#: src/Provider/AbstractAuthorizationProvider.php:161
 msgid ""
 "Error while trying to get an access token from the authorization provider. "
 "Check the setting for urlAccessToken in the webtrees configuration. Check "
@@ -261,13 +265,13 @@ msgstr ""
 "webtrees-Konfiguration. Überprüfen Sie die Serverzugriffsprotokolle auf "
 "Fehler. Überprüfen Sie die Serverkonfiguration auf Weiterleitungen."
 
-#: src/Provider/AbstractAuthorizationProvider.php:178
+#: src/Provider/AbstractAuthorizationProvider.php:193
 #: src/Provider/AutheliaAuthorizationProvider.php:90
 #: src/Provider/KanidmAuthorizationProvider.php:90
 msgid "Invalid user data received from the authorization provider"
 msgstr "Ungültige Benutzerdaten vom Authorisierungsanbieter empfangen"
 
-#: src/Provider/AbstractAuthorizationProvider.php:178
+#: src/Provider/AbstractAuthorizationProvider.php:193
 #: src/Provider/AutheliaAuthorizationProvider.php:90
 #: src/Provider/KanidmAuthorizationProvider.php:90
 msgid ""
@@ -743,9 +747,6 @@ msgstr ""
 #~ "Invalid user data received from the authorization provider; does not "
 #~ "contain user id. The following user data was received: "
 #~ msgstr "Ungültige Benutzerdaten vom Authorisierungsanbieter empfangen; "
-
-#~ msgid "Sign out"
-#~ msgstr "Abmelden"
 
 #~ msgid "Signed in in with"
 #~ msgstr "Anmelden mit"

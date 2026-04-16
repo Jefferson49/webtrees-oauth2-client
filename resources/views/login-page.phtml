@@ -24,7 +24,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  */
 
 if (!isset($url) OR 
-    strpos($url, str_replace('/', '', OAuth2Client::REDIRECT_ROUTE)) !== false OR 
+    strpos($url, str_replace('/', '', OAuth2Client::ROUTE_REDIRECT)) !== false OR 
     strpos($url,'register') !== false) {
         
     $url = route(HomePage::class);
