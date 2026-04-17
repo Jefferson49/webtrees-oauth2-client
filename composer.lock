@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39699795a7ff4b25ccbd2fba110c4b14",
+    "content-hash": "b655caabfd7f7aeaf537e63928880b94",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bahuma20/oauth2-nextcloud.git",
-                "reference": "a1813cc288d569642cad612b99880fa738a38574"
+                "reference": "0e74f247966c7be7cb60146321ac74a810a78599"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bahuma20/oauth2-nextcloud/zipball/a1813cc288d569642cad612b99880fa738a38574",
-                "reference": "a1813cc288d569642cad612b99880fa738a38574",
+                "url": "https://api.github.com/repos/bahuma20/oauth2-nextcloud/zipball/0e74f247966c7be7cb60146321ac74a810a78599",
+                "reference": "0e74f247966c7be7cb60146321ac74a810a78599",
                 "shasum": ""
             },
             "require": {
@@ -25,9 +25,9 @@
                 "php": "^7.4||^8.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.4",
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.6"
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^9.0",
+                "squizlabs/php_codesniffer": "^3.12"
             },
             "type": "library",
             "autoload": {
@@ -54,9 +54,9 @@
             "description": "Nextcloud OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
             "support": {
                 "issues": "https://github.com/bahuma20/oauth2-nextcloud/issues",
-                "source": "https://github.com/bahuma20/oauth2-nextcloud/tree/2.0.0"
+                "source": "https://github.com/bahuma20/oauth2-nextcloud/tree/2.1.0"
             },
-            "time": "2023-05-11T12:23:05+00:00"
+            "time": "2025-03-26T16:31:00+00:00"
         },
         {
             "name": "jefferson49/oauth2-authelia",
@@ -136,11 +136,11 @@
         },
         {
             "name": "jefferson49/webtrees-common",
-            "version": "1.2.20",
+            "version": "1.2.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jefferson49/webtrees-common.git",
-                "reference": "927f1541e7124177638f794f3662fc03aa9519ae"
+                "reference": "70ca7903a2277d9b946fb27259502d0fa14d9901"
             },
             "require": {
                 "php": ">=7.4"
@@ -155,26 +155,26 @@
                 "webtrees",
                 "webtrees-module"
             ],
-            "time": "2026-02-17T05:21:30+00:00"
+            "time": "2026-04-02T05:08:01+00:00"
         },
         {
             "name": "league/oauth2-client",
-            "version": "2.8.1",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-client.git",
-                "reference": "9df2924ca644736c835fc60466a3a60390d334f9"
+                "reference": "26e8c5da4f3d78cede7021e09b1330a0fc093d5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/9df2924ca644736c835fc60466a3a60390d334f9",
-                "reference": "9df2924ca644736c835fc60466a3a60390d334f9",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/26e8c5da4f3d78cede7021e09b1330a0fc093d5e",
+                "reference": "26e8c5da4f3d78cede7021e09b1330a0fc093d5e",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^6.5.8 || ^7.4.5",
-                "php": "^7.1 || >=8.0.0 <8.5.0"
+                "php": "^7.1 || >=8.0.0 <8.6.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.3.5",
@@ -218,9 +218,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-client/issues",
-                "source": "https://github.com/thephpleague/oauth2-client/tree/2.8.1"
+                "source": "https://github.com/thephpleague/oauth2-client/tree/2.9.0"
             },
-            "time": "2025-02-26T04:37:30+00:00"
+            "time": "2025-11-25T22:17:17+00:00"
         },
         {
             "name": "league/oauth2-github",
@@ -290,20 +290,20 @@
         },
         {
             "name": "league/oauth2-google",
-            "version": "4.0.1",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-google.git",
-                "reference": "1b01ba18ba31b29e88771e3e0979e5c91d4afe76"
+                "reference": "72be69505f890ea8b6d4e716f619b3c10a1f5010"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-google/zipball/1b01ba18ba31b29e88771e3e0979e5c91d4afe76",
-                "reference": "1b01ba18ba31b29e88771e3e0979e5c91d4afe76",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-google/zipball/72be69505f890ea8b6d4e716f619b3c10a1f5010",
+                "reference": "72be69505f890ea8b6d4e716f619b3c10a1f5010",
                 "shasum": ""
             },
             "require": {
-                "league/oauth2-client": "^2.0",
+                "league/oauth2-client": "^2.0 || ^3.0",
                 "php": "^7.3 || ^8.0"
             },
             "require-dev": {
@@ -339,9 +339,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-google/issues",
-                "source": "https://github.com/thephpleague/oauth2-google/tree/4.0.1"
+                "source": "https://github.com/thephpleague/oauth2-google/tree/4.2.0"
             },
-            "time": "2023-03-17T15:20:52+00:00"
+            "time": "2026-03-09T09:36:58+00:00"
         },
         {
             "name": "stevenmaguire/oauth2-dropbox",
