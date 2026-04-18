@@ -167,18 +167,11 @@ class OAuth2Client extends AbstractModule implements
      */
     public function boot(): void
     {
-        //Register this class in the webtrees container
-        //This allows to access the module instance from other places, e.g. views/scripts (->assetUrl)
-        Registry::container()->set(self::class, $this);
-
         //Check update of module version
         $this->checkModuleVersionUpdate();
 
         //Initialize custom view list
         $this->custom_view_list = new Collection;
-
-        //Replace Logout class by custom logout class in order to redirect to authorization provider logout if needed
-        //Registry::container()->set(Logout::class, new OAuth2Logout());
 
 		// Register a namespace for the views.
 		View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
