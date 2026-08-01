@@ -32,7 +32,6 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client\Contracts;
 
-use Fisharebest\Webtrees\User;
 use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
@@ -109,7 +108,7 @@ interface AuthorizationProviderInterface
      * @return ResourceOwnerInterface
      */
     public function getResourceOwner(AccessToken $token) : ResourceOwnerInterface;
-    
+
     /**
      * Use access token to get user data from provider and return it as a webtrees User object
      * 

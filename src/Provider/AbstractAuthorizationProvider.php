@@ -204,7 +204,7 @@ abstract class AbstractAuthorizationProvider
             $real_name = $user_data['name'];
         }
         else {
-            $real_name = '$user_name';
+            $real_name = $user_name;
         }
 
         return new AuthorizationProviderUser(0, $user_name, $real_name, $email, $authorization_provider_user_id, $user_data, $resourceOwner);
