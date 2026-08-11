@@ -8,8 +8,8 @@ use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginAction;
 use Fisharebest\Webtrees\Http\RequestHandlers\PasswordRequestPage;
 use Fisharebest\Webtrees\Http\RequestHandlers\RegisterPage;
-use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Tree;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 
@@ -30,8 +30,7 @@ if (!isset($url) OR
     $url = route(HomePage::class);
 }
 
-$module_service = new ModuleService();
-$oauth2_client  = $module_service->findByName(OAuth2Client::activeModuleName());
+$oauth2_client = Functions::getFromContainer(OAuth2Client::class);
 
 ?>
 

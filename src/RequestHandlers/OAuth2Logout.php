@@ -38,11 +38,11 @@ namespace Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Log;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
@@ -63,8 +63,10 @@ final class OAuth2Logout implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+		$oauth2_client    = Functions::getFromContainer(OAuth2Client::class);
+		
         $user             = Validator::attributes($request)->user();
-        $provider_name    = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME);
+        $provider_name    = Session::get($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_NAME);
         $provider_options = AuthorizationProviderFactory::getProviderOptions($provider_name);
         $post_signout_url = $provider_options['postSignoutURI'] ?? null;
 

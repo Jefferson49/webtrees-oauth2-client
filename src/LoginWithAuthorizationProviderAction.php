@@ -51,7 +51,6 @@ use Fisharebest\Webtrees\Site;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
-use Fisharebest\Webtrees\Services\ModuleService;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
@@ -72,7 +71,6 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
     use ViewResponseTrait;
 
     private CaptchaService $captcha_service;
-	private ModuleService  $module_service;
     private UpgradeService $upgrade_service;
     private UserService    $user_service;
     private TreeService    $tree_service;
@@ -83,13 +81,11 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
      */
     public function __construct(
         CaptchaService $captcha_service,
-        ModuleService $module_service,
         UpgradeService $upgrade_service,
         UserService $user_service,
         TreeService $tree_service)
     {
         $this->captcha_service = $captcha_service;
-        $this->module_service  = $module_service;
         $this->upgrade_service = $upgrade_service;
         $this->user_service    = $user_service;
         $this->tree_service    = $tree_service;
@@ -114,24 +110,24 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $connect_action  = Validator::queryParams($request)->string('connect_action', OAuth2Client::CONNECT_ACTION_NONE);
 
         $tree            = $this->tree_service->all()->get($tree_name);
-        $oauth2_client   = $this->module_service->findByName(OAuth2Client::activeModuleName());
+        $oauth2_client   = Functions::getFromContainer(OAuth2Client::class);
 
         /** @var CustomModuleLogInterface $log_module To avoid IDE warnings */
         $log_module      = $oauth2_client;
 
         //Save/load the provider name to/from the session
         if ($provider_name !== '') {
-            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME, $provider_name);
-            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, $url);
-            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, $tree instanceof Tree ? $tree->name() : '');
-            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_CONNECT_ACTION, $connect_action);
+            Session::put($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_NAME, $provider_name);
+            Session::put($oauth2_client->name() . OAuth2Client::SESSION_URL, $url);
+            Session::put($oauth2_client->name() . OAuth2Client::SESSION_TREE, $tree instanceof Tree ? $tree->name() : '');
+            Session::put($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_ACTION, $connect_action);
             $retreived_provider_name_from_session = false;
         }
         else {
-            $provider_name  = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_NAME);
-            $url            = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_URL, route(HomePage::class));
-            $tree_name      = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_TREE, '');
-            $connect_action = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_CONNECT_ACTION, '');
+            $provider_name  = Session::get($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_NAME);
+            $url            = Session::get($oauth2_client->name() . OAuth2Client::SESSION_URL, route(HomePage::class));
+            $tree_name      = Session::get($oauth2_client->name() . OAuth2Client::SESSION_TREE, '');
+            $connect_action = Session::get($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_ACTION, '');
             $tree           = $this->tree_service->all()->get($tree_name);
             $retreived_provider_name_from_session = true;
         }
@@ -172,15 +168,15 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         elseif(     $connect_action === OAuth2Client::CONNECT_ACTION_CONNECT
                 &&  $user === Auth::user()) {
 
-            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, $provider_name);
-            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, $user->id());
-            Session::put(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, time());
+            Session::put($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, $provider_name);
+            Session::put($oauth2_client->name() . OAuth2Client::SESSION_USER_TO_CONNECT, $user->id());
+            Session::put($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, time());
 
             CustomModuleLog::addDebugLog($log_module, 'Received a request to connect the user ' . $user->userName() . ' to provider: ' . $provider_name);
         }
         //If session contains a user to connect, which is different from the logged in user, reset session values
-        elseif(     0 !== Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0)
-                &&  Auth::id() !== Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0)) {
+        elseif(     0 !== Session::get($oauth2_client->name() . OAuth2Client::SESSION_USER_TO_CONNECT, 0)
+                &&  Auth::id() !== Session::get($oauth2_client->name() . OAuth2Client::SESSION_USER_TO_CONNECT, 0)) {
 
             self::deleteSessionValuesForProviderConnection();
 
@@ -191,7 +187,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             return redirect($url);    
         }
         //If timeout for connect request, reset session values
-        elseif(time() - OAuth2Client::SESSION_CONNECT_TIMEOUT > Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, time())) {
+        elseif(time() - OAuth2Client::SESSION_CONNECT_TIMEOUT > Session::get($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, time())) {
 
             self::deleteSessionValuesForProviderConnection();
 
@@ -212,20 +208,20 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             CustomModuleLog::addDebugLog($log_module, 'Received authorization URL' . ': ' . $authorizationUrl);
 
             // Get the state generated for you and store it to the session.
-            Session::put(OAuth2Client::activeModuleName() . 'oauth2state', $provider->getState());
+            Session::put($oauth2_client->name() . 'oauth2state', $provider->getState());
 
             // Save PKCE code to session (only relevant if PKCE is configured)
-            Session::put(OAuth2Client::activeModuleName() . 'oauth2pkceCode', $provider->getPkceCode());
+            Session::put($oauth2_client->name() . 'oauth2pkceCode', $provider->getPkceCode());
         
             // Redirect the user to the authorization URL.
             CustomModuleLog::addDebugLog($log_module, 'Redirecting to authorization URL');
             return redirect($authorizationUrl);
         
         // Check given state against previously stored one to mitigate CSRF attack
-        } elseif ($state === '' ||  !Session::has(OAuth2Client::activeModuleName() . 'oauth2state') || $state !== Session::get(OAuth2Client::activeModuleName() . 'oauth2state', '')) {
+        } elseif ($state === '' ||  !Session::has($oauth2_client->name() . 'oauth2state') || $state !== Session::get($oauth2_client->name() . 'oauth2state', '')) {
         
-            if (Session::get(OAuth2Client::activeModuleName() . 'oauth2state', '') !== '') {
-                Session::forget(OAuth2Client::activeModuleName() . 'oauth2state');
+            if (Session::get($oauth2_client->name() . 'oauth2state', '') !== '') {
+                Session::forget($oauth2_client->name() . 'oauth2state');
             }
         
             return $this->viewResponse(OAuth2Client::viewsNamespace() . '::alert', [
@@ -238,7 +234,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         } else {        
             try {
                 //Load PKCE code from session (only relevant if PKCE is configured)
-                $provider->setPkceCode(Session::get(OAuth2Client::activeModuleName() . 'oauth2pkceCode', ''));
+                $provider->setPkceCode(Session::get($oauth2_client->name() . 'oauth2pkceCode', ''));
 
                 // Try to get an access token using the authorization code grant.
                 $accessToken = $provider->getAccessToken('authorization_code', [
@@ -289,8 +285,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 'email'                     => $email,
             ]));
 
-        $provider_to_connect = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, '');
-        $user_to_connect     = Session::get(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT, 0);
+        $provider_to_connect = Session::get($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, '');
+        $user_to_connect     = Session::get($oauth2_client->name() . OAuth2Client::SESSION_USER_TO_CONNECT, 0);
 
         //Check if username/email already exists
         $existing_user = $this->user_service->findByEmail($email) ?? $this->user_service->findByUserName($user_name);
@@ -571,8 +567,10 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
      */
     private static function deleteSessionValuesForProviderConnection(): void
     {
-        Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT);
-        Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_USER_TO_CONNECT);
-        Session::forget(OAuth2Client::activeModuleName() . OAuth2Client::SESSION_CONNECT_TIMESTAMP);
+        $oauth2_client = Functions::getFromContainer(OAuth2Client::class);
+
+        Session::forget($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT);
+        Session::forget($oauth2_client->name() . OAuth2Client::SESSION_USER_TO_CONNECT);
+        Session::forget($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_TIMESTAMP);
     }
 }

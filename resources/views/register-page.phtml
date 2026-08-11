@@ -28,8 +28,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  */
 
 
-$module_service = new ModuleService();
-$oauth2_client  = $module_service->findByName(OAuth2Client::activeModuleName());
+$oauth2_client = Functions::getFromContainer(OAuth2Client::class);
 
 $edit_user_name = true;
 $edit_real_name = true;
@@ -44,7 +43,7 @@ $edit_email     = (!$provider_authorization OR !$oauth2_client->getPreference(OA
 $edit_password  = $oauth2_client->getPreference(OAuth2Client::PREF_USE_WEBTREES_PASSWORD);
 
 if ($provider_authorization) {
-    $provider_name = $provider_authorization ? Session::get(OAuth2Client::activeModuleName() . 'provider_name') : '';
+    $provider_name = $provider_authorization ? Session::get($oauth2_client->name() . 'provider_name') : '';
     $provider = (new AuthorizationProviderFactory())::make($provider_name, '');
 }
 

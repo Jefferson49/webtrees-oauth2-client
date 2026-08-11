@@ -48,25 +48,22 @@ use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use Fisharebest\Webtrees\Module\ModuleConfigTrait;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
-use Fisharebest\Webtrees\Module\ModuleCustomTrait;
 use Fisharebest\Webtrees\Module\ModuleGlobalInterface;
 use Fisharebest\Webtrees\Module\ModuleGlobalTrait;
 use Fisharebest\Webtrees\Module\ModuleMenuInterface;
 use Fisharebest\Webtrees\Module\ModuleMenuTrait;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\GedcomImportService;
-use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Services\TreeService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
 use Jefferson49\Webtrees\Authorization\Auth;
-use Jefferson49\Webtrees\Exceptions\GithubCommunicationError;
 use Jefferson49\Webtrees\Helpers\Functions;
-use Jefferson49\Webtrees\Helpers\GithubService;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
+use Jefferson49\Webtrees\Module\ModuleCustomTrait;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\LoginWithAuthorizationProviderAction;
 use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\OAuth2Logout;
@@ -74,7 +71,6 @@ use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\RegisterWithProvide
 use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use RuntimeException;
 
 
 class OAuth2Client extends AbstractModule implements
@@ -176,24 +172,24 @@ class OAuth2Client extends AbstractModule implements
 		View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
 
         //Register a custom view for the login page
-        View::registerCustomView('::login-page', self::viewsNamespace() . '::login-page');
-        $this->custom_view_list->add(self::viewsNamespace() . '::login-page');
+        View::registerCustomView(View::NAMESPACE_SEPARATOR . 'login-page', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'login-page');
+        $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'login-page');
 
         //Register a custom view for the registration page
-        View::registerCustomView('::register-page', self::viewsNamespace() . '::register-page');
-        $this->custom_view_list->add(self::viewsNamespace() . '::register-page');
+        View::registerCustomView(View::NAMESPACE_SEPARATOR . 'register-page', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'register-page');
+        $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'register-page');
 
         //Register a custom view for the edit account page
-        View::registerCustomView('::edit-account-page', self::viewsNamespace() . '::edit-account-page');
-        $this->custom_view_list->add(self::viewsNamespace() . '::edit-account-page');
+        View::registerCustomView(View::NAMESPACE_SEPARATOR . 'edit-account-page', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'edit-account-page');
+        $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'edit-account-page');
 
         //Register a custom view for the password request page
-        View::registerCustomView('::password-request-page', self::viewsNamespace() . '::password-request-page');
-        $this->custom_view_list->add(self::viewsNamespace() . '::password-request-page');
+        View::registerCustomView(View::NAMESPACE_SEPARATOR . 'password-request-page', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'password-request-page');
+        $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'password-request-page');
 
         //Register a custom view for the password reset page
-        View::registerCustomView('::password-reset-page', self::viewsNamespace() . '::password-reset-page');
-        $this->custom_view_list->add(self::viewsNamespace() . '::password-reset-page');
+        View::registerCustomView(View::NAMESPACE_SEPARATOR . 'password-reset-page', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'password-reset-page');
+        $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'password-reset-page');
 
         //Get the router
         $router = Registry::routeFactory()->routeMap();                 
@@ -237,104 +233,6 @@ class OAuth2Client extends AbstractModule implements
     {
         /* I18N: Description of the “AncestorsChart” module */
         return I18N::translate('A custom module to implement a OAuth2 client for webtrees.');
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\AbstractModule::resourcesFolder()
-     */
-    public function resourcesFolder(): string
-    {
-        return dirname(__DIR__, 1) . '/resources/';
-    }
-
-    /**
-     * Get the active module name, e.g. the name of the currently running module
-     *
-     * @return string
-     */
-    public static function activeModuleName(): string
-    {
-        return '_' . basename(dirname(__DIR__, 1)) . '_';
-    }
-    
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleAuthorName()
-     */
-    public function customModuleAuthorName(): string
-    {
-        return self::CUSTOM_AUTHOR;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleVersion()
-     */
-    public function customModuleVersion(): string
-    {
-        return self::CUSTOM_VERSION;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleLatestVersion()
-     */
-    public function customModuleLatestVersion(): string
-    {
-        return Registry::cache()->file()->remember(
-            $this->name() . '-latest-version',
-            function (): string {
-
-                try {
-                    //Get latest release from GitHub
-                    return GithubService::getLatestReleaseTag(self::GITHUB_REPO);
-                }
-                catch (GithubCommunicationError $ex) {
-                    // Can't connect to GitHub?
-                    return $this->customModuleVersion();
-                }
-            },
-            86400
-        );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleSupportUrl()
-     */
-    public function customModuleSupportUrl(): string
-    {
-        return 'https://github.com/' . self::GITHUB_REPO;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param string $language
-     *
-     * @return array
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customTranslations()
-     */
-    public function customTranslations(string $language): array
-    {
-        return MoreI18N::readTranslationsFromMoFile($this->resourcesFolder() . 'lang/', $language);
     }
 
     /**
@@ -507,16 +405,6 @@ class OAuth2Client extends AbstractModule implements
     }
     
     /**
-     * Get the namespace for the views
-     *
-     * @return string
-     */
-    public static function viewsNamespace(): string
-    {
-        return self::activeModuleName();
-    }    
-
-    /**
      * View module settings in control panel
      *
      * @param ServerRequestInterface $request
@@ -627,72 +515,6 @@ class OAuth2Client extends AbstractModule implements
             FlashMessages::addMessage($message, 'success');	
         }
     }
-
-    /**
-     * Check availability of the registered custom views and show flash messages with warnings if any errors occur 
-     *
-     * @return void
-     */
-    private function checkCustomViewAvailability() : void {
-
-        $module_service = new ModuleService();
-        $custom_modules = $module_service->findByInterface(ModuleCustomInterface::class);
-        $alternative_view_found = false;
-
-        foreach($this->custom_view_list as $custom_view) {
-
-            [$namespace, $view_name] = explode(View::NAMESPACE_SEPARATOR, (string) $custom_view, 2);
-
-            foreach($custom_modules->forget(self::activeModuleName()) as $custom_module) {
-
-                $view = new View('test');
-
-                try {
-                    $file_name = $view->getFilenameForView($custom_module->name() . View::NAMESPACE_SEPARATOR . $view_name);
-                    $alternative_view_found = true;
-    
-                    //If a view of one of the custom modules is found, which are known to use the same view
-                    if (in_array($custom_module->name(), ['_jc-simple-media-display_', '_webtrees-simple-media-display_'])) {
-                        
-                        $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' .
-                                    I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This can lead to unintended behavior. If using the %s module, it is strongly recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
-                                    '<b>' . $custom_module->title() . '</b>', $this->title(), $this->title(), $custom_module->title(), $this->title());
-                    }
-                    else {
-                        $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' . 
-                                    I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This can lead to unintended behavior, because both of the modules have registered the same custom view "%s". It is strongly recommended to deactivate one of the modules.', 
-                                    '<b>' . $custom_module->title() . '</b>', $this->title(),  '<b>' . $view_name . '</b>');
-                    }
-                    FlashMessages::addMessage($message, 'danger');
-                }    
-                catch (RuntimeException $e) {
-                    //If no file name (i.e. view) was found, do nothing
-                }
-            }
-            if (!$alternative_view_found) {
-
-                $view = new View('test');
-
-                try {
-                    $file_name = $view->getFilenameForView($view_name);
-
-                    //Check if the view is registered with a file path other than the current module; e.g. another moduleS probably registered it with an unknown views namespace
-                    if (mb_strpos($file_name, $this->resourcesFolder()) === false) {
-                        throw new RuntimeException;
-                    }
-                }
-                catch (RuntimeException $e) {
-                    $message =  '<b>' . MoreI18N::xlate('Error') . ':</b><br>' .
-                                I18N::translate(
-                                    'The custom module view "%s" is not registered as replacement for the standard webtrees view. There might be another module installed, which registered the same custom view. This can lead to unintended behavior. It is strongly recommended to deactivate one of the modules. The path of the parallel view is: %s',
-                                    '<b>' . $custom_view . '</b>', '<b>' . $file_name  . '</b>');
-                    FlashMessages::addMessage($message, 'danger');
-                }
-            }
-        }
-        
-        return;
-    }   
 
     /**
      * Get the redirection URL for OAuth2 clients

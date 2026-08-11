@@ -8,9 +8,9 @@ use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Http\RequestHandlers\AccountDelete;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
-use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Tree;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
@@ -33,13 +33,12 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  $edit_email     = true;
 
 //Check whether webtress password is used in parallel and can be edited
-$module_service = new ModuleService();
-$oauth2_client  = $module_service->findByName(OAuth2Client::activeModuleName());
+$oauth2_client = Functions::getFromContainer(OAuth2Client::class);
 
 //Check whether the user is logged in with an OAuth2 provider
 $provider_name           = $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '');
 $is_oauth2_user          = $provider_name !== '';
-$signed_in_with_provider = $provider_name === Session::get(OAuth2Client::activeModuleName() . 'provider_name', '');
+$signed_in_with_provider = $provider_name === Session::get($oauth2_client->name() . 'provider_name', '');
 $connect_with_providers  = boolval($oauth2_client->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'));
 
 if ($is_oauth2_user) {

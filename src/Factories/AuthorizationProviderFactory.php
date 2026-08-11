@@ -33,8 +33,8 @@ namespace Jefferson49\Webtrees\Module\OAuth2Client\Factories;
 
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Webtrees;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Module\CustomFilesystem\CustomFilesystem;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
@@ -159,8 +159,7 @@ class AuthorizationProviderFactory
                 // Only show a flash message, if CustomFilesystem module is not active in case of Nextcloud.
                 // Background: If the CustomFilesystem module is active, the config.ini.php file might be used to configure a Nextcloud filesystem.
                 //             In this case, missing configuration options for a Nextcloud authorization provider shall not be shown.
-                $module_service = new ModuleService();
-                $custom_filesystem  = $module_service->findByName(CustomFilesystem::activeModuleName());
+                $custom_filesystem = Functions::getFromContainer(CustomFilesystem::class);
 
                 if ($custom_filesystem === null OR $name !== 'Nextcloud') {
                     FlashMessages::addMessage(I18N::translate('The configuration for the authorization provider "%s" does not include data for the option "%s". Please check the configuration in the following file: data/config.ini.php', $provider_name, $option_name), 'danger');
@@ -174,8 +173,6 @@ class AuthorizationProviderFactory
 
 	/**
      * Get all options from the webtrees config.ini.php file
-     * 
-     * @param string $name  Authorization provider name
      * 
      * @return array        An array with the options. Empty if options could not be read.
      */ 
