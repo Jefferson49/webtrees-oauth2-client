@@ -162,6 +162,10 @@ class OAuth2Client extends AbstractModule implements
      */
     public function boot(): void
     {
+        //Register this class in the webtrees container
+        //This allows to access the module instance from other places, e.g. views/scripts (->assetUrl)
+        Functions::registerInContainer(self::class, $this);
+                
         //Check update of module version
         $this->checkModuleVersionUpdate();
 
