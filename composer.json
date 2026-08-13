@@ -17,7 +17,7 @@
         "bahuma/oauth2-nextcloud": "=2.1.0",
         "jefferson49/oauth2-authelia": ">=1.0.0",
         "jefferson49/oauth2-kanidm": ">=1.1.1",
-        "jefferson49/webtrees-common": ">=1.2.37",
+        "jefferson49/webtrees-common": ">=1.2.44",
         "league/oauth2-client": "=2.9.0",
         "league/oauth2-github": "=3.1.1",
         "league/oauth2-google": "=4.2.0",

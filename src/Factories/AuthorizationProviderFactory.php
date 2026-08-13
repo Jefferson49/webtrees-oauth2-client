@@ -33,7 +33,7 @@ namespace Jefferson49\Webtrees\Module\OAuth2Client\Factories;
 
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\Webtrees;
+use Jefferson49\Webtrees\Helpers\Configuration;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Module\CustomFilesystem\CustomFilesystem;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
@@ -42,18 +42,12 @@ use Illuminate\Support\Collection;
 
 use ReflectionMethod;
 
-use function file_exists;
-use function parse_ini_file;
-
 
 /**
  * Factory for an OAuth2 authorization provider with a defined interface for webtrees integration
  */
 class AuthorizationProviderFactory
 {
-    //All configured options from the webtrees config.ini.php file
-    private static $webtrees_config = [];
-
     /**
      * Create an OAuth2 authorization provider
      * 
@@ -138,7 +132,7 @@ class AuthorizationProviderFactory
         }
 
         // Get the configuration settings from the webtrees configutration
-        $config = self::getWebtreesConfig();
+        $config = Configuration::getWebtreesConfig();
         foreach ($config as $key => $value) {
             if (strpos($key, $name . '_') === 0) {
                 $key = str_replace($name . '_', '', $key);
@@ -169,39 +163,6 @@ class AuthorizationProviderFactory
         }
 
         return $options;
-    }
-
-	/**
-     * Get all options from the webtrees config.ini.php file
-     * 
-     * @return array        An array with the options. Empty if options could not be read.
-     */ 
-
-    public static function getWebtreesConfig(): array {
-
-        // If not already available, read the configuration settings from the webtrees config file
-        if (self::$webtrees_config === [] && file_exists(Webtrees::CONFIG_FILE)) {
-            self::$webtrees_config  = parse_ini_file(Webtrees::CONFIG_FILE);
-        }
-
-        return self::$webtrees_config;
-    }
-
-	/**
-     * Get the value for a certain key in the webtrees configuration (from config.ini.php file)
-     * 
-     * @param string $key
-     * 
-     * @return string
-     */ 
-
-    public static function getConfigValue(string $key): string {
-
-        if (isset(self::getWebtreesConfig()[$key])) {
-            return self::getWebtreesConfig()[$key];
-        } else {
-            return '';
-        }
     }
 
 	/**

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ca89b5a14f6a24febce4b5e0ed161c0",
+    "content-hash": "8a1e14c46446ed0b8c38bbbe255f9282",
     "packages": [
         {
             "name": "bahuma/oauth2-nextcloud",
@@ -136,11 +136,11 @@
         },
         {
             "name": "jefferson49/webtrees-common",
-            "version": "1.2.37",
+            "version": "1.2.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jefferson49/webtrees-common.git",
-                "reference": "dad0a1a433b44bf65758574a8e856cb2f7e49de6"
+                "reference": "e6a6dfd077591761ddfeb275829002d7917c3658"
             },
             "require": {
                 "php": ">=7.4"
@@ -155,7 +155,7 @@
                 "webtrees",
                 "webtrees-module"
             ],
-            "time": "2026-08-11T16:58:43+00:00"
+            "time": "2026-08-13T04:14:54+00:00"
         },
         {
             "name": "league/oauth2-client",
