@@ -32,7 +32,6 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 <?= view('components/breadcrumbs', ['links' => [route(ControlPanel::class) => I18N::translate('Control panel'), e($title)]]) ?>
 
 <form method="post" id="settings-form">
-	<?= csrf_field() ?>
 	<input type="hidden" name="save" id="save" value="1">
 
 	<h1><?=e($title) ?></h1>
@@ -208,7 +207,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 			</button>
 		</div>		
 	</div>
-
+	<?= csrf_field() ?>
 </form>	
 
 <?php View::push('javascript') ?>
