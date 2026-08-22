@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -51,10 +51,11 @@ use Fisharebest\Webtrees\Site;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
+use Jefferson49\Webtrees\Helpers\Configuration;
 use Jefferson49\Webtrees\Helpers\Functions;
-use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLog;
+use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Psr\Http\Message\ResponseInterface;
@@ -133,7 +134,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         }
 
         //Get information about pretty URLs
-        $pretty_url = AuthorizationProviderFactory::getConfigValue('rewrite_urls') === '1';
+        $pretty_url = Configuration::getConfigValue('rewrite_urls') === '1';
 		$pretty_redirect_url = boolval($oauth2_client->getPreference(OAuth2Client::PREF_PRETTY_REDIRECT_URL, '0'));
 
         //Create the requested provider
@@ -146,7 +147,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         }
         if (!$retreived_provider_name_from_session) {
             CustomModuleLog::addDebugLog($log_module, 'Found the requested authorization provider' . ': ' . $provider_name);
-        }        
+        }
 
         //If we shall disconnect a user from the provider
         if(     $connect_action === OAuth2Client::CONNECT_ACTION_DISCONNECT
@@ -162,7 +163,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             FlashMessages::addMessage($message, 'success');
             CustomModuleLog::addDebugLog($log_module, $message);
 
-            return redirect($url);    
+            return redirect($url);
         }
         //If we shall connect an existing user to a provider, remember provider in session
         elseif(     $connect_action === OAuth2Client::CONNECT_ACTION_CONNECT
@@ -184,7 +185,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             FlashMessages::addMessage($message, 'danger');
             CustomModuleLog::addDebugLog($log_module, $message);
 
-            return redirect($url);    
+            return redirect($url);
         }
         //If timeout for connect request, reset session values
         elseif(time() - OAuth2Client::SESSION_CONNECT_TIMEOUT > Session::get($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, time())) {
@@ -198,7 +199,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             return redirect($url);
         }
 
-        // Start of main OAuth 2.0 process, from: 
+        // Start of main OAuth 2.0 process, from:
         // If we don't have an authorization code then get one
         if ($code === '') {
 
@@ -212,26 +213,26 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             // Save PKCE code to session (only relevant if PKCE is configured)
             Session::put($oauth2_client->name() . 'oauth2pkceCode', $provider->getPkceCode());
-        
+
             // Redirect the user to the authorization URL.
             CustomModuleLog::addDebugLog($log_module, 'Redirecting to authorization URL');
             return redirect($authorizationUrl);
-        
+
         // Check given state against previously stored one to mitigate CSRF attack
         } elseif ($state === '' ||  !Session::has($oauth2_client->name() . 'oauth2state') || $state !== Session::get($oauth2_client->name() . 'oauth2state', '')) {
-        
+
             if (Session::get($oauth2_client->name() . 'oauth2state', '') !== '') {
                 Session::forget($oauth2_client->name() . 'oauth2state');
             }
-        
+
             return $this->viewResponse(OAuth2Client::viewsNamespace() . '::alert', [
                 'title'        => I18N::translate('OAuth 2.0 communication error'),
                 'tree'         => $tree instanceof Tree ? $tree : null,
-                'alert_type'   => OAuth2Client::ALERT_DANGER, 
+                'alert_type'   => OAuth2Client::ALERT_DANGER,
                 'module_name'  => $oauth2_client->title(),
                 'text'         => I18N::translate('Invalid state in communication with authorization provider.'),
             ]);
-        } else {        
+        } else {
             try {
                 //Load PKCE code from session (only relevant if PKCE is configured)
                 $provider->setPkceCode(Session::get($oauth2_client->name() . 'oauth2pkceCode', ''));
@@ -241,7 +242,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                     'code' => $code
                 ]);
                 CustomModuleLog::addDebugLog($log_module, 'Received accesss token from authorization provider' . ': ' . $code);
-        
+
                 // Using the access token, we can get the user data of the resource owner
                 $user_data_from_provider = $provider->getUserData($accessToken);
 
@@ -280,7 +281,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
         CustomModuleLog::addDebugLog($log_module, 'Adjusted user data from authorization provider to webtrees' . ': ' . json_encode([
                 'authorization_provider_id' => $authorization_provider_id,
-                'user_name'                 => $user_name, 
+                'user_name'                 => $user_name,
                 'real_name'                 => $real_name,
                 'email'                     => $email,
             ]));
@@ -311,7 +312,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $existing_user_not_signed_in_yet = false;
         }
 
-        //If we shall connect an existing user to a provider   
+        //If we shall connect an existing user to a provider
         if($provider_to_connect === $provider_name && $user_to_connect !== 0) {
 
             //We do not connect an existing user who has not signed in yet, because it might have been registered based on an authorization provider (and not signed in yet)
@@ -336,9 +337,9 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             self::deleteSessionValuesForProviderConnection();
         }
         // Reject if existing user, who has signed in before and is not connected to the provider
-        // Also reject if an existing user is requested to register, but is already connected with the provider 
-        elseif (    $existing_user !== null 
-                && ((   !$existing_user_not_signed_in_yet && $provider_of_existing_user !== $provider_name) 
+        // Also reject if an existing user is requested to register, but is already connected with the provider
+        elseif (    $existing_user !== null
+                && ((   !$existing_user_not_signed_in_yet && $provider_of_existing_user !== $provider_name)
                      OR ($connect_action === OAuth2Client::CONNECT_ACTION_REGISTER && $provider_of_existing_user === $provider_name)
                     )
             ) {
@@ -401,7 +402,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //Login
         //Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction
         try {
-            $user = $this->doLogin($email, $provider, $authorization_provider_id, $log_module->getLogPrefix());            
+            $user = $this->doLogin($email, $provider, $authorization_provider_id, $log_module->getLogPrefix());
 
             //Update email address if we have not just newly connected the user and email shall be synchronized with provider
             if (    $user_to_connect === 0
@@ -429,8 +430,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 'tree' => $tree instanceof Tree ? $tree->name() : '',
                 'url'  => $url,
             ]));
-        }        
-    }	
+        }
+    }
 
     /**
      * Log in, if we can. Throw an exception, if we can't.
@@ -443,7 +444,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
      *
      * @return void
      * @throws Exception
-     * 
+     *
      * @return User                              The logged in user
      */
     private function doLogin(string $email, AuthorizationProviderInterface $provider, string $authorization_provider_id, string $oauth_log_prefix): User
@@ -483,7 +484,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             }
         }
         //If user has authorization provider, but provider/ID does not match
-        elseif (    ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== $provider->getName()) 
+        elseif (    ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== $provider->getName())
                 OR  ($user->getPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, '') !== $authorization_provider_id)) {
 
                 Log::addAuthenticationLog($oauth_log_prefix . ': ' . 'Login denied. The email address or username already exists: ' . $provider->getName() . ' ' . $authorization_provider_id);
@@ -549,7 +550,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $users = Functions::getAllUsers();
 
         foreach($users as $user) {
-    
+
             if (    $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME)  === $provider->getName()
                 &&  $user->getPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER) === $authorization_provider_id) {
 

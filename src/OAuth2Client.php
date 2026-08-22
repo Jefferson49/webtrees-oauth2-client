@@ -24,11 +24,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -60,6 +60,7 @@ use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
 use Jefferson49\Webtrees\Authorization\Auth;
+use Jefferson49\Webtrees\Helpers\Configuration;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
@@ -74,7 +75,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 
 class OAuth2Client extends AbstractModule implements
-	ModuleCustomInterface, 
+	ModuleCustomInterface,
 	ModuleConfigInterface,
     ModuleGlobalInterface,
     ModuleMenuInterface,
@@ -151,7 +152,7 @@ class OAuth2Client extends AbstractModule implements
      */
     public function __construct()
     {
-        //Caution: Do not use the shared library jefferson47/webtrees-common within __construct(), 
+        //Caution: Do not use the shared library jefferson47/webtrees-common within __construct(),
         //         because it might result in wrong autoload behavior
     }
 
@@ -165,7 +166,7 @@ class OAuth2Client extends AbstractModule implements
         //Register this class in the webtrees container
         //This allows to access the module instance from other places, e.g. views/scripts (->assetUrl)
         Functions::registerInContainer(self::class, $this);
-                
+
         //Check update of module version
         $this->checkModuleVersionUpdate();
 
@@ -196,7 +197,7 @@ class OAuth2Client extends AbstractModule implements
         $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'password-reset-page');
 
         //Get the router
-        $router = Registry::routeFactory()->routeMap();                 
+        $router = Registry::routeFactory()->routeMap();
 
         //Register a route for the communication with the authorization provider
         $router
@@ -206,14 +207,14 @@ class OAuth2Client extends AbstractModule implements
         //Register a route for the RegisterWithProviderAction request handler
         $router
         ->get(RegisterWithProviderAction::class, self::ROUTE_REGISTER_PROVIDER)
-        ->allows(RequestMethodInterface::METHOD_POST);        
+        ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a route for the OAuth2 Logout
         $router
         ->get(OAuth2Logout::class, self::ROUTE_OAUTH2_LOGOUT)
         ->allows(RequestMethodInterface::METHOD_POST);
     }
-	
+
     /**
      * {@inheritDoc}
      *
@@ -257,7 +258,7 @@ class OAuth2Client extends AbstractModule implements
             $css .= "\n" . $hide_login_logout_menu_css;
         }
 
-        return $css; 
+        return $css;
     }
 
     /**
@@ -290,7 +291,7 @@ class OAuth2Client extends AbstractModule implements
 
             foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
-                $submenus[] = new Menu(I18N::translate('Sign in with') . ' ' . $sign_in_button_label, 
+                $submenus[] = new Menu(I18N::translate('Sign in with') . ' ' . $sign_in_button_label,
                     route(LoginWithAuthorizationProviderAction::class, [
                         'tree'          => $tree instanceof Tree ? $tree->name() : null,
                         'url'           => $url,
@@ -347,14 +348,14 @@ class OAuth2Client extends AbstractModule implements
             else {
                 $sub_menu_label = I18N::translate('Connect account with');
                 $connect_action =  OAuth2Client::CONNECT_ACTION_CONNECT;
-                $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels();                
+                $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabels();
             }
-            
+
             //If users are allowed to connect/disconnect with providers, show submenu entries to connect or disconnect
             if (boolval($this->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'))) {
                 foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
-                    $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label, 
+                    $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label,
                         route(LoginWithAuthorizationProviderAction::class, [
                             'tree'            => $tree_name,
                             'url'             => $url,
@@ -388,26 +389,26 @@ class OAuth2Client extends AbstractModule implements
         else {
             return new Menu($menu_label, '#', 'menu-oauth2-client' , ['rel' => 'nofollow'], $submenus);
         }
-    }  
+    }
 
     /**
      * Get the prefix for custom module specific logs
-     * 
+     *
      * @return string
      */
     public static function getLogPrefix() : string {
         return 'OAuth2 Client';
-    }  
-    
+    }
+
     /**
      * Whether debugging is activated
-     * 
+     *
      * @return bool
      */
     public function debuggingActivated(): bool {
         return boolval($this->getPreference(self::PREF_DEBUGGING_ACTIVATED, '0'));
     }
-    
+
     /**
      * View module settings in control panel
      *
@@ -422,7 +423,7 @@ class OAuth2Client extends AbstractModule implements
         $this->layout = 'layouts/administration';
 
         $base_url              = Validator::attributes($request)->string('base_url');
-        $pretty_urls           = AuthorizationProviderFactory::getConfigValue('rewrite_urls') === '1';
+        $pretty_urls           = Configuration::getConfigValue('rewrite_urls') === '1';
         $pretty_redirect_url   = boolval($this->getPreference(self::PREF_PRETTY_REDIRECT_URL, '0'));
         $redirect_url          = OAuth2Client::getRedirectUrl(true, $pretty_urls && $pretty_redirect_url);
         $modified_redirect_url = OAuth2Client::getRedirectUrl(true, $pretty_urls && $pretty_redirect_url) !== OAuth2Client::getRedirectUrl(false, $pretty_urls && $pretty_redirect_url);
@@ -482,7 +483,7 @@ class OAuth2Client extends AbstractModule implements
 
         //Finally, show a success message
         $message = I18N::translate('The preferences for the module "%s" were updated.', $this->title());
-        FlashMessages::addMessage($message, 'success');	
+        FlashMessages::addMessage($message, 'success');
 
         return redirect($this->getConfigLink());
     }
@@ -501,32 +502,32 @@ class OAuth2Client extends AbstractModule implements
 
             // Warning message if updating from 1.0.x versions
             if (version_compare($this->getPreference(self::PREF_MODULE_VERSION, ''), '1.1.0' , '<=')) {
-                    
+
                 $message = I18N::translate('The redirect URL for OAuth 2.0 communication has changed in custom module versions >= 1.1.0. If certain connections with authorization providers fail, you might need to update the authorization provider settings with the new redirect URL.');
-                FlashMessages::addMessage($message, 'warning');	
+                FlashMessages::addMessage($message, 'warning');
             }
 
             //Update module files
             if (require __DIR__ . '/../update_module_files.php') {
                 $this->setPreference(self::PREF_MODULE_VERSION, self::CUSTOM_VERSION);
-                $updated = true;    
+                $updated = true;
             }
         }
 
         if ($updated) {
             //Show flash message for update of preferences
             $message = I18N::translate('The preferences for the custom module "%s" were sucessfully updated to the new module version %s.', $this->title(), self::CUSTOM_VERSION);
-            FlashMessages::addMessage($message, 'success');	
+            FlashMessages::addMessage($message, 'success');
         }
     }
 
     /**
      * Get the redirection URL for OAuth2 clients
-     * 
+     *
      * @param bool $replace_encodings  Whether to replace precent encodings
      * @param bool $pretty_url         Whether to provide a pretty URL
-     * 
-     * 
+     *
+     *
      * @return string
      */
     public static function getRedirectUrl(bool $replace_encodings = true, bool $pretty_url = false) : string {
@@ -553,17 +554,17 @@ class OAuth2Client extends AbstractModule implements
     }
 
     /**
-     * Replaces percent encodings (default %2F) in URLs 
-     * 
+     * Replaces percent encodings (default %2F) in URLs
+     *
      * @param string   url
-     * 
+     *
      * @return string  converted url
      */
     public static function replacePercentEncodings(string $redirectUrl, array $percent_encodings = ['%2F' => '/']) : string {
 
         $redirectUrl = str_replace('%2F', '/', $redirectUrl);
 
-        return $redirectUrl;       
+        return $redirectUrl;
     }
 
 
