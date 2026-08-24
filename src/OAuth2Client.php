@@ -59,6 +59,7 @@ use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
+use Fisharebest\Webtrees\Webtrees;
 use Jefferson49\Webtrees\Authorization\Auth;
 use Jefferson49\Webtrees\Helpers\Configuration;
 use Jefferson49\Webtrees\Helpers\Functions;
@@ -539,7 +540,7 @@ class OAuth2Client extends AbstractModule implements
             $redirectUrl = $base_url . self::ROUTE_REDIRECT;
         }
         else {
-            $path        = parse_url($base_url, PHP_URL_PATH) ?? '';
+            $path        = version_compare(Webtrees::VERSION, '2.3', '>=') ? '' : parse_url($base_url, PHP_URL_PATH) ?? '';
             $parameters  = ['route' => $path];
             $url         = $base_url . '/index.php';
             $redirectUrl = Html::url($url, $parameters) . self::ROUTE_REDIRECT;
