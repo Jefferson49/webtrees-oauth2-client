@@ -1,4 +1,24 @@
 {
+    "name": "jefferson49/webtrees-oauth2-client",
+    "description": "A webtrees custom module to manage custom modules within webtrees",
+    "license": [
+        "GPL-3.0-or-later"
+    ],
+    "keywords": [
+        "webtrees",
+        "custom module"
+    ],
+    "authors": [
+        {
+            "name": "Markus Hemprich",
+            "homepage": "https://github.com/jefferson49",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/jefferson49/webtrees-oauth2-client",
+    "support": {
+        "issues": "https://github.com/jefferson49/webtrees-oauth2-client/issues"
+    },
     "repositories": [
         {
             "url": "https://github.com/Jefferson49/webtrees-common.git",
@@ -14,6 +34,7 @@
         }
     ],
     "require": {
+        "php": ">=7.4",
         "bahuma/oauth2-nextcloud": "=2.1.0",
         "jefferson49/oauth2-authelia": ">=1.0.0",
         "jefferson49/oauth2-kanidm": ">=1.1.1",
@@ -28,6 +49,9 @@
         "firebase/php-jwt": "*",
         "guzzlehttp/guzzle": "*",
         "paragonie/random_compat": "*"
+    },
+    "conflict": {
+        "fisharebest/webtrees": "<2.1"
     },
     "config": {
         "prepend-autoloader": false
