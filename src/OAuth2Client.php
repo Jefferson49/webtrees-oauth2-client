@@ -35,13 +35,8 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
-use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Html;
-use Fisharebest\Webtrees\Http\RequestHandlers\AccountEdit;
-use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
-use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
-use Fisharebest\Webtrees\Http\RequestHandlers\Logout;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Menu;
 use Fisharebest\Webtrees\Module\AbstractModule;
@@ -52,7 +47,6 @@ use Fisharebest\Webtrees\Module\ModuleGlobalInterface;
 use Fisharebest\Webtrees\Module\ModuleGlobalTrait;
 use Fisharebest\Webtrees\Module\ModuleMenuInterface;
 use Fisharebest\Webtrees\Module\ModuleMenuTrait;
-use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\GedcomImportService;
 use Fisharebest\Webtrees\Services\TreeService;
 use Fisharebest\Webtrees\Session;
@@ -61,6 +55,7 @@ use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
 use Fisharebest\Webtrees\Webtrees;
 use Jefferson49\Webtrees\Authorization\Auth;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Helpers\Configuration;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
@@ -197,23 +192,10 @@ class OAuth2Client extends AbstractModule implements
         View::registerCustomView(View::NAMESPACE_SEPARATOR . 'password-reset-page', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'password-reset-page');
         $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'password-reset-page');
 
-        //Get the router
-        $router = Registry::routeFactory()->routeMap();
-
-        //Register a route for the communication with the authorization provider
-        $router
-        ->get(LoginWithAuthorizationProviderAction::class, self::ROUTE_REDIRECT)
-        ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the RegisterWithProviderAction request handler
-        $router
-        ->get(RegisterWithProviderAction::class, self::ROUTE_REGISTER_PROVIDER)
-        ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the OAuth2 Logout
-        $router
-        ->get(OAuth2Logout::class, self::ROUTE_OAUTH2_LOGOUT)
-        ->allows(RequestMethodInterface::METHOD_POST);
+        //Register the routes for the custom module
+        Functions::registerRoute(self::ROUTE_REDIRECT, LoginWithAuthorizationProviderAction::class);
+        Functions::registerRoute(self::ROUTE_REGISTER_PROVIDER, RegisterWithProviderAction::class);
+        Functions::registerRoute(self::ROUTE_OAUTH2_LOGOUT, OAuth2Logout::class);
     }
 
     /**
@@ -271,7 +253,7 @@ class OAuth2Client extends AbstractModule implements
      */
     public function getMenu(Tree $tree): ?Menu
     {
-        $url = route(HomePage::class);
+        $url = route(ClassName::get(ClassName::HOME_PAGE));
         $theme = Session::get('theme');
         $menu_title_shown = in_array($theme, ['webtrees', 'minimal', 'xenea', 'fab', 'rural', '_myartjaub_ruraltheme_', '_jc-theme-justlight_']);
         $tree_name = $tree instanceof Tree ? $tree->name() : null;
@@ -284,7 +266,7 @@ class OAuth2Client extends AbstractModule implements
 
             //Add webtrees sign in menu as submenu item, if preference is activated
             if (boolval($this->getPreference(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, '1'))) {
-                $submenus[] = new Menu(MoreI18N::xlate('Sign in'), route(LoginPage::class), 'menu-oauth2-client-item' , ['rel' => 'nofollow']);
+                $submenus[] = new Menu(MoreI18N::xlate('Sign in'), route(ClassName::get(ClassName::LOGIN_PAGE)), 'menu-oauth2-client-item' , ['rel' => 'nofollow']);
             }
 
             //Add submenu items to sign in with authorization providers
@@ -327,8 +309,8 @@ class OAuth2Client extends AbstractModule implements
             //Add sign out as submenu item
             else {
                 $parameters = [
-                    'data-wt-post-url'   => route(Logout::class),
-                    'data-wt-reload-url' => route(HomePage::class)
+                    'data-wt-post-url'   => route(ClassName::get(ClassName::LOGOUT_PAGE)),
+                    'data-wt-reload-url' => route(ClassName::get(ClassName::HOME_PAGE))
                 ];
                 $submenus[] = new Menu(MoreI18N::xlate('Sign out'), '#', 'menu-oauth2-client-item', $parameters);
 
@@ -336,7 +318,7 @@ class OAuth2Client extends AbstractModule implements
 
             //Add webtrees my account menu as submenu item, if preference is activated
             if (boolval($this->getPreference(self::PREF_SHOW_MY_ACCOUNT_IN_MENU, '1'))) {
-                $submenus[] = new Menu(MoreI18N::xlate('My account'), route(AccountEdit::class, ['tree' => $tree_name, 'user' => Auth::user()->id()]), 'menu-oauth2-client-item');
+                $submenus[] = new Menu(MoreI18N::xlate('My account'), route(ClassName::get(ClassName::ACCOUNT_EDIT), ['tree' => $tree_name, 'user' => Auth::user()->id()]), 'menu-oauth2-client-item');
             }
 
             //If user is connected with an authorization provider, offer disconnect
