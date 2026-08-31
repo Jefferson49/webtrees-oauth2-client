@@ -28,6 +28,7 @@ This README file contains the following main sections:
     + [PocketID](#pocketid)
     + [Spotify](#spotify)
     + [WordPress](#wordpress)
+    + [Yahoo](#yahoo)
 +   [PKCE (Proof Key for Code Exchange)](#pkce-proof-key-for-code-exchange)
 +   [Trouble Shooting](#trouble-shooting)
 +   [Concept](#concept)
@@ -94,6 +95,7 @@ Currently, the following authorization providers are supported:
 + **PocketID** (can be configured with the Generic provider)
 + **Spotify**
 + **WordPress** (with a specific authorization provider plugin installed in WordPress)
++ **Yahoo**
 
 To use further authorization providers, the following approaches are available:
 + Use the Generic authorization provider, which can be adopted to a wide range of authorization providers.
@@ -427,6 +429,7 @@ Spotify_clientSecret='xxx'
     + **Spotify_clientId**='...' (value shown in Spotify, like described above)
     + **Spotify_clientSecret**='...' (value shown in Spotify, like described above)
 
+
 ### WordPress
 + Download the WordPress plugin [WP OAuth Server](https://wordpress.org/plugins/miniorange-oauth-20-server/)
 + Install the plugin in the WordPress administration backend
@@ -467,6 +470,27 @@ If using Apache and the OAuth 2 authorization fails, check the following setting
 ```PHP
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 ```
+
+### Yahoo
++ Ref: [Yahoo Documentation](https://developer.yahoo.com/oauth2/guide/openid_connect/getting_started.html)
++ See chapter [General Configuration](#general-configuration) about how to get the redirect URL from the webtrees custom module settings.
++ Ensure you select the following options:
+    + `OAuth Client Type`
+        + [x] `Confidential Client`
+    + [x] `OpenID Connect Permissions`
+        + [x] Email
+        + [x] Profile
++ Copy the **Client ID** and the **Client secret**
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Yahoo_clientId='xxx'
+Yahoo_clientSecret='xxx'
+```
+
+**NOTE**: A Yahoo application can not be modified after it has been created.
+Ensure that all settings are correct before saving it, otherwise you must
+delete it and create a new one.
+
 ## PKCE (Proof Key for Code Exchange)
 The Generic and Kanidm authorization providers support to use PKCE.  
 
