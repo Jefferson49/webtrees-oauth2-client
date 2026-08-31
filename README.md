@@ -91,6 +91,7 @@ Currently, the following authorization providers are supported:
 + **Joomla** (with a specific authorization provider extension installed in Joomla)
 + **Kanidm**
 + **Keycloak**
++ **Microsoft** (**NOTE**: Requires ¨pretty_urls¨)
 + **Nextcloud**
 + **PocketID** (can be configured with the Generic provider)
 + **Spotify**
@@ -352,6 +353,28 @@ Keycloak_signInButtonLabel='xxx'
     + **Keycloak_authServerUrl**='...' (URL of your Keycloak server)
     + **Keycloak_realm**='xxx' (value for "Realm name" shown in Keycloak)
     + **Keycloak_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
+
+### Microsoft
++ Enable [pretty_urls](https://webtrees.net/faq/urls/) for your webtrees configuration
+    + This is required because Microsoft does not allow Redirect URLs to contain query parameters
++ Check the `Use pretty redirect URL` checkbox in the OAuth2 Client settings
+    + **NOTE**: this will affect the redirect URL of all other OAuth2 configurations. You will need to update them or they will stop working.
++ Follow the [Microsoft Instructions](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow) for setting up the Microsoft identity platform
+    + Create your Microsoft application on the [Microsoft Entra](https://entra.microsoft.com/) platform
+    + Select "App registrations" -> "New registration"
++ Ensure you set the following properties:
+    + The `Application (client) ID` (found in the "Overview" tab) will be used as the `clientId`
+    + `Redirect URI configuration`: The "Redirect URL" shown in your webtrees OAuth2 Client
+    + `Supported Account Types`: "Any Entra ID Tenant + Personal Microsoft accounts"
+    + `Certificates & Secrets`:
+        + Create a new "Client Secret¨
+        + The "Value" will be specified as the `clientSecret`
+        + **NOTE**: Microsoft secrets will expire in at most 2 years, so you will need to renew these periodically
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Microsoft_clientId='xxx'
+Microsoft_clientSecret='xxx'
+```
 
 ### Nextcloud
 + For a description about the Nextcloud configuration, open the chapter about OAuth2 configuration in the [Nextcloud Administration Manual](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/oauth2.html#add-an-oauth2-application)
