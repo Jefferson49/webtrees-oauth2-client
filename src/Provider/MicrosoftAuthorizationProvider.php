@@ -63,10 +63,11 @@ class MicrosoftAuthorizationProvider extends AbstractAuthorizationProvider imple
         $user           = parent::getUserData($token);
         $resource_owner = $user->getRessourceOwner();
 
-        // Microsoft has no username field so use the email address
         $data = $resource_owner->toArray();
+        // Microsoft has no username field so use the email address
         $user->setUserName($data['email'] ?? '');
-        $user->setRealName($data['name'] ?? '');
+        // Microsoft also doesn't necessarily return a name field, so construct the name 
+        $user->setRealName(trim(($data['givenname'] ?? '') . ' ' . ($data['familyname'] ?? '')));
 
         return $user;
     }
