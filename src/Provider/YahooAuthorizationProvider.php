@@ -23,7 +23,7 @@
  *
  * OAuth2-Client
  *
- * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
+ * A webtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
  *
  */
 
