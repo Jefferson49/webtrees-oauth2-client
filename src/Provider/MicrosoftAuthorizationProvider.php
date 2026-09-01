@@ -66,7 +66,7 @@ class MicrosoftAuthorizationProvider extends AbstractAuthorizationProvider imple
         $data = $resource_owner->toArray();
         // Microsoft has no username field so use the email address
         $user->setUserName($data['email'] ?? '');
-        // Microsoft also doesn't necessarily return a name field, so construct the name 
+        // Microsoft also doesn't necessarily return a name field, so construct the name
         $user->setRealName(trim(($data['givenname'] ?? '') . ' ' . ($data['familyname'] ?? '')));
 
         return $user;
@@ -74,7 +74,10 @@ class MicrosoftAuthorizationProvider extends AbstractAuthorizationProvider imple
 
     public static function getRequiredOptions(): array
     {
-        return ['clientId', 'clientSecret'];
+        return [
+            'clientId',
+            'clientSecret'
+        ];
     }
 
     public function getSignInButtonLabel(): string

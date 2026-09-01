@@ -73,7 +73,10 @@ class YahooAuthorizationProvider extends AbstractAuthorizationProvider implement
 
     public static function getRequiredOptions(): array
     {
-        return ['clientId', 'clientSecret'];
+        return [
+            'clientId',
+            'clientSecret'
+        ];
     }
 
     public function getSignInButtonLabel(): string

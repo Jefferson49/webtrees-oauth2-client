@@ -24,6 +24,7 @@ This README file contains the following main sections:
     + [Joomla](#joomla)
     + [Kanidm](#kanidm)
     + [Keycloak](#keycloak)
+    + [Microsoft](#microsoft)
     + [Nextcloud](#nextcloud)
     + [PocketID](#pocketid)
     + [Spotify](#spotify)
@@ -76,10 +77,10 @@ The OAuth 2.0 Client offers two different options to sign on with an authorizati
 
 ## Handling of User Name and Email
 
-If a new webtrees user is created (i.e. registered), the user name and the email needs to be unique. This is a general webtrees requirement. If the user name or email address provided by the authorization provider is identical to an already existing user, an error message will be shown. 
+If a new webtrees user is created (i.e. registered), the user name and the email needs to be unique. This is a general webtrees requirement. If the user name or email address provided by the authorization provider is identical to an already existing user, an error message will be shown.
 
 ## Supported Authorization Providers
-The OAuth 2.0 Client for webtrees uses the OAuth 2.0 implementation of the [The League](https://oauth2-client.thephpleague.com/), which allows developers to create OAuth 2.0 clients that interface with a wide-variety of OAuth 2.0 providers. Within this concept, The League supports serveral "[official providers](https://oauth2-client.thephpleague.com/providers/league/)". As far as suitable for webtrees, these official providers were included, see list below. 
+The OAuth 2.0 Client for webtrees uses the OAuth 2.0 implementation of the [The League](https://oauth2-client.thephpleague.com/), which allows developers to create OAuth 2.0 clients that interface with a wide-variety of OAuth 2.0 providers. Within this concept, The League supports serveral "[official providers](https://oauth2-client.thephpleague.com/providers/league/)". As far as suitable for webtrees, these official providers were included, see list below.
 
 Currently, the following authorization providers are supported:
 + **Generic** (can be configured for several authorization providers)
@@ -116,7 +117,7 @@ In order to get the redirect URL, open the module settings in the control panel 
 
 ![Get redirect URL from module settings](resources/img/control_panel_redirect_url.jpg)
 
-In the following, the configuration is described for a subset of authorization providers. Simular configuration procedures apply to other providers. 
+In the following, the configuration is described for a subset of authorization providers. Simular configuration procedures apply to other providers.
 
 ### Generic
 + Configure the OAuth 2.0 server, which shall be used as authorization provider.
@@ -143,14 +144,14 @@ Generic_signInButtonLabel='xxx'
     ```PHP
     Generic_postSignoutURI='...' (specific URI, which might be offered by the authorization provider)
     ```
-    Example URI for **postSignoutURI** with post logout redirect URI to webtrees after sign out:  
+    Example URI for **postSignoutURI** with post logout redirect URI to webtrees after sign out:
     ```
     https://[AUTH_PROVIDER_URL]/logout?client_id=[CLIENT_ID]&post_logout_redirect_uri=https://[MY_DOMAIN]/webtrees'
     ```
 
-    If **postSignoutURI** is configured, a specific sign out menu item will be shown in the OAuth2 Client menu:  
+    If **postSignoutURI** is configured, a specific sign out menu item will be shown in the OAuth2 Client menu:
 
-    <img src="resources/img/sign_out_of_provider.jpg" width="300">  
+    <img src="resources/img/sign_out_of_provider.jpg" width="300">
 
 + If your authorization provider uses another user ID credential instead of "id", you can add the following configuration (in this example with "sub" used as user ID)
     ```PHP
@@ -182,7 +183,7 @@ Authelia_signInButtonLabel='xxx'
 ### Authentik
 + Use the [Generic client](#generic) to connect with Authentik
 + Authentik configuration:
-    + Customized > Property Mappings > Create > Scope Mapping  
+    + Customized > Property Mappings > Create > Scope Mapping
         + Name: uid to id
         + scope name: hashed-id
         + description: blank
@@ -239,7 +240,7 @@ Dropbox_clientSecret='xxx'
 + Choose "OAuth2 Apps"
 + Click the button "New OAuth2 App" on the right side
 + Enter the data for the GitHub App:
-    + Application name: Can be freely chosen, e.g. "webtrees - Miller family" 
+    + Application name: Can be freely chosen, e.g. "webtrees - Miller family"
     + Homepage URL: **BASE_URL** (from webtress config.ini.php)
     + Authorization callback URL: See chapter [General Configuration](#general-configuration) about how to get the redirect URL from the module settings.
 + Press button "Register application"
@@ -253,7 +254,7 @@ Github_clientSecret='xxx'
 + Insert the configuration details from your Github OAuth2 App into the newly included configuration lines of your config.ini.php file:
     + **Github_clientId**='...' (value shown in Github, like described above)
     + **Github_clientSecret**='...' (value shown in Github, like described above)
-+ Press button "Update Application" 
++ Press button "Update Application"
 
 ### Google
 + Open the [Google API credential](https://console.cloud.google.com/apis/credentials) page and log into your Google account
@@ -297,7 +298,7 @@ Google_clientSecret='xxx'
     + Client ID
     + Client Secret
 + Click on "Endpoint URLs" to find the following configuration parameter, which is needed for the webtrees configuration in config.ini.php below:
-    + Authorize Endpoint 
+    + Authorize Endpoint
 + Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
 ```PHP
 Joomla_clientId='xxx'
@@ -411,7 +412,7 @@ After saving, copy the **Client ID**, **Client Secret**, and the corresponding e
 
 Add the following lines to your `config.ini.php`:
 
-```ini
+```PHP
 Generic_clientId="YOUR_CLIENT_ID"
 Generic_clientSecret="YOUR_CLIENT_SECRET"
 
@@ -483,16 +484,7 @@ WordPress_signInButtonLabel='WordPress'
     + **WordPress_urlAuthorize**='...' (value for "Authorization Endpoint" shown in the WordPress plugin, like described above)
     + **WordPress_urlAccessToken**='...' (value for "Token Endpoint" shown in the WordPress plugin, like described above)
     + **WordPress_urlResourceOwnerDetails**='...' (value for "Userinfo Endpoint" shown in the WordPress plugin, like described above)
-    + **WordPress_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)    
-
-#### PHP/Apache configuration
-If using Apache and the OAuth 2 authorization fails, check the following settings: 
-+ In certain PHP/Apache configurations, PHP is not receiving GET headers and GET requests for authorization and the OAuth 2 authorization will fail.
-+ In order to solve this issue, a line with the Apache settings below needs to be added to the Apache .htaccess configuration file.
-+ If you already use an .htaccess file on your server, you should add this line. If you do not yet have an .htaccess file, create an empty file and insert the mentioned line. Afterwards, use FTP to transfer this file into the top directory of your WordPress installation.
-```PHP
-SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-```
+    + **WordPress_signInButtonLabel**='...' (the label, which shall be shown for the sign in button etc.)
 
 ### Yahoo
 + Ref: [Yahoo Documentation](https://developer.yahoo.com/oauth2/guide/openid_connect/getting_started.html)
@@ -510,14 +502,23 @@ Yahoo_clientId='xxx'
 Yahoo_clientSecret='xxx'
 ```
 
+#### PHP/Apache configuration
+If using Apache and the OAuth 2 authorization fails, check the following settings:
++ In certain PHP/Apache configurations, PHP is not receiving GET headers and GET requests for authorization and the OAuth 2 authorization will fail.
++ In order to solve this issue, a line with the Apache settings below needs to be added to the Apache .htaccess configuration file.
++ If you already use an .htaccess file on your server, you should add this line. If you do not yet have an .htaccess file, create an empty file and insert the mentioned line. Afterwards, use FTP to transfer this file into the top directory of your WordPress installation.
+```PHP
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+```
+
 **NOTE**: A Yahoo application can not be modified after it has been created.
 Ensure that all settings are correct before saving it, otherwise you must
 delete it and create a new one.
 
 ## PKCE (Proof Key for Code Exchange)
-The Generic and Kanidm authorization providers support to use PKCE.  
+The Generic and Kanidm authorization providers support to use PKCE.
 
-In order to activate PKCE for the **Generic provider**, the following configuration needs to be added to the config.ini.php file in webtrees: 
+In order to activate PKCE for the **Generic provider**, the following configuration needs to be added to the config.ini.php file in webtrees:
 ```PHP
 Generic_pkceMethod='S256'
 ```
@@ -536,7 +537,7 @@ Although OAuth 2 is a standard protocol and is used on lots of websites, the aut
    ```
    Generic_scopes = "openid,email,profile"
    ```
-+ Check if your authorization provider includes an "id" and an "email" within the transmitted user data. 
++ Check if your authorization provider includes an "id" and an "email" within the transmitted user data.
     ```
     {"id":"12345","email":"my@email.net"}
     ```
@@ -558,7 +559,7 @@ Although OAuth 2 is a standard protocol and is used on lots of websites, the aut
 + If using the WordPress authorization provider, check the [PHP/Apache configuration](#phpapache-configuration)
 + In rare cases, it might be helpful to use a [pretty URL](https://webtrees.net/faq/urls/) for the redirect URL. In this case, activate "Use pretty redirect URL" in the module settings.
 
-## Definitions 
+## Definitions
 [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749) defines several roles, which are used in OAuth. In the context of the OAuth 2.0 Client and webtrees single sign on, the OAuth [roles](https://datatracker.ietf.org/doc/html/rfc6749#section-1.1) and definitions are used as follows:
 + **Resource Owner**: The webtrees user.
 + **Ressource**: The user data (e.g. user name, real name, email address, ...), which belong to the webtrees user while using a 3rd party webservice (e.g. Github, Google, Joomla).
@@ -595,7 +596,7 @@ Currently, the following languages are available:
 
 You can help to translate this module. The language files are available on [POEditor](https://poeditor.com/join/project/HyBUm95T1U), where you can update them or add new languages.
 
-Alternatively, you can directly edit the .po translation text files, which can be found in [/resources/lang/](resources/lang). You can use a specific editor like [Poedit](https://poedit.net/) or a text editor like notepad++ to work on translations and provide them in the [Github repository](https://github.com/Jefferson49/webtrees-oauth2-client) of the module. You can do this via a pull request (if you know how to do), or by opening a new issue and attaching a .po file. 
+Alternatively, you can directly edit the .po translation text files, which can be found in [/resources/lang/](resources/lang). You can use a specific editor like [Poedit](https://poedit.net/) or a text editor like notepad++ to work on translations and provide them in the [Github repository](https://github.com/Jefferson49/webtrees-oauth2-client) of the module. You can do this via a pull request (if you know how to do), or by opening a new issue and attaching a .po file.
 
 Updated translations will be included in the next release of this module.
 
