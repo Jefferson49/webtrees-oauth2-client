@@ -36,6 +36,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use Bahuma\OAuth2\Client\Provider\Nextcloud;
+use Bahuma\OAuth2\Client\Provider\NextcloudResourceOwner;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
@@ -86,7 +87,9 @@ class NextcloudAuthorizationProvider extends AbstractAuthorizationProvider imple
      */
     public function getUserData(AccessToken $token) : AuthorizationProviderUser {
 
-        $user           = parent::getUserData($token);
+        $user = parent::getUserData($token);
+
+        /** @var NextcloudResourceOwner $resource_owner */
         $resource_owner = $user->getRessourceOwner();
 
         //Apply specific user data provided by Dropbox

@@ -36,6 +36,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Github;
+use League\OAuth2\Client\Provider\GithubResourceOwner;
 use League\OAuth2\Client\Token\AccessToken;
 
 
@@ -74,6 +75,8 @@ class GithubAuthorizationProvider extends AbstractAuthorizationProvider implemen
 
         $user           = parent::getUserData($token);
         $user_data      = $user->getUserData();
+
+        /** @var GithubResourceOwner $resource_owner */
         $resource_owner = $user->getRessourceOwner();
 
         //Apply specific user data provided by Github

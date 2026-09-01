@@ -36,6 +36,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Google;
+use League\OAuth2\Client\Provider\GoogleUser;
 use League\OAuth2\Client\Token\AccessToken;
 
 
@@ -73,7 +74,9 @@ class GoogleAuthorizationProvider extends AbstractAuthorizationProvider implemen
      */
     public function getUserData(AccessToken $token) : AuthorizationProviderUser {
 
-        $user           = parent::getUserData($token);
+        $user = parent::getUserData($token);
+
+        /** @var GoogleUser $resource_owner */
         $resource_owner = $user->getRessourceOwner();
 
         //Apply specific user data provided by Google

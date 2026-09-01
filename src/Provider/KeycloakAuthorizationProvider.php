@@ -35,9 +35,10 @@ use Fisharebest\Webtrees\User;
 use Jefferson49\Webtrees\Module\OAuth2Client\AuthorizationProviderUser;
 use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
-use Stevenmaguire\OAuth2\Client\Provider\Keycloak;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
+use Stevenmaguire\OAuth2\Client\Provider\Keycloak;
+use Stevenmaguire\OAuth2\Client\Provider\KeycloakResourceOwner;
 
 
 /**
@@ -77,7 +78,9 @@ class KeycloakAuthorizationProvider extends AbstractAuthorizationProvider implem
      */
     public function getUserData(AccessToken $token) : AuthorizationProviderUser {
 
-        $user           = parent::getUserData($token);
+        $user = parent::getUserData($token);
+
+        /** @var KeycloakResourceOwner $resource_owner */
         $resource_owner = $user->getRessourceOwner();
 
         //Apply specific user data provided by Keycloak
