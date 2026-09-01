@@ -38,7 +38,7 @@
         "bahuma/oauth2-nextcloud": "=2.1.0",
         "jefferson49/oauth2-authelia": ">=1.0.0",
         "jefferson49/oauth2-kanidm": ">=1.1.1",
-        "jefferson49/webtrees-common": ">=1.2.56",
+        "jefferson49/webtrees-common": ">=1.2.58",
         "league/oauth2-client": "=2.9.0",
         "league/oauth2-github": "=3.1.1",
         "league/oauth2-google": "=4.2.0",
@@ -47,8 +47,12 @@
     },
     "replace": {
         "firebase/php-jwt": "*",
-        "guzzlehttp/guzzle": "*",
-        "paragonie/random_compat": "*"
+        "paragonie/random_compat": "*",
+        "psr/http-client": "*",
+        "psr/http-factory": "*",
+        "psr/http-message": "*",
+        "symfony/polyfill-php80": "*",
+        "symfony/deprecation-contracts": "*"
     },
     "conflict": {
         "fisharebest/webtrees": "<2.1"
