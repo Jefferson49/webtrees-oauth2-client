@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -65,9 +65,9 @@ class GithubAuthorizationProvider extends AbstractAuthorizationProvider implemen
 
     /**
      * Use access token to get user data from provider and return it as a webtrees User object
-     * 
+     *
      * @param AccessToken $token
-     * 
+     *
      * @return User
      */
     public function getUserData(AccessToken $token) : AuthorizationProviderUser {
@@ -81,7 +81,7 @@ class GithubAuthorizationProvider extends AbstractAuthorizationProvider implemen
         $user->setRealName($resource_owner->getName() ?? '');
 
         return $user;
-    }      
+    }
 
     /**
      * Returns a list with options that need to be passed to the provider

@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -40,7 +40,7 @@ use League\OAuth2\Client\Provider\GenericProvider;
  * A generic OAuth2 authorization client, which can be configured for several authorization provider
  */
 class GenericAuthorizationProvider extends AbstractAuthorizationProvider implements AuthorizationProviderInterface
-{    
+{
     //The authorization provider
     protected AbstractProvider $provider;
 
@@ -55,7 +55,7 @@ class GenericAuthorizationProvider extends AbstractAuthorizationProvider impleme
         $options = array_merge($options, [
             'redirectUri'             => $redirectUri,
         ]);
-        
+
         $this->provider = new GenericProvider($options, $collaborators);
 
         if (isset($options['signInButtonLabel'])) {
@@ -82,5 +82,5 @@ class GenericAuthorizationProvider extends AbstractAuthorizationProvider impleme
             'urlResourceOwnerDetails',
             'signInButtonLabel',
         ];
-    }      
+    }
 }

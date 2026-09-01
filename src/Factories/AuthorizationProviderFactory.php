@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -50,11 +50,11 @@ class AuthorizationProviderFactory
 {
     /**
      * Create an OAuth2 authorization provider
-     * 
+     *
      * @param string $name          name of the authorization provider
      * @param string $redirectUri   redirection URL from authorization provider to webtrees OAuth2 client
-     * 
-     * @return AuthorizationProviderInterface   A configured authorization provider. Null, if error 
+     *
+     * @return AuthorizationProviderInterface   A configured authorization provider. Null, if error
      */
     public static function make(string $name, string $redirectUri) : ?AuthorizationProviderInterface
     {
@@ -84,7 +84,7 @@ class AuthorizationProviderFactory
      * Return the names of all available authorization providers
      *
      * @return array array<class_name => provider_name>
-     */ 
+     */
 
     public static function getAuthorizatonProviderNames(): array {
 
@@ -93,13 +93,13 @@ class AuthorizationProviderFactory
         $name_space_provider = str_replace('Factories', 'Provider\\', $name_space);
         $name_space_contracts = str_replace('Factories', 'Contracts\\', $name_space);
 
-        foreach (get_declared_classes() as $class_name) { 
+        foreach (get_declared_classes() as $class_name) {
             if (strpos($class_name, $name_space_provider) !==  false) {
                 if (in_array($name_space_contracts . 'AuthorizationProviderInterface', class_implements($class_name))) {
                     if (str_replace($name_space_provider, '',  $class_name) !== 'AbstractAuthorizationProvider') {
                         $reflectionMethod = new ReflectionMethod($class_name, 'getName');
                         $class_name = str_replace($name_space_provider, '', $class_name);
-                        $provider_names[$class_name] = $reflectionMethod->invoke(null);    
+                        $provider_names[$class_name] = $reflectionMethod->invoke(null);
                     }
                 }
             }
@@ -110,11 +110,11 @@ class AuthorizationProviderFactory
 
 	/**
      * Get the options of a provider
-     * 
+     *
      * @param string $name  Authorization provider name
-     * 
+     *
      * @return array        An array with the options. Empty if options could not be read completely.
-     */ 
+     */
 
     public static function getProviderOptions(string $name): array {
 
@@ -149,7 +149,7 @@ class AuthorizationProviderFactory
         foreach ($option_names as $option_name) {
             if (!key_exists($option_name, $options)) {
 
-                // Check if the CustomFilesystem module is active and we want to configure Nextcloud. 
+                // Check if the CustomFilesystem module is active and we want to configure Nextcloud.
                 // Only show a flash message, if CustomFilesystem module is not active in case of Nextcloud.
                 // Background: If the CustomFilesystem module is active, the config.ini.php file might be used to configure a Nextcloud filesystem.
                 //             In this case, missing configuration options for a Nextcloud authorization provider shall not be shown.
@@ -167,11 +167,11 @@ class AuthorizationProviderFactory
 
 	/**
      * Whether a provider provides enough user data for a webtrees registration, e.g. username and email
-     * 
+     *
      * @param string $name  Authorization provider name
-     * 
+     *
      * @return bool
-     */ 
+     */
 
      public static function providerSupportsRegistration(string $name): bool {
 
@@ -194,13 +194,13 @@ class AuthorizationProviderFactory
 
 	/**
      * Get the sign in button labels for all active authorization providers
-     * 
+     *
      * @param bool $registration If true, only providers are included, which provide enough user data for a webtrees registration
-     * 
+     *
      * @return array [provider_name => label]
-     */ 
+     */
 
-    public static function getSignInButtonLabels($registration = false): array {    
+    public static function getSignInButtonLabels($registration = false): array {
 
         $provider_names = self::getAuthorizatonProviderNames();
 
@@ -232,19 +232,19 @@ class AuthorizationProviderFactory
 
 	/**
      * Get sign in button labels for a set of users
-     * 
+     *
      * @param Collection [User]  $users
      * @param bool               $registration If true, only providers are included, which provide enough user data for a webtrees registration
-     * 
-     * 
+     *
+     *
      * @return array [provider_name => label]
-     */ 
+     */
 
     public static function getSignInButtonLabelsByUsers(Collection $users, $registration = false): array {
 
         $labels = self::getSignInButtonLabels($registration);
         $labels_for_users = [];
-    
+
         foreach($users as $user) {
             foreach($labels as $provider_name => $label) {
 

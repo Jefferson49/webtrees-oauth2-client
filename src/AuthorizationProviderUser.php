@@ -20,12 +20,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module for advanced GEDCOM import, export
  * and filter operations. The module also supports remote downloads/uploads via URL requests.
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -45,7 +45,7 @@ class AuthorizationProviderUser extends User
     protected string $authorization_provider_user_id;
 
     //The user data, which is provided via OAuth2 for the user from the authorization provider
-    protected array $user_data;   
+    protected array $user_data;
 
     //The ressource owner object, which is provided from the authorization provider
     protected ResourceOwnerInterface $ressource_owner;
@@ -58,7 +58,7 @@ class AuthorizationProviderUser extends User
      * @param string                 $authorization_provider_user_id   The user ID, which is provided for the user from the authorization provider
      * @param array                  $user_data                        The user data, which is provided via OAuth2 for the user from the authorization provider
      * @param ResourceOwnerInterface $ressource_owner                  The ressource owner object, which is provided from the authorization provider
-     * 
+     *
      */
     public function __construct(int $user_id, string $user_name, string $real_name, string $email, string $authorization_provider_user_id, array  $user_data, ResourceOwnerInterface $ressource_owner)
     {
@@ -71,9 +71,9 @@ class AuthorizationProviderUser extends User
 
     /**
      * Get the user ID, which is provided for the user from the authorization provider
-     * 
+     *
      * @return string
-     */    
+     */
     public function getAuthorizationProviderUserId(): string {
 
         return $this->authorization_provider_user_id;
@@ -81,9 +81,9 @@ class AuthorizationProviderUser extends User
 
     /**
      * Get the user data, which is provided via OAuth2 for the user from the authorization provider
-     * 
+     *
      * @return array
-     */    
+     */
     public function getUserData(): array {
 
         return $this->user_data;
@@ -91,11 +91,11 @@ class AuthorizationProviderUser extends User
 
     /**
      * Get the ressource owner object, which is provided from the authorization provider
-     * 
+     *
      * @return ResourceOwnerInterface
-     */    
+     */
     public function getRessourceOwner(): ResourceOwnerInterface {
 
         return $this->ressource_owner;
-    }        
+    }
 }

@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -44,7 +44,7 @@ use League\OAuth2\Client\Tool\ArrayAccessorTrait;
  *  An OAuth2 authorization client for Spotify
  */
 class SpotifyAuthorizationProvider extends AbstractAuthorizationProvider implements AuthorizationProviderInterface
-{    
+{
     use ArrayAccessorTrait;
 
     //The authorization provider
@@ -72,15 +72,15 @@ class SpotifyAuthorizationProvider extends AbstractAuthorizationProvider impleme
 			'urlAccessToken'          => 'https://accounts.spotify.com/api/token',
 			'urlResourceOwnerDetails' => 'https://api.spotify.com/v1/me',
         ]);
-        
+
         $this->provider = new GenericProvider($options, $collaborators);
     }
 
     /**
      * Use access token to get user data from provider and return it as a webtrees User object
-     * 
+     *
      * @param AccessToken $token
-     * 
+     *
      * @return User
      */
     public function getUserData(AccessToken $token) : AuthorizationProviderUser {
@@ -118,5 +118,5 @@ class SpotifyAuthorizationProvider extends AbstractAuthorizationProvider impleme
 
         //False, since Spotify does not provide an email address
         return false;
-    }       
+    }
 }

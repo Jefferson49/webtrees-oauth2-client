@@ -24,11 +24,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -55,7 +55,7 @@ use function route;
 
 /*
  * Logout from webtrees and optionally from the authorization provider
- * 
+ *
  * Code from: Fisharebest\Webtrees\Http\RequestHandlers\Logout.php
  * Last check: 2026-04-08
  */
@@ -64,7 +64,7 @@ final class OAuth2Logout implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
 		$oauth2_client    = Functions::getFromContainer(OAuth2Client::class);
-		
+
         $user             = Validator::attributes($request)->user();
         $provider_name    = Session::get($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_NAME);
         $provider_options = AuthorizationProviderFactory::getProviderOptions($provider_name);

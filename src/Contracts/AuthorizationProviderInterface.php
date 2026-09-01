@@ -20,12 +20,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module for advanced GEDCOM import, export
  * and filter operations. The module also supports remote downloads/uploads via URL requests.
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -40,7 +40,7 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 
 
 /**
- * Interface for OAuth2 authorization providers to be used within webtrees 
+ * Interface for OAuth2 authorization providers to be used within webtrees
  */
 interface AuthorizationProviderInterface
 {
@@ -53,27 +53,27 @@ interface AuthorizationProviderInterface
 
     /**
      * Get the name of the authorization client
-     * 
+     *
      * @return string
      */
     public static function getName() : string;
 
     /**
      * Set the sing in button label for the authorization client
-     * 
+     *
      * @param string $label
-     * 
+     *
      * @return void
      */
     public function setSignInButtonLabel(string $label) : void;
 
     /**
      * Get the sign in button label for the authorization client
-     * 
+     *
      * @return string
      */
     public function getSignInButtonLabel() : string;
-    
+
     /**
      * Get the authorization URL
      *
@@ -90,7 +90,7 @@ interface AuthorizationProviderInterface
      * @return string
      */
     public function getState();
-    
+
         /**
      * Get an access token from the provider using a specified grant and option set.
      *
@@ -111,12 +111,12 @@ interface AuthorizationProviderInterface
 
     /**
      * Use access token to get user data from provider and return it as a webtrees User object
-     * 
+     *
      * @param AccessToken $token
-     * 
+     *
      * @return AuthorizationProviderUser
      */
-    public function getUserData(AccessToken $token) : AuthorizationProviderUser;    
+    public function getUserData(AccessToken $token) : AuthorizationProviderUser;
 
     /**
      * Returns a list with options that can be passed to the provider

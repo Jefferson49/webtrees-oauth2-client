@@ -24,11 +24,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * autoload for webtrees custom module: OAuth2-Client
- * 
+ *
  */
- 
+
 declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client;

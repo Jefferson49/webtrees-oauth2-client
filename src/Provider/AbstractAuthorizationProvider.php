@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -60,7 +60,7 @@ abstract class AbstractAuthorizationProvider
 
     /**
      * Get the name of the authorization client
-     * 
+     *
      * @return string
      */
     public static function getName() : string {
@@ -68,7 +68,7 @@ abstract class AbstractAuthorizationProvider
         $name_space = str_replace('\\\\', '\\',__NAMESPACE__ );
         $class_name = str_replace($name_space . '\\', '', static::class);
         return str_replace('AuthorizationProvider', '', $class_name);
-    }    
+    }
 
     /**
      * Set the sing in button label for the authorization client
@@ -96,7 +96,7 @@ abstract class AbstractAuthorizationProvider
 
     /**
      * Get the sign in button label for the authorization client
-     * 
+     *
      * @return string
      */
     public function getSignInButtonLabel() : string {
@@ -125,7 +125,7 @@ abstract class AbstractAuthorizationProvider
     public function getState()
     {
         return $this->provider->getState();
-    }    
+    }
 
     /**
      * Get an access token from the provider using a specified grant and option set.
@@ -146,15 +146,15 @@ abstract class AbstractAuthorizationProvider
 
             if ($response instanceof ResponseInterface) {
                 $status_code = $response->getStatusCode();
-                $reason_phrase = $response->getReasonPhrase();    
+                $reason_phrase = $response->getReasonPhrase();
             }
             else {
                 $status_code = '';
-                $reason_phrase = '';    
+                $reason_phrase = '';
             }
 
-            $error_text =   'Error message: ' . $message . 
-                            ($status_code   !== '' ? ', Status code: '. $status_code : '') . 
+            $error_text =   'Error message: ' . $message .
+                            ($status_code   !== '' ? ', Status code: '. $status_code : '') .
                             ($reason_phrase !== '' ? ', Reason phrase: '. $reason_phrase : '') .
                             '.';
 
@@ -175,10 +175,10 @@ abstract class AbstractAuthorizationProvider
 
     /**
      * Use access token to get user data from provider and return it as a webtrees User object
-     * 
+     *
      * @param  AccessToken               $token
      * @throws IdentityProviderException
-     * 
+     *
      * @return AuthorizationProviderUser
      */
     public function getUserData(AccessToken $token) : AuthorizationProviderUser {
@@ -208,7 +208,7 @@ abstract class AbstractAuthorizationProvider
         }
 
         return new AuthorizationProviderUser(0, $user_name, $real_name, $email, $authorization_provider_user_id, $user_data, $resourceOwner);
-    }    
+    }
 
     /**
      * Returns a list with options that can be passed to the provider
@@ -222,7 +222,7 @@ abstract class AbstractAuthorizationProvider
             'clientSecret',
             'urlAuthorize',
             'urlAccessToken',
-            'urlResourceOwnerDetails',        
+            'urlResourceOwnerDetails',
         ];
     }
 
@@ -259,5 +259,5 @@ abstract class AbstractAuthorizationProvider
 
         $this->provider->setPkceCode($pkceCode);
         return;
-    }      
+    }
 }

@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -44,7 +44,7 @@ use League\OAuth2\Client\Tool\ArrayAccessorTrait;
  *  An OAuth2 authorization client for Nextcloud
  */
 class NextcloudAuthorizationProvider extends AbstractAuthorizationProvider implements AuthorizationProviderInterface
-{    
+{
     use ArrayAccessorTrait;
 
     //The authorization provider
@@ -69,19 +69,19 @@ class NextcloudAuthorizationProvider extends AbstractAuthorizationProvider imple
         $options = array_merge($options, [
             'redirectUri'       => $redirectUri,
         ]);
-        
+
         $this->provider = new Nextcloud($options, $collaborators);
 
         if (isset($options['signInButtonLabel'])) {
             $this->setSignInButtonLabel($options['signInButtonLabel']);
-        }        
+        }
     }
 
     /**
      * Use access token to get user data from provider and return it as a webtrees User object
-     * 
+     *
      * @param AccessToken $token
-     * 
+     *
      * @return User
      */
     public function getUserData(AccessToken $token) : AuthorizationProviderUser {

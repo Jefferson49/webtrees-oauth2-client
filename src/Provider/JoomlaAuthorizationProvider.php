@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -61,7 +61,7 @@ class JoomlaAuthorizationProvider extends AbstractAuthorizationProvider implemen
             'urlAccessToken'          => $options['urlAuthorize'] ?? '',
             'urlResourceOwnerDetails' => $options['urlAuthorize'] ?? '',
         ]);
-        
+
         $this->provider = new GenericProvider($options, $collaborators);
 
         if (isset($options['signInButtonLabel'])) {
@@ -82,5 +82,5 @@ class JoomlaAuthorizationProvider extends AbstractAuthorizationProvider implemen
             'urlAuthorize',
             'signInButtonLabel',
         ];
-    }    
+    }
 }

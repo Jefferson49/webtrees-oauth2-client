@@ -20,11 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -48,7 +48,7 @@ use Exception;
  * An OAuth2 authorization client for Kandim
  */
 class KanidmAuthorizationProvider extends AbstractAuthorizationProvider implements AuthorizationProviderInterface
-{        
+{
     //The authorization provider
     protected AbstractProvider $provider;
 
@@ -71,10 +71,10 @@ class KanidmAuthorizationProvider extends AbstractAuthorizationProvider implemen
 
     /**
      * Use access token to get user data from provider and return it as a webtrees User object
-     * 
+     *
      * @param AccessToken $token
      * @throws IdentityProviderException
-     * 
+     *
      * @return User
      */
     public function getUserData(AccessToken $token) : AuthorizationProviderUser {
@@ -89,7 +89,7 @@ class KanidmAuthorizationProvider extends AbstractAuthorizationProvider implemen
         catch (Exception $e) {
             throw new IdentityProviderException(I18N::translate('Invalid user data received from the authorization provider') . ': '. json_encode($user_data) . ' . ' . I18N::translate('Check the setting for urlResourceOwnerDetails in the webtrees configuration.'), 0, $user_data);
         }
-        
+
         //Apply specific user data provided by Kanidm
         /** @var KanidmResourceOwner $resource_owner To avoid IDE warnings */
         $user->setUserName($resource_owner->getPreferredUsername() ?? '');
@@ -97,7 +97,7 @@ class KanidmAuthorizationProvider extends AbstractAuthorizationProvider implemen
         $user->setEmail($resource_owner->getEmail() ?? '');
 
         return $user;
-    }      
+    }
 
     /**
      * Returns a list with options that can be passed to the provider

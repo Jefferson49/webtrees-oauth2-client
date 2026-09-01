@@ -80,13 +80,13 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
 <form method="post" class="wt-page-options wt-page-options-my-account">
 
     <?php if ($is_oauth2_user) : ?>
-        <?php if (!$edit_user_name) : ?>    
+        <?php if (!$edit_user_name) : ?>
             <input type="hidden" name="user_name" value="<?= e($user->userName()) ?>">
         <?php endif ?>
-        <?php if (!$edit_real_name) : ?>    
+        <?php if (!$edit_real_name) : ?>
             <input type="hidden" name="real_name" value="<?= e($user->realName()) ?>">
         <?php endif ?>
-        <?php if (!$edit_email) : ?>        
+        <?php if (!$edit_email) : ?>
             <input type="hidden" name="email" value="<?= e($user->email()) ?>">
         <?php endif ?>
 
@@ -157,7 +157,7 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
                 <?= MoreI18N::xlate('Password') ?>
             <?php else : ?>
                 <?= MoreI18N::xlate('Password') ?>
-            <?php endif ?>    
+            <?php endif ?>
         </label>
         <div class="col-sm-9 wt-page-options-value">
             <input class="form-control" type="password" id="password" name="password<?= !$edit_password ? '_disabled' : '' ?>" aria-describedby="password-description" autocomplete="new-password" data-wt-show-password-text="<?= e(MoreI18N::xlate('show')) ?>" data-wt-show-password-title="<?= e(MoreI18N::xlate('Show password')) ?>" data-wt-hide-password-text="<?= e(MoreI18N::xlate('hide')) ?>" data-wt-hide-password-title="<?= e(MoreI18N::xlate('Hide password')) ?>" <?= !$edit_password ? 'disabled' : '' ?>>

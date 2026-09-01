@@ -6,7 +6,6 @@ namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
 use Fisharebest\Webtrees\Http\RequestHandlers\ControlPanel;
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\View;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 
@@ -49,7 +48,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 		<label class="col-sm-3 col-form-label wt-page-options-label" for="redirect_url"><?= I18N::translate('Redirect URL') ?></label>
 		<div class="col-sm-9 wt-page-options-value">
 			<input type="text" class="form-control" id="redirect_url-name" name="redirect_url" value="<?= e($redirect_url) ?>" dir="auto" required="required" disabled >
-		</div>		
+		</div>
 		<div class="row mb-3"><?= view('icons/spacer') ?></div>
 		<?php if ($modified_redirect_url) : ?>
 			<div class="alert alert-warning">
@@ -72,9 +71,9 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 			</div>
 		</fieldset>
 	<?php endif ?>
-  
+
 	<div class="h4">
-		<?= I18N::translate('Settings for Sign In Menus') ?>	
+		<?= I18N::translate('Settings for Sign In Menus') ?>
 	</div>
 
 	<?php if ($hide_webtrees_sign_in) : ?>
@@ -84,7 +83,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 		</div>
 	<?php elseif (!$show_webtrees_login_in_menu && $dont_show_webtrees_login_menu) : ?>
 		<div class="alert alert-danger">
-			<p><?= I18N::translate('Currently, all menus to directly sign in with a webtrees Username/Password are deactivated.') . ' ' . 
+			<p><?= I18N::translate('Currently, all menus to directly sign in with a webtrees Username/Password are deactivated.') . ' ' .
 			I18N::translate('Therefore, it is only possible to sign in with an authorization provider. Please be sure to establish a webtrees administrator account with an authorization provider. Otherwise, administrator sign in might not be possible any more.') ?></p>
 		</div>
 	<?php elseif ($dont_show_webtrees_login_menu && sizeof($trees_with_hidden_menu) > 0) : ?>
@@ -205,7 +204,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 				<?= view('icons/save') ?>
 				<?= MoreI18N::xlate('save') ?>
 			</button>
-		</div>		
+		</div>
 	</div>
 	<?= csrf_field() ?>
-</form>	
+</form>

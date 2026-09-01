@@ -52,7 +52,7 @@ $provider_label = $provider !== null ?  $provider->getSignInButtonLabel() : $pro
         'user_name'      => $user_name,
         ])) ?>" >
 
-    <?= $captcha ?>                 
+    <?= $captcha ?>
 
     <div class="row">
         <label class="col-sm-3 col-form-label wt-page-options-label" for="comment">
@@ -83,7 +83,7 @@ $provider_label = $provider !== null ?  $provider->getSignInButtonLabel() : $pro
                 <?=  MoreI18N::xlate('cancel') ?>
             </a>
         </div>
-    </div>      
+    </div>
 
     <?= csrf_field() ?>
 </form>

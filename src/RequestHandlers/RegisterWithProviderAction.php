@@ -24,11 +24,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * 
+ *
  * OAuth2-Client
  *
  * A weebtrees(https://webtrees.net) 2.1 custom module to implement an OAuth2 client
- * 
+ *
  */
 
 declare(strict_types=1);
@@ -95,12 +95,12 @@ class RegisterWithProviderAction implements RequestHandlerInterface
             if ($this->captcha_service->isRobot($request)) {
                 throw new Exception(MoreI18N::xlate('Please try again.'));
             }
-        } 
+        }
         catch (Exception $ex) {
             FlashMessages::addMessage($ex->getMessage(), 'danger');
 
             return redirect(route(LoginPage::class));
-        }        
+        }
 
         //Generate a request for a new webtrees user account
         $random_password  = md5($password_token . time());
@@ -119,7 +119,7 @@ class RegisterWithProviderAction implements RequestHandlerInterface
 
         //Use a deactivated captcha service to call the request handler directly from the code
         $request_handler = new RegisterAction(new DeactivatedCaptchaService, new EmailService, new RateLimitService(), new UserService);
-    
+
         return $request_handler->handle($request);
     }
 
