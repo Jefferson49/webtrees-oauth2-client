@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
-use Fisharebest\Webtrees\Http\RequestHandlers\RegisterAction;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
@@ -60,7 +60,7 @@ if ($provider_authorization) {
     </div>
 <?php endif ?>
 
-<form method="post" action="<?= e(route(RegisterAction::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>" autocomplete="off" class="wt-page-options wt-page-options-register">
+<form method="post" action="<?= e(route(ClassName::get(ClassName::REGISTER), ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>" autocomplete="off" class="wt-page-options wt-page-options-register">
     <?= $captcha ?>
 
     <?php if ($provider_authorization) : ?>

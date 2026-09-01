@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
-use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\Tree;
 use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Helpers\Functions;
@@ -26,7 +25,7 @@ if (!isset($url) OR
     strpos($url, str_replace('/', '', OAuth2Client::ROUTE_REDIRECT)) !== false OR
     strpos($url,'register') !== false) {
 
-    $url = route(HomePage::class);
+    $url = route(ClassName::get(ClassName::HOME_PAGE), ['tree' => $tree instanceof Tree ? $tree->name() : null]);
 }
 
 $oauth2_client = Functions::getFromContainer(OAuth2Client::class);

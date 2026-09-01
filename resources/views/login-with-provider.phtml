@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
-use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\User;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\LoginWithAuthorizationProviderAction;
 use Illuminate\Support\Collection;
@@ -22,7 +22,7 @@ use Illuminate\Support\Collection;
 
 $user             = $user ?? null;
 $connect_action   = $connect_action ?? OAuth2Client::CONNECT_ACTION_NONE;
-$url              = $url ?? route(HomePage::class);
+$url              = $url ?? route(ClassName::get(ClassName::HOME_PAGE));
 $provider_of_user = $user !== null ? $user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') : '';
 
 if ($connect_action === OAuth2Client::CONNECT_ACTION_REGISTER) {

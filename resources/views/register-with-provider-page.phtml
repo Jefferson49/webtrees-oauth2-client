@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
 use Fisharebest\Webtrees\Tree;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
 use Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers\RegisterWithProviderAction;
@@ -76,7 +76,7 @@ $provider_label = $provider !== null ?  $provider->getSignInButtonLabel() : $pro
             <button class="btn btn-primary">
                 <?= MoreI18N::xlate('continue') ?>
             </button>
-            <a href="<?= e(route(LoginPage::class, [
+            <a href="<?= e(route(ClassName::get(ClassName::LOGIN_PAGE), [
                 'tree' => $tree instanceof Tree ? $tree->name() : null,
                 'url'  => $url,
                 ])) ?>" type="submit" class="btn btn-secondary">

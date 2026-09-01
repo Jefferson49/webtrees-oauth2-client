@@ -36,10 +36,7 @@ use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Http\Exceptions\HttpNotFoundException;
-use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
-use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
 use Fisharebest\Webtrees\Http\ViewResponseTrait;
-use Fisharebest\Webtrees\Http\RequestHandlers\UpgradeWizardPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Log;
 use Fisharebest\Webtrees\Services\CaptchaService;
@@ -53,6 +50,7 @@ use Fisharebest\Webtrees\User;
 use Fisharebest\Webtrees\Validator;
 use Jefferson49\Webtrees\Helpers\Configuration;
 use Jefferson49\Webtrees\Helpers\Functions;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLog;
 use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
@@ -107,7 +105,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $code            = Validator::queryParams($request)->string('code', '');
         $state           = Validator::queryParams($request)->string('state', '');
         $provider_name   = Validator::queryParams($request)->string('provider_name', '');
-        $url             = Validator::queryParams($request)->isLocalUrl()->string('url', route(HomePage::class));
+        $url             = Validator::queryParams($request)->isLocalUrl()->string('url', route(ClassName::get(ClassName::HOME_PAGE)));
         $connect_action  = Validator::queryParams($request)->string('connect_action', OAuth2Client::CONNECT_ACTION_NONE);
 
         $tree            = $this->tree_service->all()->get($tree_name);
@@ -126,7 +124,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         }
         else {
             $provider_name  = Session::get($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_NAME);
-            $url            = Session::get($oauth2_client->name() . OAuth2Client::SESSION_URL, route(HomePage::class));
+            $url            = Session::get($oauth2_client->name() . OAuth2Client::SESSION_URL, route(ClassName::get(ClassName::HOME_PAGE)));
             $tree_name      = Session::get($oauth2_client->name() . OAuth2Client::SESSION_TREE, '');
             $connect_action = Session::get($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_ACTION, '');
             $tree           = $this->tree_service->all()->get($tree_name);
@@ -143,7 +141,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //Check if requested provider is available
         if ($provider === null) {
             FlashMessages::addMessage(I18N::translate('The requested authorization provider could not be found') . ': ' . $provider_name, 'danger');
-            return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
+            return redirect(route(ClassName::get(ClassName::LOGIN_PAGE), ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
         }
         if (!$retreived_provider_name_from_session) {
             CustomModuleLog::addDebugLog($log_module, 'Found the requested authorization provider' . ': ' . $provider_name);
@@ -321,7 +319,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 $message = I18N::translate('The identity received from the authorization provider cannot be connected to the requested user, because it is already used to sign in by another webtrees user.');
                 FlashMessages::addMessage($message, 'danger');
                 CustomModuleLog::addDebugLog($log_module, $message);
-                return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
+                return redirect(route(ClassName::get(ClassName::LOGIN_PAGE), ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
             }
 
             $user = $this->user_service->find($user_to_connect);
@@ -346,7 +344,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $message = I18N::translate('The identity received from the authorization provider is already used to sign in by another webtrees user.');
             FlashMessages::addMessage($message, 'danger');
             CustomModuleLog::addDebugLog($log_module, $message);
-            return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
+            return redirect(route(ClassName::get(ClassName::LOGIN_PAGE), ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
         }
         //If user does not exist already and user is not connected already, register based on the authorization provider user data
         elseif ($existing_user === null && !$provider_id_is_connected) {
@@ -361,14 +359,14 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 FlashMessages::addMessage(I18N::translate('It is not possible to request a webtrees account with %s.', $provider->getSignInButtonLabel()));
                 FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider->getSignInButtonLabel()));
                 CustomModuleLog::addDebugLog($log_module, 'Provider does not support webtrees registration.');
-                return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
+                return redirect(route(ClassName::get(ClassName::LOGIN_PAGE), ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
             }
             // If no email was retrieved from authorization provider, show messages and redirect to login page
             elseif ($email === '' OR $user_name === '') {
                 FlashMessages::addMessage(I18N::translate('Invalid user data received from %s. Email or username missing.', $provider->getSignInButtonLabel()), 'danger');
                 FlashMessages::addMessage(I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider->getSignInButtonLabel()));
                 CustomModuleLog::addDebugLog($log_module, 'Invalid user account data received from authorizaton provider. Email or username missing.');
-                return redirect(route(LoginPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
+                return redirect(route(ClassName::get(ClassName::LOGIN_PAGE), ['tree' => $tree instanceof Tree ? $tree->name() : '', 'url' => $url]));
             }
             else {
                 //Check if registration is allowed
@@ -415,7 +413,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             }
 
             if (Auth::isAdmin() && $this->upgrade_service->isUpgradeAvailable()) {
-                FlashMessages::addMessage(MoreI18N::xlate('A new version of webtrees is available.') . ' <a class="alert-link" href="' . e(route(UpgradeWizardPage::class)) . '">' . MoreI18N::xlate('Upgrade to webtrees %s.', '<span dir="ltr">' . $this->upgrade_service->latestVersion() . '</span>') . '</a>');
+                FlashMessages::addMessage(MoreI18N::xlate('A new version of webtrees is available.') . ' <a class="alert-link" href="' . e(route(ClassName::get(ClassName::UPGRADE_WIZARD_PAGE))) . '">' . MoreI18N::xlate('Upgrade to webtrees %s.', '<span dir="ltr">' . $this->upgrade_service->latestVersion() . '</span>') . '</a>');
             }
 
             // Redirect to the target URL
@@ -426,7 +424,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             FlashMessages::addMessage($ex->getMessage(), 'danger');
             CustomModuleLog::addDebugLog($log_module, 'Failed to login: ' . $ex->getMessage());
 
-            return redirect(route(LoginPage::class, [
+            return redirect(route(ClassName::get(ClassName::LOGIN_PAGE), [
                 'tree' => $tree instanceof Tree ? $tree->name() : '',
                 'url'  => $url,
             ]));

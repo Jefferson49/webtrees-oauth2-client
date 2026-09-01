@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
-use Fisharebest\Webtrees\Http\RequestHandlers\ControlPanel;
 use Fisharebest\Webtrees\I18N;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 
@@ -28,7 +28,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 
 ?>
 
-<?= view('components/breadcrumbs', ['links' => [route(ControlPanel::class) => I18N::translate('Control panel'), e($title)]]) ?>
+<?= view('components/breadcrumbs', ['links' => [route(ClassName::get(ClassName::CONTROL_PANEL)) => I18N::translate('Control panel'), e($title)]]) ?>
 
 <form method="post" id="settings-form">
 	<input type="hidden" name="save" id="save" value="1">

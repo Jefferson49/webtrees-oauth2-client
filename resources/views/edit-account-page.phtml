@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
 use Fisharebest\Webtrees\Contracts\UserInterface;
-use Fisharebest\Webtrees\Http\RequestHandlers\AccountDelete;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Tree;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\Factories\AuthorizationProviderFactory;
@@ -253,7 +253,7 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
     <div class="row mb-3">
         <div class="col-sm-3 wt-page-options-label"></div>
         <div class="col-sm-9 wt-page-options-value">
-            <a href="#" class="btn btn-danger" data-wt-confirm="<?= MoreI18N::xlate('Are you sure you want to delete “%s”?', e($user->userName())) ?>" data-wt-post-url="<?= e(route(AccountDelete::class)) ?>">
+            <a href="#" class="btn btn-danger" data-wt-confirm="<?= MoreI18N::xlate('Are you sure you want to delete “%s”?', e($user->userName())) ?>" data-wt-post-url="<?= e(route(ClassName::ACCOUNT_DELETE)) ?>">
                 <?= view('icons/delete') ?>
                 <?= MoreI18N::xlate('Delete your account') ?>
             </a>
