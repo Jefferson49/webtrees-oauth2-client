@@ -169,7 +169,38 @@ if ($provider_authorization) {
 
     <?php View::push('javascript') ?>
     <script>
-        $("#password").hideShowPassword("infer", true);
+        const passwordInput = document.getElementById('password');
+        const showText = passwordInput.dataset.wtShowPasswordText;
+        const showTitle = passwordInput.dataset.wtShowPasswordTitle;
+        const hideText = passwordInput.dataset.wtHidePasswordText;
+        const hideTitle = passwordInput.dataset.wtHidePasswordTitle;
+        
+        const toggleButton = document.createElement('button');
+        toggleButton.type = 'button';
+        toggleButton.className = 'btn btn-link';
+        toggleButton.textContent = showText;
+        toggleButton.title = showTitle;
+        toggleButton.style.position = 'absolute';
+        toggleButton.style.right = '10px';
+        toggleButton.style.top = '50%';
+        toggleButton.style.transform = 'translateY(-50%)';
+        
+        const wrapper = passwordInput.parentElement;
+        wrapper.style.position = 'relative';
+        wrapper.appendChild(toggleButton);
+        
+        toggleButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.textContent = hideText;
+                toggleButton.title = hideTitle;
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.textContent = showText;
+                toggleButton.title = showTitle;
+            }
+        });
     </script>
     <?php View::endpush() ?>
 <?php endif ?>

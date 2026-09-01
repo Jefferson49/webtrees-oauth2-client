@@ -209,15 +209,3 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 	</div>
 	<?= csrf_field() ?>
 </form>	
-
-<?php View::push('javascript') ?>
-<script>
-    $('#select-all-1').change(function(e) {
-        if (e.currentTarget.checked) {
-            $('.mb-3 .row').find('input[type="checkbox"]').prop('checked', true);
-        } else {
-            $('.mb-3 .row').find('input[type="checkbox"]').prop('checked', false);
-        }
-    });
-</script>
-<?php View::endpush() ?>
