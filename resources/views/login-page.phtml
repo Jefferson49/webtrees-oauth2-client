@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\OAuth2Client;
 
 use Fisharebest\Webtrees\Http\RequestHandlers\HomePage;
-use Fisharebest\Webtrees\Http\RequestHandlers\LoginAction;
-use Fisharebest\Webtrees\Http\RequestHandlers\PasswordRequestPage;
-use Fisharebest\Webtrees\Http\RequestHandlers\RegisterPage;
 use Fisharebest\Webtrees\Tree;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
@@ -23,10 +21,10 @@ use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
  * @var string        $welcome
  */
 
-if (!isset($url) OR 
-    strpos($url, str_replace('/', '', OAuth2Client::ROUTE_REDIRECT)) !== false OR 
+if (!isset($url) OR
+    strpos($url, str_replace('/', '', OAuth2Client::ROUTE_REDIRECT)) !== false OR
     strpos($url,'register') !== false) {
-        
+
     $url = route(HomePage::class);
 }
 
@@ -46,7 +44,7 @@ $oauth2_client = Functions::getFromContainer(OAuth2Client::class);
     <br>
 <?php endif ?>
 
-<form method="post" action="<?= e(route(LoginAction::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>" class="wt-page-options wt-page-options-login">
+<form method="post" action="<?= e(route(ClassName::get(ClassName::LOGIN_PAGE), ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>" class="wt-page-options wt-page-options-login">
     <input type="hidden" name="url" value="<?= e($url) ?>">
 
     <?php if ($oauth2_client->getPreference(OAuth2Client::PREF_HIDE_WEBTREES_SIGN_IN) !== '1') : ?>
@@ -77,18 +75,18 @@ $oauth2_client = Functions::getFromContainer(OAuth2Client::class);
                     MoreI18N::xlate('sign in') ?>
                 </button>
 
-                <a class="btn btn-link" href="<?= e(route(PasswordRequestPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>">
+                <a class="btn btn-link" href="<?= e(route(ClassName::get(ClassName::PASSWORD_REQUEST), ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>">
                     <?= MoreI18N::xlate('Forgot password?') ?>
                 </a>
 
                 <?php if ($can_register) : ?>
-                    <a class="btn btn-link" href="<?= e(route(RegisterPage::class, ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>">
+                    <a class="btn btn-link" href="<?= e(route(ClassName::get(ClassName::REGISTER), ['tree' => $tree instanceof Tree ? $tree->name() : null])) ?>">
                         <?= MoreI18N::xlate('Request a new user account') ?>
                     </a>
                 <?php endif ?>
             </div>
         </div>
-    <?php endif ?>        
+    <?php endif ?>
 
     <?= csrf_field() ?>
 </form>
