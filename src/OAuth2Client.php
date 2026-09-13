@@ -143,8 +143,8 @@ class OAuth2Client extends AbstractModule implements
     public const CONNECT_ACTION_REGISTER     = 'connect_action_register';
 
 
-   /**
-     * OAuth2Client constructor.
+    /**
+     * Constructor
      */
     public function __construct()
     {
@@ -153,9 +153,11 @@ class OAuth2Client extends AbstractModule implements
     }
 
     /**
-     * Initialization.
+     * {@inheritDoc}
      *
      * @return void
+     *
+     * @see \Fisharebest\Webtrees\Module\AbstractModule::boot()
      */
     public function boot(): void
     {

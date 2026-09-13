@@ -38,11 +38,9 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 
 
-//Check availability of correct webtrees-common library; update files if needed
-$file_system = new Filesystem(new LocalFilesystemAdapter(__DIR__));
-if (!$file_system->fileExists('/vendor/jefferson49/webtrees-common/autoload.php')) {
-    if (!require __DIR__ . '/update_module_files.php') return false;
-}
+//Autoload vendor libraries
+//Need to be autoloaded before the common code library, because otherwise the prepended library will be removed
+require_once __DIR__ . '/vendor/autoload.php';
 
 //Autoload the latest version of the common code library, which is shared between webtrees custom modules
 //Caution: This autoload needs to be executed before autoloading any other libraries from __DIR__/vendor
@@ -53,13 +51,9 @@ $loader = new ClassLoader(__DIR__);
 $loader->addPsr4('Jefferson49\\Webtrees\\Module\\OAuth2Client\\', __DIR__ . '/src');
 $loader->register();
 
-//Autoload league/oauth2 clients
-require_once __DIR__ . '/vendor/autoload.php';
-
 //Directly include provider wrappers, because they shall be detected by "get_declared_classes"
+$file_system = new Filesystem(new LocalFilesystemAdapter(__DIR__));
 $files = $file_system->listContents('/src/Provider')->toArray();
 foreach ($files as $file) {
     require_once __DIR__ . '/'. $file->path();
 }
-
-return true;
