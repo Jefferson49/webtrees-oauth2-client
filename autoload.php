@@ -38,12 +38,11 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 
 
-//Autoload vendor libraries
-//Need to be autoloaded before the common code library, because otherwise the prepended library will be removed
+//Autoload vendor
+//Needs to be autoloaded before the common code library, because otherwise the prepended library will be removed
 require_once __DIR__ . '/vendor/autoload.php';
 
 //Autoload the latest version of the common code library, which is shared between webtrees custom modules
-//Caution: This autoload needs to be executed before autoloading any other libraries from __DIR__/vendor
 require_once __DIR__ . '/vendor/jefferson49/webtrees-common/autoload.php';
 
 //Autoload this webtrees custom module
