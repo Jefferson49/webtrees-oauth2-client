@@ -268,7 +268,15 @@ class OAuth2Client extends AbstractModule implements
 
             //Add webtrees sign in menu as submenu item, if preference is activated
             if (boolval($this->getPreference(self::PREF_SHOW_WEBTREES_LOGIN_IN_MENU, '1'))) {
-                $submenus[] = new Menu(MoreI18N::xlate('Sign in'), route(ClassName::get(ClassName::LOGIN_PAGE)), 'menu-oauth2-client-item' , ['rel' => 'nofollow']);
+                $submenus[] = new Menu(
+                    MoreI18N::xlate('Sign in'),
+                    route(ClassName::get(ClassName::LOGIN_PAGE) , [
+                        'tree' => $tree_name,
+                        'url'  => $url,
+                    ]),
+                    'menu-oauth2-client-item',
+                    ['rel' => 'nofollow']
+                );
             }
 
             //Add submenu items to sign in with authorization providers
@@ -276,7 +284,8 @@ class OAuth2Client extends AbstractModule implements
 
             foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
-                $submenus[] = new Menu(I18N::translate('Sign in with') . ' ' . $sign_in_button_label,
+                $submenus[] = new Menu(
+                    I18N::translate('Sign in with') . ' ' . $sign_in_button_label,
                     route(LoginWithAuthorizationProviderAction::class, [
                         'tree'          => $tree instanceof Tree ? $tree->name() : null,
                         'url'           => $url,
@@ -300,7 +309,8 @@ class OAuth2Client extends AbstractModule implements
             if ($provider_name !== '' && $post_signout_url !== null) {
 
                 // Add sign out from provider
-                $submenus[] = new Menu(I18N::translate('Sign out of') . ' ' . $provider_name,
+                $submenus[] = new Menu(
+                    I18N::translate('Sign out of') . ' ' . $provider_name,
                     route(OAuth2Logout::class, [
                         'provider_name' => $provider_name,
                     ]),
@@ -320,7 +330,14 @@ class OAuth2Client extends AbstractModule implements
 
             //Add webtrees my account menu as submenu item, if preference is activated
             if (boolval($this->getPreference(self::PREF_SHOW_MY_ACCOUNT_IN_MENU, '1'))) {
-                $submenus[] = new Menu(MoreI18N::xlate('My account'), route(ClassName::get(ClassName::ACCOUNT_EDIT), ['tree' => $tree_name, 'user' => Auth::user()->id()]), 'menu-oauth2-client-item');
+                $submenus[] = new Menu(
+                    MoreI18N::xlate('My account'),
+                    route(ClassName::get(ClassName::ACCOUNT_EDIT), [
+                        'tree' => $tree_name,
+                        'user' => Auth::user()->id()
+                    ]),
+                    'menu-oauth2-client-item'
+                );
             }
 
             //If user is connected with an authorization provider, offer disconnect
@@ -340,7 +357,8 @@ class OAuth2Client extends AbstractModule implements
             if (boolval($this->getPreference(OAuth2Client::PREF_CONNECT_WITH_PROVIDERS, '0'))) {
                 foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
-                    $submenus[] = new Menu($sub_menu_label . ' ' . $sign_in_button_label,
+                    $submenus[] = new Menu(
+                        $sub_menu_label . ' ' . $sign_in_button_label,
                         route(LoginWithAuthorizationProviderAction::class, [
                             'tree'            => $tree_name,
                             'url'             => $url,

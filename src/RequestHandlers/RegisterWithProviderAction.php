@@ -37,10 +37,11 @@ namespace Jefferson49\Webtrees\Module\OAuth2Client\RequestHandlers;
 
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\Http\Exceptions\HttpNotFoundException;
+use Fisharebest\Webtrees\Http\Controllers\Register;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
 use Fisharebest\Webtrees\Http\RequestHandlers\RegisterAction;
 use Fisharebest\Webtrees\Http\ViewResponseTrait;
-use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\CaptchaService;
 use Fisharebest\Webtrees\Services\EmailService;
 use Fisharebest\Webtrees\Services\RateLimitService;
@@ -48,9 +49,11 @@ use Fisharebest\Webtrees\Services\UserService;
 use Fisharebest\Webtrees\Site;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
+use Fisharebest\Webtrees\Webtrees;
 use Jefferson49\Webtrees\Helpers\DeactivatedCaptchaService;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -118,9 +121,15 @@ class RegisterWithProviderAction implements RequestHandlerInterface
         $request         = $request->withParsedBody($params);
 
         //Use a deactivated captcha service to call the request handler directly from the code
-        $request_handler = new RegisterAction(new DeactivatedCaptchaService, new EmailService, new RateLimitService(), new UserService);
-
-        return $request_handler->handle($request);
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
+            $clock = Registry::container()->get(ClockInterface::class);
+            $controller = new Register(new DeactivatedCaptchaService($clock), new EmailService, new RateLimitService($clock), new UserService($clock));
+            return $controller->post($request);
+        }
+        else {
+            $request_handler = new RegisterAction(new DeactivatedCaptchaService, new EmailService, new RateLimitService(), new UserService);
+            return $request_handler->handle($request);
+        }
     }
 
     /**

@@ -253,7 +253,7 @@ $edit_password = (!$is_oauth2_user || boolval($oauth2_client->getPreference(OAut
     <div class="row mb-3">
         <div class="col-sm-3 wt-page-options-label"></div>
         <div class="col-sm-9 wt-page-options-value">
-            <a href="#" class="btn btn-danger" data-wt-confirm="<?= MoreI18N::xlate('Are you sure you want to delete “%s”?', e($user->userName())) ?>" data-wt-post-url="<?= e(route(ClassName::ACCOUNT_DELETE)) ?>">
+            <a href="#" class="btn btn-danger" data-wt-confirm="<?= MoreI18N::xlate('Are you sure you want to delete “%s”?', e($user->userName())) ?>" data-wt-post-url="<?= e(route(ClassName::get(ClassName::ACCOUNT_DELETE))) ?>">
                 <?= view('icons/delete') ?>
                 <?= MoreI18N::xlate('Delete your account') ?>
             </a>
