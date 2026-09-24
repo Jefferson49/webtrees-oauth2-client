@@ -36,10 +36,11 @@
     "require": {
         "php": ">=7.4",
         "bahuma/oauth2-nextcloud": "=2.1.0",
+        "guzzlehttp/guzzle": "7.15.5",
         "jefferson49/oauth2-authelia": ">=1.0.0",
         "jefferson49/oauth2-kanidm": ">=1.1.1",
         "jefferson49/webtrees-common": ">=1.4.65",
-        "league/oauth2-client": "=2.9.0",
+        "league/oauth2-client": "=2.9.1",
         "league/oauth2-github": "=3.1.1",
         "league/oauth2-google": "=4.2.0",
         "stevenmaguire/oauth2-dropbox": "=3.1.0",
