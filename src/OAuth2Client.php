@@ -285,7 +285,7 @@ class OAuth2Client extends AbstractModule implements
             foreach ($sign_in_button_labels as $provider_name => $sign_in_button_label) {
 
                 $submenus[] = new Menu(
-                    I18N::translate('Sign in with') . ' ' . $sign_in_button_label,
+                    I18N::translate('Sign in with %s', $sign_in_button_label),
                     route(LoginWithAuthorizationProviderAction::class, [
                         'tree'          => $tree instanceof Tree ? $tree->name() : null,
                         'url'           => $url,
@@ -308,9 +308,11 @@ class OAuth2Client extends AbstractModule implements
             //If user is connected with an authorization provider and has a sign out URL, add OAuth2 sign out as submenu item
             if ($provider_name !== '' && $post_signout_url !== null) {
 
+                $provider = AuthorizationProviderFactory::make($provider_name, '');
+
                 // Add sign out from provider
                 $submenus[] = new Menu(
-                    I18N::translate('Sign out of') . ' ' . $provider_name,
+                    I18N::translate('Sign out of %s', $provider->getSignInButtonLabel()),
                     route(OAuth2Logout::class, [
                         'provider_name' => $provider_name,
                     ]),
