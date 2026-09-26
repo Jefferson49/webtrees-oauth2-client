@@ -122,9 +122,10 @@ class OAuth2Client extends AbstractModule implements
     public const PREF_PRETTY_REDIRECT_URL           = 'pretty_redirect_url';
 
     //User preferences
-    public const USER_PREF_PROVIDER_NAME     = 'provider_name';
-    public const USER_PREF_ID_AT_PROVIDER    = 'id_at_provider';
-    public const USER_PREF_EMAIL_AT_PROVIDER = 'email_at_provider';
+    public const USER_PREF_PROVIDER_NAME            = 'provider_name';
+    public const USER_PREF_ID_AT_PROVIDER           = 'id_at_provider';
+    public const USER_PREF_EMAIL_AT_PROVIDER        = 'email_at_provider';
+    public const USER_PREF_REGISTERED_WITH_PROVIDER = 'user_is_registered_with_provider';
 
     //Session values
     public const SESSION_PROVIDER_NAME       = 'session_provider_name';
@@ -305,7 +306,7 @@ class OAuth2Client extends AbstractModule implements
             $post_signout_url = $provider_options['postSignoutURI'] ?? null;
             $menu_label = $user->realName();
 
-            //If user is connected with an authorization provider and has a sign out URL, add OAuth2 sign out as submenu item
+            //If user has an authorization provider and a sign out URI, add OAuth2 sign out with URI as submenu item
             if ($provider_name !== '' && $post_signout_url !== null) {
 
                 $provider = AuthorizationProviderFactory::make($provider_name, '');
@@ -342,13 +343,20 @@ class OAuth2Client extends AbstractModule implements
                 );
             }
 
-            //If user is connected with an authorization provider, offer disconnect
+            //If user has a provider
             if ($provider_name !== '') {
-                $sub_menu_label = I18N::translate('Disconnect account from');
-                $connect_action =  OAuth2Client::CONNECT_ACTION_DISCONNECT;
-                $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(new Collection([$user]));
+                //If is registered with the provider, do not offer connect/disconnect
+                if ($provider_name !== '' && boolval($user->getPreference(self::USER_PREF_REGISTERED_WITH_PROVIDER,'0'))) {
+                    $sign_in_button_labels = [];
+                }
+                //If not registered (i.e. user is connected), offer disconnect
+                else {
+                    $sub_menu_label = I18N::translate('Disconnect account from');
+                    $connect_action =  OAuth2Client::CONNECT_ACTION_DISCONNECT;
+                    $sign_in_button_labels = AuthorizationProviderFactory::getSignInButtonLabelsByUsers(new Collection([$user]));
+                }
             }
-            //If user is not connected with an provider, offer to connect to all available providers
+            //If user has no provider, offer to connect to all available providers
             else {
                 $sub_menu_label = I18N::translate('Connect account with');
                 $connect_action =  OAuth2Client::CONNECT_ACTION_CONNECT;

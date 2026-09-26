@@ -156,6 +156,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $user->setPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '');
             $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, '');
             $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, '');
+            $user->setPreference(OAuth2Client::USER_PREF_REGISTERED_WITH_PROVIDER, '');
 
             $message = I18N::translate('Disconnected the user %s from provider: %s', $user->userName(), $provider->getSignInButtonLabel());
             FlashMessages::addMessage($message, 'success');
@@ -326,6 +327,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             $user->setPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, $provider_name);
             $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, $authorization_provider_id);
             $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, $email);
+            $user->setPreference(OAuth2Client::USER_PREF_REGISTERED_WITH_PROVIDER, '0');
 
             $message = I18N::translate('Sucessfully connected existing user %s with provider: %s', $user->userName(), $provider->getSignInButtonLabel());
             FlashMessages::addMessage($message, 'success');
@@ -482,6 +484,9 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                 throw new Exception(I18N::translate('Login denied. The email address or username already exists.') . ' ' .
                                     I18N::translate('To connect an existing user with %s, sign in and select: My pages / My account / Connect with', $provider->getSignInButtonLabel()));
             }
+
+            //Since first time registration, this user is registered with the provider (and not only connected)
+            $user->setPreference(OAuth2Client::USER_PREF_REGISTERED_WITH_PROVIDER, '1');
         }
         //If user has authorization provider, but provider/ID does not match
         elseif (    ($user->getPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, '') !== $provider->getName())
