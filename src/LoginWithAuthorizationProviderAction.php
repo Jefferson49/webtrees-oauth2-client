@@ -62,6 +62,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function substr;
 
+
 /**
  * Perform a login with an authorization provider
  */
@@ -170,7 +171,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
             Session::put($oauth2_client->name() . OAuth2Client::SESSION_PROVIDER_TO_CONNECT, $provider_name);
             Session::put($oauth2_client->name() . OAuth2Client::SESSION_USER_TO_CONNECT, $user->id());
-            Session::put($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, time());
+            Session::put($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, Functions::getCurrentTimestamp());
 
             CustomModuleLog::addDebugLog($log_module, 'Received a request to connect the user ' . $user->userName() . ' to provider: ' . $provider_name);
         }
@@ -187,7 +188,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             return redirect($url);
         }
         //If timeout for connect request, reset session values
-        elseif(time() - OAuth2Client::SESSION_CONNECT_TIMEOUT > Session::get($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, time())) {
+        elseif(Functions::getCurrentTimestamp() - OAuth2Client::SESSION_CONNECT_TIMEOUT > Session::get($oauth2_client->name() . OAuth2Client::SESSION_CONNECT_TIMESTAMP, Functions::getCurrentTimestamp())) {
 
             self::deleteSessionValuesForProviderConnection();
 
@@ -402,6 +403,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         //Login
         //Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction
 		//			Fisharebest\Webtrees\Http\Controllers\Login (webtrees 2.3)
+        //Last check: 2026-09-26
         try {
             $user = $this->doLogin($email, $provider, $authorization_provider_id, $log_module->getLogPrefix());
 
@@ -438,6 +440,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
      * Log in, if we can. Throw an exception, if we can't.
      * Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction
 	 *           Fisharebest\Webtrees\Http\Controllers\Login (webtrees 2.3)
+     * Last check: 2026-09-26
      *
      * @param string                         $email                      Email address of user
      * @param AuthorizationProviderInterface $provider                   The authorization provider
@@ -498,18 +501,17 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         }
 
         Auth::login($user);
-        Log::addAuthenticationLog('Login: ' . Auth::user()->userName() . '/' . Auth::user()->realName());
-        Auth::user()->setPreference(UserInterface::PREF_TIMESTAMP_ACTIVE, (string) time());
+        Log::addAuthenticationLog('Login: ' . $user->userName() . '/' . $user->realName());
+        $user->setPreference(UserInterface::PREF_TIMESTAMP_ACTIVE, Functions::getCurrentTimestamp());
 
         //Save authorization provider data to user preferences
         $user->setPreference(OAuth2Client::USER_PREF_PROVIDER_NAME, $provider->getName());
         $user->setPreference(OAuth2Client::USER_PREF_ID_AT_PROVIDER, $authorization_provider_id);
         $user->setPreference(OAuth2Client::USER_PREF_EMAIL_AT_PROVIDER, $email);
 
-        Session::put('language', Auth::user()->getPreference(UserInterface::PREF_LANGUAGE));
-        Session::put('theme', Auth::user()->getPreference(UserInterface::PREF_THEME));
-
-        I18N::init(Auth::user()->getPreference(UserInterface::PREF_LANGUAGE));
+        Session::put('language', $user->getPreference(UserInterface::PREF_LANGUAGE, 'en-US'));
+        Session::put('theme', $user->getPreference(UserInterface::PREF_THEME));
+        I18N::init($user->getPreference(UserInterface::PREF_LANGUAGE, 'en-US'));
 
         return $user;
     }

@@ -106,7 +106,7 @@ class RegisterWithProviderAction implements RequestHandlerInterface
         }
 
         //Generate a request for a new webtrees user account
-        $random_password  = md5($password_token . time());
+        $random_password  = md5($password_token . Functions::getCurrentTimestamp());
 
         $params = [
             'comments'        => $comments,
