@@ -40,6 +40,7 @@ use Jefferson49\Webtrees\Module\OAuth2Client\Contracts\AuthorizationProviderInte
 use Jefferson49\Webtrees\Module\OAuth2Client\OAuth2Client;
 use Illuminate\Support\Collection;
 
+use Exception;
 use ReflectionMethod;
 
 
@@ -151,9 +152,16 @@ class AuthorizationProviderFactory
 
                 // Check if the CustomFilesystem module is active and we want to configure Nextcloud.
                 // Only show a flash message, if CustomFilesystem module is not active in case of Nextcloud.
+                //
                 // Background: If the CustomFilesystem module is active, the config.ini.php file might be used to configure a Nextcloud filesystem.
                 //             In this case, missing configuration options for a Nextcloud authorization provider shall not be shown.
-                $custom_filesystem = Functions::getFromContainer(CustomFilesystem::class);
+
+                try {
+                    $custom_filesystem = Functions::getFromContainer(CustomFilesystem::class);
+                }
+                catch (Exception $ex) {
+                    $custom_filesystem = null;
+                }
 
                 if ($custom_filesystem === null OR $name !== 'Nextcloud') {
                     FlashMessages::addMessage(I18N::translate('The configuration for the authorization provider "%s" does not include data for the option "%s". Please check the configuration in the following file: data/config.ini.php', $provider_name, $option_name), 'danger');
