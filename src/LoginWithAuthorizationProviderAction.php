@@ -102,12 +102,14 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
     {
         $user            = Validator::attributes($request)->user();
 
-        $tree_name       = Validator::queryParams($request)->string('tree', '');
-        $code            = Validator::queryParams($request)->string('code', '');
-        $state           = Validator::queryParams($request)->string('state', '');
-        $provider_name   = Validator::queryParams($request)->string('provider_name', '');
-        $url             = Validator::queryParams($request)->isLocalUrl()->string('url', route(ClassName::get(ClassName::HOME_PAGE)));
-        $connect_action  = Validator::queryParams($request)->string('connect_action', OAuth2Client::CONNECT_ACTION_NONE);
+        $tree_name         = Validator::queryParams($request)->string('tree', '');
+        $code              = Validator::queryParams($request)->string('code', '');
+        $state             = Validator::queryParams($request)->string('state', '');
+        $provider_name     = Validator::queryParams($request)->string('provider_name', '');
+        $url               = Validator::queryParams($request)->isLocalUrl()->string('url', route(ClassName::get(ClassName::HOME_PAGE)));
+        $connect_action    = Validator::queryParams($request)->string('connect_action', OAuth2Client::CONNECT_ACTION_NONE);
+        $error             = Validator::queryParams($request)->string('error', '');
+        $error_description = Validator::queryParams($request)->string('error_description', '');
 
         $tree            = $this->tree_service->all()->get($tree_name);
         $oauth2_client   = Functions::getFromContainer(OAuth2Client::class);
@@ -199,9 +201,21 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
             return redirect($url);
         }
 
-        // Start of main OAuth 2.0 process, from:
+        // Start of main OAuth 2.0 process
+
+        // If we received an error from the authorization provider, show it
+        if ($error !== '') {
+            CustomModuleLog::addDebugLog($log_module, 'Error received from authorization provider' . ': ' . $error . ' - ' . $error_description);
+            return $this->viewResponse(OAuth2Client::viewsNamespace() . '::alert', [
+                'title'        => I18N::translate('OAuth 2.0 communication error'),
+                'tree'         => $tree instanceof Tree ? $tree : null,
+                'alert_type'   => OAuth2Client::ALERT_DANGER,
+                'module_name'  => $oauth2_client->title(),
+                'text'         => I18N::translate('Error received from authorization provider') . ': ' . $error . ' - ' . $error_description,
+            ]);
+        }
         // If we don't have an authorization code then get one
-        if ($code === '') {
+        elseif ($code === '') {
 
             // Fetch the authorization URL from the provider; this returns the
             // urlAuthorize option and generates and applies any necessary parameters (e.g. state).
@@ -269,7 +283,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
                     'alert_type'   => OAuth2Client::ALERT_DANGER,
                     'module_name'  => $oauth2_client->title(),
                     'text'         => I18N::translate('Failed to get the access token or the user details from the authorization provider') . ': ' . $error_message,
-            ]);
+                ]);
             }
         }
 
