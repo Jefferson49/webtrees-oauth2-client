@@ -502,18 +502,30 @@ Yahoo_clientId='xxx'
 Yahoo_clientSecret='xxx'
 ```
 
-#### PHP/Apache configuration
-If using Apache and the OAuth 2 authorization fails, check the following settings:
-+ In certain PHP/Apache configurations, PHP is not receiving GET headers and GET requests for authorization and the OAuth 2 authorization will fail.
-+ In order to solve this issue, a line with the Apache settings below needs to be added to the Apache .htaccess configuration file.
-+ If you already use an .htaccess file on your server, you should add this line. If you do not yet have an .htaccess file, create an empty file and insert the mentioned line. Afterwards, use FTP to transfer this file into the top directory of your WordPress installation.
-```PHP
-SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-```
-
 **NOTE**: A Yahoo application can not be modified after it has been created.
 Ensure that all settings are correct before saving it, otherwise you must
 delete it and create a new one.
+
+## PHP/Apache configuration
+If using Apache and the OAuth 2 authorization fails, check the following settings:
++ In certain PHP/Apache configurations, PHP is not receiving GET headers and GET requests for authorization and the OAuth2 authorization will fail.
++ In order to solve this issue, an additional configuration needs to be added to the Apache .htaccess configuration file.
++ If you already use an .htaccess file on your server, you should add this configuration. If you do not yet have an .htaccess file, create an empty file and insert the mentioned configuration. Afterwards, use FTP to transfer this file into the top directory of your WordPress installation.
+
+```
+# Capture the Authorization value into an Apache environment variable
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+```
+
+If not sufficient, also set a request header from that variable.
+```
+# Preserve the Authorization header
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Set the Authorization header for proxied requests
+RequestHeader set Authorization "%{HTTP_AUTHORIZATION}e" env=HTTP_AUTHORIZATION
+```
 
 ## PKCE (Proof Key for Code Exchange)
 The Generic and Kanidm authorization providers support to use PKCE.
