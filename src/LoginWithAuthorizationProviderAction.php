@@ -100,7 +100,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $user            = Validator::attributes($request)->user();
+        $user              = Validator::attributes($request)->user();
 
         $tree_name         = Validator::queryParams($request)->string('tree', '');
         $code              = Validator::queryParams($request)->string('code', '');
@@ -111,11 +111,11 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         $error             = Validator::queryParams($request)->string('error', '');
         $error_description = Validator::queryParams($request)->string('error_description', '');
 
-        $tree            = $this->tree_service->all()->get($tree_name);
-        $oauth2_client   = Functions::getFromContainer(OAuth2Client::class);
+        $tree          = $this->tree_service->all()->get($tree_name);
+        $oauth2_client = Functions::getFromContainer(OAuth2Client::class);
 
         /** @var CustomModuleLogInterface $log_module To avoid IDE warnings */
-        $log_module      = $oauth2_client;
+        $log_module    = $oauth2_client;
 
         //Save/load the provider name to/from the session
         if ($provider_name !== '') {

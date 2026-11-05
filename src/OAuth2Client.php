@@ -58,6 +58,7 @@ use Jefferson49\Webtrees\Authorization\Auth;
 use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Helpers\Configuration;
 use Jefferson49\Webtrees\Helpers\Functions;
+use Jefferson49\Webtrees\Http\Middleware\RequireHttpPostMethod;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Log\CustomModuleLogInterface;
 use Jefferson49\Webtrees\Module\ModuleCustomTrait;
@@ -197,8 +198,8 @@ class OAuth2Client extends AbstractModule implements
 
         //Register the routes for the custom module
         Functions::registerRoute(self::ROUTE_REDIRECT, LoginWithAuthorizationProviderAction::class);
-        Functions::registerRoute(self::ROUTE_REGISTER_PROVIDER, RegisterWithProviderAction::class);
-        Functions::registerRoute(self::ROUTE_OAUTH2_LOGOUT, OAuth2Logout::class);
+        Functions::registerRoute(self::ROUTE_REGISTER_PROVIDER, RegisterWithProviderAction::class, null, [RequireHttpPostMethod::class, ]);
+        Functions::registerRoute(self::ROUTE_OAUTH2_LOGOUT, OAuth2Logout::class, null, [RequireHttpPostMethod::class, ]);
     }
 
     /**
@@ -311,21 +312,24 @@ class OAuth2Client extends AbstractModule implements
 
                 $provider = AuthorizationProviderFactory::make($provider_name, '');
 
+                $parameters = [
+                    'data-wt-post-url'   => route(OAuth2Logout::class, ['provider_name' => $provider_name]),
+                    'data-wt-reload-url' => route(ClassName::get(ClassName::HOME_PAGE)),
+                ];
+
                 // Add sign out from provider
                 $submenus[] = new Menu(
                     I18N::translate('Sign out of %s', $provider->getSignInButtonLabel()),
-                    route(OAuth2Logout::class, [
-                        'provider_name' => $provider_name,
-                    ]),
+                    '#',
                     'menu-oauth2-client-item',
-                    ['rel' => 'nofollow']
+                    $parameters
                 );
             }
-            //Add sign out as submenu item
+            //Add webtrees sign out as submenu item
             else {
                 $parameters = [
                     'data-wt-post-url'   => route(ClassName::get(ClassName::LOGOUT_PAGE)),
-                    'data-wt-reload-url' => route(ClassName::get(ClassName::HOME_PAGE))
+                    'data-wt-reload-url' => route(ClassName::get(ClassName::HOME_PAGE)),
                 ];
                 $submenus[] = new Menu(MoreI18N::xlate('Sign out'), '#', 'menu-oauth2-client-item', $parameters);
 
@@ -337,7 +341,7 @@ class OAuth2Client extends AbstractModule implements
                     MoreI18N::xlate('My account'),
                     route(ClassName::get(ClassName::ACCOUNT_EDIT), [
                         'tree' => $tree_name,
-                        'user' => Auth::user()->id()
+                        'user' => Auth::user()->id(),
                     ]),
                     'menu-oauth2-client-item'
                 );
