@@ -98,6 +98,7 @@ Currently, the following authorization providers are supported:
 + **Spotify**
 + **WordPress** (with a specific authorization provider plugin installed in WordPress)
 + **Yahoo**
++ **Yandex**
 
 To use further authorization providers, the following approaches are available:
 + Use the Generic authorization provider, which can be adopted to a wide range of authorization providers.
@@ -505,6 +506,25 @@ Yahoo_clientSecret='xxx'
 **NOTE**: A Yahoo application can not be modified after it has been created.
 Ensure that all settings are correct before saving it, otherwise you must
 delete it and create a new one.
+
+### Yandex
++ Ref: [Yandex Documentation](https://yandex.ru/dev/id/doc/en/)
++ Open the create apps page [Yandex ID OAuth](https://oauth.yandex.ru/)
+    + Select "Your applications" -> "+ Create"
+    + In the window "What kind of app would you like to create?", select "For user authorization" and cleck "Go to creation"
++ Next, we go through 4 steps. Ensure you set the following properties:
+    + Step 1. `Application name`, `the app icon`, `Mail for communication`
+    + Step 2. "Application platforms" -> select "web services" and input the `Redirect URI`: The "Redirect URL" shown in your webtrees OAuth2 Client
+    + Step 3. "Access rights to user data" -> select `Access to the email address` and `Access to the login, first name and last name, gender`
+    + Step 4. In the next window, verifity input data and click the “Everything is correct, create the app” button.
++ In next window copy the **Client ID** and the **Client secret**
++ Open your webtrees config.ini.php file and add the following lines (copy/paste to the end):
+```PHP
+Yandex_clientId='xxx'
+Yandex_clientSecret='xxx'
+; Optional label for login button in the webtrees UI
+Yandex_signInButtonLabel='Яндекс ID'
+```
 
 ## PHP/Apache configuration
 If using Apache and the OAuth 2 authorization fails, check the following settings:
