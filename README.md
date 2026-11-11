@@ -30,6 +30,7 @@ This README file contains the following main sections:
     + [Spotify](#spotify)
     + [WordPress](#wordpress)
     + [Yahoo](#yahoo)
+    + [Yandex](#yandex)
 +   [PKCE (Proof Key for Code Exchange)](#pkce-proof-key-for-code-exchange)
 +   [Trouble Shooting](#trouble-shooting)
 +   [Concept](#concept)
