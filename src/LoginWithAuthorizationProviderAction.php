@@ -415,8 +415,7 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
         }
 
         //Login
-        //Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction
-		//			Fisharebest\Webtrees\Http\Controllers\Login (webtrees 2.3)
+        //Code from Fisharebest\Webtrees\Http\Controllers\Login
         //Last check: 2026-09-26
         try {
             $user = $this->doLogin($email, $provider, $authorization_provider_id, $log_module->getLogPrefix());
@@ -452,8 +451,8 @@ class LoginWithAuthorizationProviderAction implements RequestHandlerInterface
 
     /**
      * Log in, if we can. Throw an exception, if we can't.
-     * Code from Fisharebest\Webtrees\Http\RequestHandlers\LoginAction
-	 *           Fisharebest\Webtrees\Http\Controllers\Login (webtrees 2.3)
+     *
+     * Code from Fisharebest\Webtrees\Http\Controllers\Login
      * Last check: 2026-09-26
      *
      * @param string                         $email                      Email address of user
