@@ -49,8 +49,6 @@ class YandexAuthorizationProvider extends AbstractAuthorizationProvider implemen
             'urlAuthorize'                 => 'https://oauth.yandex.ru/authorize',
             'urlAccessToken'               => 'https://oauth.yandex.ru/token',
             'urlResourceOwnerDetails'      => 'https://login.yandex.ru/info',
-//            'scope'                        => ['openid', 'profile', 'email'],
-//            'responseResourceOwnerId'      => 'sub',
         ], $options, [
             'redirectUri' => $redirectUri,
         ]);
@@ -67,13 +65,12 @@ class YandexAuthorizationProvider extends AbstractAuthorizationProvider implemen
         $user           = parent::getUserData($token);
         $resource_owner = $user->getRessourceOwner();
 
-        // In the Yandex ID provider, not all field names 
-        //     correspond to the standard expected ones.
-        // Expected     Yandex ID				
+        // In the Yandex ID provider, not all field names correspond to the standard expected ones.
+        // Expected     Yandex ID
         // id           id
         // username		login
         // email		default_email
-        // name			real_name		
+        // name			real_name
         $data = $resource_owner->toArray();
         $user->setUserName($data['login'] ?? '');
         $user->setEmail($data['default_email'] ?? '');
@@ -90,4 +87,8 @@ class YandexAuthorizationProvider extends AbstractAuthorizationProvider implemen
         ];
     }
 
+    public function getSignInButtonLabel(): string
+    {
+        return 'Yandex';
+    }
 }
